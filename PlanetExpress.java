@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -51,8 +52,15 @@ this.maxEnviosPorCliente= maxEnviosPorCliente;
      * @param ficheroEnvios
      */
     public void cargarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
-
-
+PrintWriter salida = null;
+try{
+    salida= new PrintWriter(ficheroPuertos);
+    salida.println("Nombre del puerto espacial: "+ListaPuertosEspaciales.escribirPuertosEspacialesCsv());
+    salida.println("Código indentificativo GFSC del puerto espacial: "+);
+    salida.println("Coordenandas esféricas del puerto espacial: "+);
+    salida.println("Número de muelles de carga del puerto espacial: "+);
+    for (int i=0)
+}
 
     }
 
