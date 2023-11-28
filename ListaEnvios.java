@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -130,11 +127,27 @@ public class ListaEnvios {
     public static void leerEnviosCsv(String ficheroEnvios, ListaPortes portes, ListaClientes clientes) {
         Scanner sc = null;
         try {
+            sc = new Scanner(new FileOutputStream("ficheroEnvios.csv"));
 
         } catch (FileNotFoundException e) {
             System.out.println("No se ha encontrado el fichero de envíos");
-        } finally {
-
+        }
+        //añado excepciones para este método
+        catch(FileNotFoundException e){
+            System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
+        }catch( e){
+            System.out.print("Error de lectura de fichero "+e.getMessage());
+        }catch(IOException e) {
+            System.out.print("Error de escritura en fichero " + e.getMessage());
+        }finally {
+            if (salida != null) {
+                try {
+                    salida.close();
+                } catch (IOException e) {
+                    System.out.println("Error de cierre de fichero "
+                            + e.getMessage());
+                }
+            }
         }
     }
 }

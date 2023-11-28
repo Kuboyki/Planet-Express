@@ -1,11 +1,15 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
 
 /**
  * Clase principal de Planet Express App, la práctica de Taller de Programación
  *
- * @author      Taller de Progamación
- * @version     1.0
+ * @author Taller de Progamación
+ * @version 1.0
  */
 public class PlanetExpress {
     private final int maxPortes;
@@ -23,19 +27,17 @@ public class PlanetExpress {
      * TODO: Rellene el constructor de la clase
      *
      * @param maxPuertosEspaciales Máximo número de puertos espaciales que tendrá la lista de puertos espaciales de PlanetExpress App.
-     * @param maxNaves Máximo número de naves que tendrá la lista de naves de PlanetExpress App.
-     * @param maxPortes Máximo número de portes que tendrá la lista de portes de PlanetExpress App.
-     * @param maxClientes Máximo número de clientes que tendrá la lista de clientes de PlanetExpress App.
-     * @param maxEnviosPorCliente Máximo número de envíos por cliente.
+     * @param maxNaves             Máximo número de naves que tendrá la lista de naves de PlanetExpress App.
+     * @param maxPortes            Máximo número de portes que tendrá la lista de portes de PlanetExpress App.
+     * @param maxClientes          Máximo número de clientes que tendrá la lista de clientes de PlanetExpress App.
+     * @param maxEnviosPorCliente  Máximo número de envíos por cliente.
      */
     public PlanetExpress(int maxPuertosEspaciales, int maxNaves, int maxPortes, int maxClientes, int maxEnviosPorCliente) {
-this.maxPuertosEspaciales= maxPuertosEspaciales;
-this.maxNaves= maxNaves;
-this.maxPortes= maxPortes;
-this.maxClientes= maxClientes;
-this.maxEnviosPorCliente= maxEnviosPorCliente;
-
-
+        this.maxPuertosEspaciales = maxPuertosEspaciales;
+        this.maxNaves = maxNaves;
+        this.maxPortes = maxPortes;
+        this.maxClientes = maxClientes;
+        this.maxEnviosPorCliente = maxEnviosPorCliente;
 
 
     }
@@ -44,6 +46,7 @@ this.maxEnviosPorCliente= maxEnviosPorCliente;
     /**
      * TODO: Metodo para leer los datos de los ficheros específicados en el enunciado y los agrega a
      *  la información de PlanetExpress (listaPuertosEspaciales, listaNaves, listaPortes, listaClientes)
+     *
      * @param ficheroPuertos
      * @param ficheroNaves
      * @param ficheroPortes
@@ -52,7 +55,25 @@ this.maxEnviosPorCliente= maxEnviosPorCliente;
      */
     public void cargarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
 
+        listaPuertosEspaciales = ListaPuertosEspaciales.leerPuertosEspacialesCsv(ficheroPuertos, maxPuertosEspaciales);
+        listaNaves =ListaNaves.leerNavesCsv(ficheroNaves,maxNaves);
+        listaClientes =ListaClientes.leerClientesCsv(ficheroClientes,maxClientes,maxEnviosPorCliente);
+        listaPortes = ListaPortes.leerPortesCsv(ficheroPortes,maxPortes,listaPuertosEspaciales,listaNaves);
+        listaEnvios = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);
 
+/*PrintWriter salida = null;
+try{
+    //Mercury Station;MS-1;0.387;0.0;0.0;4
+    salida= new PrintWriter(ficheroPuertos);
+    salida.println("Nombre del puerto espacial: "+ListaPuertosEspaciales.escribirPuertosEspacialesCsv());
+    salida.println("Código indentificativo GFSC del puerto espacial: "+);
+    salida.println("Coordenandas esféricas del puerto espacial: "+);
+    salida.println("Número de muelles de carga del puerto espacial: "+);
+    salida.println();
+    for (int i=0;i<n){
+
+    }
+}*/
 
     }
 
@@ -60,6 +81,7 @@ this.maxEnviosPorCliente= maxEnviosPorCliente;
     /**
      * TODO: Metodo para almacenar los datos de PlanetExpress en los ficheros .csv especificados
      *  en el enunciado de la práctica
+     *
      * @param ficheroPuertos
      * @param ficheroNaves
      * @param ficheroPortes
@@ -67,20 +89,49 @@ this.maxEnviosPorCliente= maxEnviosPorCliente;
      * @param ficheroEnvios
      */
     public void guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
+       PrintWriter salida = null;
+        try {
+            salida = new PrintWriter(new FileOutputStream("ficheroPuertos.csv"));
+            salida = new PrintWriter(new FileOutputStream("ficheroNaves.csv"));
+            salida = new PrintWriter(new FileOutputStream("ficheroPortes.csv"));
+            salida = new PrintWriter(new FileOutputStream("ficheroClientes.csv"));
+            salida = new PrintWriter(new FileOutputStream("ficheroEnvios.csv"));
+//hacerlo por separado , por cada fichero
+            for (int i = 0; i < maxPuertosEspaciales; i++) {
 
-
+            }
+        } catch(FileNotFoundException e){
+System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
+        }catch( e){
+System.out.print("Error de lectura de fichero "+e.getMessage());
+        }catch(IOException e) {
+           System.out.print("Error de escritura en fichero "+e.getMessage());
+        }finally{
+            if (salida != null) {
+                try {
+                    salida.close();
+                } catch (IOException e) {
+                    System.out.println("Error de cierre de fichero "
+                            + e.getMessage());
+                }
+            }
+        }
 
     }
+
     public boolean maxPortesAlcanzado() {
         return listaPortes.estaLlena();
     }
-    public boolean insertarPorte (Porte porte) {
+
+    public boolean insertarPorte(Porte porte) {
         return listaPortes.insertarPorte(porte);
     }
+
     public boolean maxClientesAlcanzado() {
         return listaClientes.estaLlena();
     }
-    public boolean insertarCliente (Cliente cliente) {
+
+    public boolean insertarCliente(Cliente cliente) {
         return listaClientes.insertarCliente(cliente);
     }
 
@@ -89,11 +140,11 @@ this.maxEnviosPorCliente= maxEnviosPorCliente;
      *  Devuelve una lista de los portes entre dos puertos espaciales con una fecha de salida solicitados por teclado
      *  al usuario en el orden y con los textos establecidos (tomar como referencia los ejemplos de ejecución en el
      *  enunciado de la prática)
+     *
      * @param teclado
      * @return
      */
     public ListaPortes buscarPorte(Scanner teclado) {
-
 
 
         return listaPortes.buscarPortes(codigoOrigen, codigoDestino, fecha);
@@ -104,14 +155,13 @@ this.maxEnviosPorCliente= maxEnviosPorCliente;
      * TODO: Metodo para contratar un envio tal y como se indica en el enunciado de la práctica. Se contrata un envio para un porte
      *  especificado, pidiendo por teclado los datos necesarios al usuario en el orden y con los textos (tomar como referencia los
      *  ejemplos de ejecución en el enunciado de la prática)
+     *
      * @param teclado
      * @param rand
      * @param porte
      */
     public void contratarEnvio(Scanner teclado, Random rand, Porte porte) {
         if (porte != null) {
-
-
 
 
         }
@@ -121,6 +171,7 @@ this.maxEnviosPorCliente= maxEnviosPorCliente;
     /**
      * TODO Metodo statico con la interfaz del menú de entrada a la App.
      * Tiene que coincidir con las trazas de ejecución que se muestran en el enunciado
+     *
      * @param teclado
      * @return opción seleccionada
      */
@@ -132,19 +183,20 @@ this.maxEnviosPorCliente= maxEnviosPorCliente;
      * TODO: Método Main que carga los datos de los ficheros CSV pasados por argumento (consola) en PlanetExpress,
      *  llama iterativamente al menú y realiza la opción especificada hasta que se indique la opción Salir. Al finalizar
      *  guarda los datos de PlanetExpress en los mismos ficheros CSV.
+     *
      * @param args argumentos de la línea de comandos, recibe **10 argumentos** estrictamente en el siguiente orden:
-     * 1. Número máximo de puertos espaciales que tendrá la lista de puertos espaciales de PlanetExpress App.
-     * 2. Número máximo de naves que tendrá la lista de naves de PlanetExpress App.
-     * 3. Número máximo de portes que tendrá la lita de portes de PlanetExpress App.
-     * 4. Número máximo de clientes que tendrá la lista de clientes de PlanetExpress App.
-     * 5. Número máximo de envíos por pasajero.
-     * 6. Nombre del fichero CSV que contiene la lista de puertos espaciales de PlanetExpress App (tanto para lectura como escritura).
-     * 7. Nombre del fichero CSV que contiene la lista de naves de PlanetExpress App (tanto para lectura como escritura).
-     * 8. Nombre del fichero CSV que contiene la lista de portes de PlanetExpress App (tanto para lectura como escritura).
-     * 9. Nombre del fichero CSV que contiene la lista de clientes de PlanetExpress App (tanto para lectura como escritura).
-     * 10. Nombre del fichero CSV que contiene los envíos adquiridos en PlanetExpress App (tanto para lectura como escritura).
-     * En el caso de que no se reciban exactamente estos argumentos, el programa mostrará el siguiente mensaje
-     * y concluirá la ejecución del mismo: `Número de argumentos incorrecto`.
+     *             1. Número máximo de puertos espaciales que tendrá la lista de puertos espaciales de PlanetExpress App.
+     *             2. Número máximo de naves que tendrá la lista de naves de PlanetExpress App.
+     *             3. Número máximo de portes que tendrá la lita de portes de PlanetExpress App.
+     *             4. Número máximo de clientes que tendrá la lista de clientes de PlanetExpress App.
+     *             5. Número máximo de envíos por pasajero.
+     *             6. Nombre del fichero CSV que contiene la lista de puertos espaciales de PlanetExpress App (tanto para lectura como escritura).
+     *             7. Nombre del fichero CSV que contiene la lista de naves de PlanetExpress App (tanto para lectura como escritura).
+     *             8. Nombre del fichero CSV que contiene la lista de portes de PlanetExpress App (tanto para lectura como escritura).
+     *             9. Nombre del fichero CSV que contiene la lista de clientes de PlanetExpress App (tanto para lectura como escritura).
+     *             10. Nombre del fichero CSV que contiene los envíos adquiridos en PlanetExpress App (tanto para lectura como escritura).
+     *             En el caso de que no se reciban exactamente estos argumentos, el programa mostrará el siguiente mensaje
+     *             y concluirá la ejecución del mismo: `Número de argumentos incorrecto`.
      */
     public static void main(String[] args) {
         if (args.length != 10) {

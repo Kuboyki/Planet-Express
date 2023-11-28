@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -106,11 +109,27 @@ public class ListaNaves {
         ListaNaves listaNaves = new ListaNaves(capacidad);
         Scanner sc = null;
         try {
+            sc = new Scanner(new FileOutputStream("ficheroNaves.csv"));
 
         } catch (Exception e) {
             return null;
-        } finally {
-
+        }
+        //añado excepciones
+        catch(FileNotFoundException e){
+            System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
+        }catch( e){
+            System.out.print("Error de lectura de fichero "+e.getMessage());
+        }catch(IOException e) {
+            System.out.print("Error de escritura en fichero " + e.getMessage());
+        }finally {
+            if (salida != null) {
+                try {
+                    salida.close();
+                } catch (IOException e) {
+                    System.out.println("Error de cierre de fichero "
+                            + e.getMessage());
+                }
+            }
         }
         return listaNaves;
     }
