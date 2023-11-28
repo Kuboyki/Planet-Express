@@ -59,7 +59,9 @@ try{
     salida.println("Código indentificativo GFSC del puerto espacial: "+);
     salida.println("Coordenandas esféricas del puerto espacial: "+);
     salida.println("Número de muelles de carga del puerto espacial: "+);
-    for (int i=0)
+    for (int i=0;i<n){
+
+    }
 }
 
     }
