@@ -15,28 +15,33 @@ public class ListaClientes {
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
-     * @param capacidad
+     * @param capacidad indica numero de espacio que hay en el array o la lista de cliente.
      */
-    public ListaClientes(int capacidad) {
-        
-		
-		
+    public ListaClientes(int capacidad) ;
     }
     // TODO: Devuelve el número de clientes que hay en la lista de clientes
     public int getOcupacion() {
-
+        for(int i=0;i<clientes.length;i++){
+            System.out.println(clientes[i]);
+        }
+        return getOcupacion();
     }
     // TODO: ¿Está llena la lista de clientes?
     public boolean estaLlena() {
+        if(){
 
+        }else{
+
+        }
     }
 	// TODO: Devuelve el cliente dada el indice
     public Cliente getCliente(int i) {
+        System.out.println(clientes[i]);
         return null;
     }
     // TODO: Inserta el cliente en la lista de clientes
     public boolean insertarCliente(Cliente cliente) {
-
+        for(int i=)
     }
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
     public Cliente buscarClienteEmail(String email) {
