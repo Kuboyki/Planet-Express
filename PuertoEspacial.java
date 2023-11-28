@@ -10,8 +10,14 @@ public class PuertoEspacial {
     private String nombre;
     private String codigo;
     private double radio;
+    //puertos se determina según la distancia al Sol
+    // en unidades astronómicas UA
     private double azimut;
+    //el ángulo desde el eje positivo x hasta la
+    // proyección del punto en el plano xy
     private double polar;
+    // el ángulo desde el eje positivo z
+    //hasta el puerto
     private int numMuelles;
 
     /**
