@@ -77,11 +77,12 @@ public class PlanetExpress {
      * @param ficheroEnvios
      */
     public void guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
+        //no hay que poner un throws ?????
         listaPuertosEspaciales = ListaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
         listaNaves =ListaNaves.escribirNavesCsv(ficheroNaves);
         listaClientes =ListaClientes.escribirClientesCsv(ficheroClientes);
         listaPortes = ListaPortes.escribirPortesCsv(ficheroPortes);
-        Cliente.getListaEnvios() = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);//como escrbiir los encios??????
+        Cliente.getListaEnvios() = ListaEnvios.escribir(ficheroEnvios, listaPortes,listaClientes);//como escrbiir los encios??????
 
     }
 

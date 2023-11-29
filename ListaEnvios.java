@@ -135,7 +135,7 @@ public class ListaEnvios {
         //añado excepciones para este método
         catch(FileNotFoundException e){
             System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
-        }catch( e){
+        }catch( IOException e){
             System.out.print("Error de lectura de fichero "+e.getMessage());
         }catch(IOException e) {
             System.out.print("Error de escritura en fichero " + e.getMessage());

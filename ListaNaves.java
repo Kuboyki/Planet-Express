@@ -116,7 +116,7 @@ public class ListaNaves {
         }
         //añado excepciones
         catch(FileNotFoundException e){
-            System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
+            System.out.print("Fichero "+fichero.getName()+" no encontrado"+ e.getMessage());
         }catch( e){
             System.out.print("Error de lectura de fichero "+e.getMessage());
         }catch(IOException e) {
