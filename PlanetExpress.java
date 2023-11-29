@@ -59,21 +59,9 @@ public class PlanetExpress {
         listaNaves =ListaNaves.leerNavesCsv(ficheroNaves,maxNaves);
         listaClientes =ListaClientes.leerClientesCsv(ficheroClientes,maxClientes,maxEnviosPorCliente);
         listaPortes = ListaPortes.leerPortesCsv(ficheroPortes,maxPortes,listaPuertosEspaciales,listaNaves);
-        listaEnvios = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);
+        Cliente.getListaEnvios() = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);
 
-/*PrintWriter salida = null;
-try{
-    //Mercury Station;MS-1;0.387;0.0;0.0;4
-    salida= new PrintWriter(ficheroPuertos);
-    salida.println("Nombre del puerto espacial: "+ListaPuertosEspaciales.escribirPuertosEspacialesCsv());
-    salida.println("Código indentificativo GFSC del puerto espacial: "+);
-    salida.println("Coordenandas esféricas del puerto espacial: "+);
-    salida.println("Número de muelles de carga del puerto espacial: "+);
-    salida.println();
-    for (int i=0;i<n){
 
-    }
-}*/
 
     }
 
@@ -89,33 +77,11 @@ try{
      * @param ficheroEnvios
      */
     public void guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
-       PrintWriter salida = null;
-        try {
-            salida = new PrintWriter(new FileOutputStream("ficheroPuertos.csv"));
-            salida = new PrintWriter(new FileOutputStream("ficheroNaves.csv"));
-            salida = new PrintWriter(new FileOutputStream("ficheroPortes.csv"));
-            salida = new PrintWriter(new FileOutputStream("ficheroClientes.csv"));
-            salida = new PrintWriter(new FileOutputStream("ficheroEnvios.csv"));
-//hacerlo por separado , por cada fichero
-            for (int i = 0; i < maxPuertosEspaciales; i++) {
-
-            }
-        } catch(FileNotFoundException e){
-System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
-        }catch( e){
-System.out.print("Error de lectura de fichero "+e.getMessage());
-        }catch(IOException e) {
-           System.out.print("Error de escritura en fichero "+e.getMessage());
-        }finally{
-            if (salida != null) {
-                try {
-                    salida.close();
-                } catch (IOException e) {
-                    System.out.println("Error de cierre de fichero "
-                            + e.getMessage());
-                }
-            }
-        }
+        listaPuertosEspaciales = ListaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
+        listaNaves =ListaNaves.escribirNavesCsv(ficheroNaves);
+        listaClientes =ListaClientes.escribirClientesCsv(ficheroClientes);
+        listaPortes = ListaPortes.escribirPortesCsv(ficheroPortes);
+        Cliente.getListaEnvios() = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);//como escrbiir los encios??????
 
     }
 
