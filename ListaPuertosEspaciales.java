@@ -13,27 +13,42 @@ import java.util.Scanner;
  */
 public class ListaPuertosEspaciales {
     private PuertoEspacial[] lista;
-
+private  int ocupacion=0;
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
      * @param capacidad
      */
     public ListaPuertosEspaciales(int capacidad) {
-        
+        lista = new PuertoEspacial[capacidad];
 		
     }
     // TODO: Devuelve el número de puertos espaciales que hay en la lista
     public int getOcupacion() {
 
+        for (int i=0; i< lista.length; i++) {
+            if (lista[i]==null) {
+ocupacion+=0;
+            }else {
+                ocupacion++;
+            }
+        }
+
+        return ocupacion; //esto se puede pq el propio enunciado dice que devolvamos el número de puertos espaciales
     }
+
     // TODO: ¿Está llena la lista?
     public boolean estaLlena() {
-
+        boolean lleno= false;
+        if (getOcupacion()== lista.length){
+            lleno = true;
+        }
+        return lleno;
     }
+
 	// TODO: Devuelve un puerto espacial dado un indice
     public PuertoEspacial getPuertoEspacial(int i) {
-        return null;
+        return lista[i];
     }
 
     /**
@@ -42,8 +57,24 @@ public class ListaPuertosEspaciales {
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarPuertoEspacial(PuertoEspacial puertoEspacial) {
+        boolean esPosibleRellenar=false;
+        boolean salir =false;
+        if(estaLlena()==false){
+            esPosibleRellenar = true;
 
-        return false;
+            do{
+                for (int i=0; i< lista.length; i++){
+                    if (lista[i] ==null){
+                        salir = true;
+                        lista [i]=puertoEspacial;
+                    }
+                }
+                //recorre la lista hasta haber un espacio en blanco y así , cuando salga del bucle, es decir,
+                // ha enocntrado un sespaico en blanoc, pueda meter ahí el objeto
+            }while (salir = false);
+        }
+
+        return esPosibleRellenar;
     }
 
     /**
@@ -108,11 +139,11 @@ public class ListaPuertosEspaciales {
         //añado excepcione que devuelven null
         catch(FileNotFoundException e){
             System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
-        }catch( e){
+        }catch( e){º
             System.out.print("Error de lectura de fichero "+e.getMessage());
         }catch(IOException e) {
-            System.out.print("Error de escritura en fichero "+e.getMessage());
-        finally {
+            System.out.print("Error de escritura en fichero " + e.getMessage());
+        }finally {
             if (salida != null) {
                 try {
                     salida.close();
