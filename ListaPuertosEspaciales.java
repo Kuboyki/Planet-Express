@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -28,7 +25,7 @@ private  int ocupacion=0;
 
         for (int i=0; i< lista.length; i++) {
             if (lista[i]==null) {
-ocupacion+=0;
+                ocupacion+=0;
             }else {
                 ocupacion++;
             }
@@ -83,8 +80,13 @@ ocupacion+=0;
      * @return Puerto espacial que encontramos o null si no existe
      */
     public PuertoEspacial buscarPuertoEspacial(String codigo) {
-
-        return null;
+        PuertoEspacial puerto= getPuertoEspacial(Integer.parseInt(codigo));
+        if (puerto != null){
+            return puerto;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -97,7 +99,7 @@ ocupacion+=0;
      */
     public PuertoEspacial seleccionarPuertoEspacial(Scanner teclado, String mensaje) {
         PuertoEspacial puertoEspacial = null;
-
+//hay q escribir texto q pregunte qué hay que seleccionar ??
 
         return puertoEspacial;
     }
@@ -131,25 +133,21 @@ ocupacion+=0;
         ListaPuertosEspaciales listaPuertosEspaciales = new ListaPuertosEspaciales(capacidad);
         Scanner sc = null;
         try {
-            sc = new Scanner(new FileOutputStream("ficheroPuertos.csv"));
+            sc = new Scanner (new FileReader("ficheroPuertos.csv"));
 
-        } catch (Exception e) {
-            return null;
-        }
-        //añado excepcione que devuelven null
-        catch(FileNotFoundException e){
-            System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
-        }catch( e){º
+        } catch(FileNotFoundException e){
+            System.out.print("Fichero "+fichero+" no encontrado"+ e.getMessage());
+        }catch(IOException e){
             System.out.print("Error de lectura de fichero "+e.getMessage());
         }catch(IOException e) {
             System.out.print("Error de escritura en fichero " + e.getMessage());
         }finally {
-            if (salida != null) {
+            if (sc != null) {
                 try {
-                    salida.close();
-                } catch (IOException e) {
+                    sc.close();
+                } catch (IOException ex) {
                     System.out.println("Error de cierre de fichero "
-                            + e.getMessage());
+                            + ex.getMessage());
                 }
             }
         }
