@@ -41,6 +41,8 @@ return nombre+ ", " +email;
     }
     // TODO: Devuelve un booleano que indica si se ha alcanzado el número máximo de envíos
     public boolean maxEnviosAlcanzado() {
+        boolean llena = false;
+        if (listaEnvios=)
 
     }
     // TODO: Devuelve un envío en función de su posición
