@@ -99,9 +99,18 @@ private  int ocupacion=0;
      */
     public PuertoEspacial seleccionarPuertoEspacial(Scanner teclado, String mensaje) {
         PuertoEspacial puertoEspacial = null;
-//hay q escribir texto q pregunte qué hay que seleccionar ??
+        System.out.print("Ingrese código de puerto Origen: ");
+        String codigo = teclado.next();
+        do {
+            if (codigo != mensaje) {
+                System.out.print("Código de puerto no encontrado.");
+            }
+            System.out.print("Ingrese código de puerto Origen: ");
+             codigo = teclado.next();
+        }while (codigo != mensaje);
+       puertoEspacial= buscarPuertoEspacial(mensaje);
 
-        return puertoEspacial;
+         return puertoEspacial;
     }
 
     /**
@@ -112,12 +121,21 @@ private  int ocupacion=0;
     public boolean escribirPuertosEspacialesCsv(String nombre) {
         PrintWriter pw = null;
         try {
-
+            pw = new PrintWriter (new FileWriter("ficheroPuertos.csv"));
             return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-
+        }catch(FileNotFoundException e){
+            System.out.print("Fichero "+nombre+" no encontrado"+e.getMessage());
+        } catch(IOException e) {
+            System.out.print("Error de escritura en fichero "+nombre + e.getMessage());
+        }finally {
+            if (pw != null) {
+                try {
+                    pw.close();
+                } catch (IOException ex){
+                    System.out.println("Error de cierre de fichero "
+                            +nombre +ex.getMessage());
+                }
+            }
         }
     }
 
@@ -137,10 +155,8 @@ private  int ocupacion=0;
 
         } catch(FileNotFoundException e){
             System.out.print("Fichero "+fichero+" no encontrado"+ e.getMessage());
-        }catch(IOException e){
-            System.out.print("Error de lectura de fichero "+e.getMessage());
         }catch(IOException e) {
-            System.out.print("Error de escritura en fichero " + e.getMessage());
+            System.out.print("Error de lectura de fichero " + e.getMessage());
         }finally {
             if (sc != null) {
                 try {
