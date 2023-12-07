@@ -64,6 +64,7 @@ private  int ocupacion=0;
                     if (lista[i] ==null){
                         salir = true;
                         lista [i]=puertoEspacial;
+                        //no sería puertoEspacial= new PuertoEspacial(lista[i]) ???????????????????????????????????????'
                     }
                 }
                 //recorre la lista hasta haber un espacio en blanco y así , cuando salga del bucle, es decir,
@@ -120,8 +121,10 @@ private  int ocupacion=0;
      */
     public boolean escribirPuertosEspacialesCsv(String nombre) {
         PrintWriter pw = null;
+        //falta devolver algo, qué devolvemos ????? el pw ???????????''
+
         try {
-            pw = new PrintWriter (new FileWriter("ficheroPuertos.csv"));
+            pw = new PrintWriter (new FileWriter("ficheroPuertos.csv"));//no hay que poner nombre???????????????????
             return true;
         }catch(FileNotFoundException e){
             System.out.print("Fichero "+nombre+" no encontrado"+e.getMessage());

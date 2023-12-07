@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -13,28 +10,39 @@ import java.util.Scanner;
  */
 public class ListaNaves {
     private Nave[] naves;
-
+private int ocupacion=0;
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
      * @param capacidad
      */
     public ListaNaves(int capacidad) {
-        
-		
-		
+        naves = new Nave[capacidad];
+
     }
     // TODO: Devuelve el número de naves que hay en la lista
     public int getOcupacion() {
+        for (int i=0; i< naves.length; i++) {
+            if (naves[i]==null) {
+                ocupacion+=0;
+            }else {
+                ocupacion++;
+            }
+        }
 
+        return ocupacion;
     }
     // TODO: ¿Está llena la lista de naves?
     public boolean estaLlena() {
-
+        boolean lleno= false;
+        if (getOcupacion()== naves.length){
+            lleno = true;
+        }
+        return lleno;
     }
 	// TODO: Devuelve nave dado un indice
     public Nave getNave(int posicion) {
-        return null;
+        return naves[posicion];
     }
 
     /**
@@ -43,9 +51,23 @@ public class ListaNaves {
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarNave(Nave nave) {
+        boolean esPosibleRellenar=false;
+        boolean salir =false;
+        if(estaLlena()==false){
+            esPosibleRellenar = true;
 
+            do{
+                for (int i=0; i< naves.length; i++){
+                    if (naves[i] ==null){
+                        salir = true;
+                        naves [i]=nave;
+                    }
+                }
+                }while (salir = false);
+        }
 
-        return false;
+        return esPosibleRellenar;
+
     }
     /**
      * TODO: Buscamos la nave a partir de la matricula pasada como parámetro
@@ -53,11 +75,23 @@ public class ListaNaves {
      * @return la nave que encontramos o null si no existe
      */
     public Nave buscarNave(String matricula) {
+        Nave nave= getNave(Integer.parseInt(matricula));
 
-        return null;
+        if (nave != null){
+            return nave;
+        }
+        else {
+            return null;
+        }
     }
     // TODO: Muestra por pantalla las naves de la lista con el formato indicado en el enunciado
     public void mostrarNaves() {
+        for (int i=0; i<naves.length; i++){
+            //puedo crear objeto para poder acceder a metodos de la otra clase ???
+            System.out.print(getNave(i).getMarca()+"; "+getNave(i).getModelo()+"; "+getNave(i).getMatricula()+"; "+getNave(i).getColumnas()+"; "+getNave(i).getFilas()+"; "+getNave(i).getAlcance());
+
+        }
+        //Starship;SN15;BFR-15;5;5;66.6846E-5
 
     }
 
@@ -73,10 +107,25 @@ public class ListaNaves {
      * @param alcance
      * @return
      */
+    //Ingrese matrícula de la nave: EC-2
+    //Matrícula de avión no encontrada.
+    //Ingrese matrícula de la nave: Soyuz
+    //Avión seleccionado con alcance insuficiente.
+    //Ingrese matrícula de la nave: MS-19
     public Nave seleccionarNave(Scanner teclado, String mensaje, double alcance) {
         Nave nave = null;
-
-
+        System.out.print("Ingrese matrícula de la nave: ");
+        String codigo = teclado.next();
+        do {
+            if (codigo != mensaje) {
+                System.out.print("Matrícula de avión no encontrada.");
+            } else if (buscarNave(codigo).getAlcance() != alcance) {
+                System.out.print("Avión seleccionado con alcance insuficiente.");
+            }
+            System.out.print("Ingrese matrícula de la nave: ");
+            codigo = teclado.next();
+        }while (codigo != mensaje || buscarNave(codigo).getAlcance() !=alcance);
+        nave= buscarNave(mensaje);
         return nave;
     }
 
@@ -87,14 +136,25 @@ public class ListaNaves {
      * @return
      */
     public boolean escribirNavesCsv(String nombre) {
+        //falta devolver algo, qué devolvemos ????? el pw ???????????''
         PrintWriter pw = null;
         try {
+            pw = new PrintWriter (new FileWriter("ficheroNaves.csv")); //no hay que poner nombre???
 
             return true;
-        } catch (Exception e) {
-            return false;
-        } finally {
-
+        }catch(FileNotFoundException e){
+            System.out.print("Fichero "+nombre+" no encontrado"+e.getMessage());
+        } catch(IOException e) {
+            System.out.print("Error de escritura en fichero "+nombre + e.getMessage());
+        }finally {
+            if (pw != null) {
+                try {
+                    pw.close();
+                } catch (IOException ex){
+                    System.out.println("Error de cierre de fichero "
+                            +nombre +ex.getMessage());
+                }
+            }
         }
     }
 
@@ -109,22 +169,17 @@ public class ListaNaves {
         ListaNaves listaNaves = new ListaNaves(capacidad);
         Scanner sc = null;
         try {
-            sc = new Scanner(new FileOutputStream("ficheroNaves.csv"));
+            sc = new Scanner(new FileReader("ficheroNaves.csv"));
 
-        } catch (Exception e) {
-            return null;
-        }
-        //añado excepciones
-        catch(FileNotFoundException e){
-            System.out.print("Fichero "+fichero.getName()+" no encontrado"+ e.getMessage());
-        }catch( e){
-            System.out.print("Error de lectura de fichero "+e.getMessage());
+            //añado excepciones
+        }catch(FileNotFoundException e){
+            System.out.print("Fichero "+fichero+" no encontrado"+ e.getMessage());
         }catch(IOException e) {
-            System.out.print("Error de escritura en fichero " + e.getMessage());
+            System.out.print("Error de lectura de fichero "+e.getMessage());
         }finally {
-            if (salida != null) {
+            if (sc != null) {
                 try {
-                    salida.close();
+                    sc.close();
                 } catch (IOException e) {
                     System.out.println("Error de cierre de fichero "
                             + e.getMessage());

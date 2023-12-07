@@ -77,7 +77,8 @@ public class PuertoEspacial {
      * @return ejemplo -> "Gaia Galactic Terminal(GGT), en (1.0 90.0 0.0), con 8 muelles" (Radio, Azimut, Polar)
      */
     public String toString() {
-        return " ";
+//NO SÉ SI ESTÁ BIEN ASÍ????????????????????'-NO SÉ QUE SIGNIFICA CADA COSA
+        return nombre+", en ("+codigo+"), con "+numMuelles+" muelles ("+radio+", "+azimut+", "+polar;
     }
 
     /**
@@ -85,6 +86,8 @@ public class PuertoEspacial {
      * @return ejemplo -> "Gaia Galactic Terminal (GGT)"
      */
     public String toStringSimple() {
-        return " ";
+        //COM SABEMOS EL NOMBRE DEL AEROPUERTO??O SOLO WS NOMBRE????
+        //lo que va entree paréntesis, q es ???
+        return nombre;
     }
 }
