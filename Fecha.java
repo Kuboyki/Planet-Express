@@ -12,6 +12,7 @@ public class Fecha {
     /**
      * Meses del año.
      */
+
     enum Meses { ENERO, FEBRERO, MARZO, ABRIL, MAYO, JUNIO, JULIO, AGOSTO, SEPTIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE }
     /**
      * Primer año para fecha válida.
@@ -208,6 +209,7 @@ public class Fecha {
      * @return true si la fecha es anterior a la pasada como argumento, false en caso contrario
      */
     public boolean anterior(Fecha fecha) {
+        //aquí no hay que ponerlo en el fomato dd/mm/aa?????????????????
         String thisString = "";
         String fechaString = "";
         if (hora >= 0 && fecha.hora >= 0){
