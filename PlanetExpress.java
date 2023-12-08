@@ -21,6 +21,9 @@ public class PlanetExpress {
     private ListaNaves listaNaves;
     private ListaClientes listaClientes;
     private ListaPortes listaPortes;
+    //creo una variable de tipo
+    private ListaEnvios listaEnvios;
+
 
 
     /**
@@ -59,7 +62,7 @@ public class PlanetExpress {
         listaNaves =ListaNaves.leerNavesCsv(ficheroNaves,maxNaves);
         listaClientes =ListaClientes.leerClientesCsv(ficheroClientes,maxClientes,maxEnviosPorCliente);
         listaPortes = ListaPortes.leerPortesCsv(ficheroPortes,maxPortes,listaPuertosEspaciales,listaNaves);
-        Cliente.getListaEnvios() = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);
+       = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);
 
 
 
@@ -82,7 +85,7 @@ public class PlanetExpress {
         listaNaves =ListaNaves.escribirNavesCsv(ficheroNaves);
         listaClientes =ListaClientes.escribirClientesCsv(ficheroClientes);
         listaPortes = ListaPortes.escribirPortesCsv(ficheroPortes);
-        Cliente.getListaEnvios() = ListaEnvios.escribir(ficheroEnvios, listaPortes,listaClientes);//como escrbiir los encios??????
+        = ListaEnvios.escribirEn(ficheroEnvios, listaPortes,listaClientes);//como escrbiir los envios??????
 
     }
 
@@ -143,7 +146,14 @@ public class PlanetExpress {
      * @return opción seleccionada
      */
     public static int menu(Scanner teclado) {
-
+        System.out.println("1.  Alta de Porte.");
+        System.out.println("2. Alta de Cliente.");
+        System.out.println("3. Buscar Porte.");
+        System.out.println("4. Mostrar envíos de un cliente.");
+        System.out.println("5. Generar lista de envíos.");
+        System.out.println("0. Salir.");
+//qué poner en la parte donde se supone que hay que poner un mensaje????????''
+        return Utilidades.leerNumero (teclado,0, 5);
     }
 
     /**
@@ -196,7 +206,7 @@ public class PlanetExpress {
                     break;
             }
         } while (opcion != 0);
-
+guardarDatos()
 
     }
 }
