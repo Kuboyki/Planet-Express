@@ -37,41 +37,38 @@ public class Cliente {
     }
     // TODO: Texto que debe generar: Zapp Brannigan, zapp.brannigan@dop.gov
     public String toString() {
-return nombre+ ", " +email;
+        return (nombre+" "+apellidos+", "+email);
     }
     // TODO: Devuelve un booleano que indica si se ha alcanzado el número máximo de envíos
     public boolean maxEnviosAlcanzado() {
-        boolean llena = false;
-        if (listaEnvios=)
-
+        return listaEnvios.estaLlena();
     }
     // TODO: Devuelve un envío en función de su posición
     public Envio getEnvio(int i) {
-
+        return listaEnvios.getEnvio(i);
     }
     public ListaEnvios getListaEnvios() {
         return listaEnvios;
     }
     // TODO: Añade un envío al cliente
     public boolean aniadirEnvio(Envio envio) {
-
+        return listaEnvios.insertarEnvio(envio);
     }
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
     }
     // TODO: Elimina el envío de la lista de envíos del pasajero
     public boolean cancelarEnvio(String localizador) {
-
+        return listaEnvios.eliminarEnvio(localizador);
     }
     public void listarEnvios() {
         listaEnvios.listarEnvios();
     }
     // Encapsula la funcionalidad seleccionarEnvio de ListaEnvios
+    // Que es esto de encapsula creo que no lo hemos dado.
     public Envio seleccionarEnvio(Scanner teclado, String mensaje) {
         return listaEnvios.seleccionarEnvio(teclado, mensaje);
     }
-
-
     /**
      * TODO: Método estático para crear un nuevo cliente "no repetido", se pide por teclado los datos necesarios
      * al usuario en el orden y con los textos indicados en los ejemplos de ejecución del enunciado
@@ -81,20 +78,24 @@ return nombre+ ", " +email;
      * @param maxEnvios
      * @return Cliente
      */
+
+    // me falta la parte del que se repita
     public static Cliente altaCliente(Scanner teclado, ListaClientes clientes, int maxEnvios) {
-
-
-
-
+        System.out.println("Nombre: ");
+        String nombre = teclado.nextLine();
+        System.out.println("Apellidos: ");
+        String apellidos = teclado.nextLine();
+        System.out.println("Email: ");
+        String email = teclado.nextLine();
         return new Cliente(nombre, apellidos, email, maxEnvios);
     }
-
-
     /**
      * TODO: Metodo para comprobar que el formato de email introducido sea correcto
      * @param email
      * @return
      */
+
+    //no comprendo la idea de que sea correcto: el formato?
     public static boolean correctoEmail(String email) {
         return false;
     }

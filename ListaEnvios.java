@@ -10,26 +10,39 @@ import java.util.Scanner;
  */
 public class ListaEnvios {
     private Envio[] envios;
+
+    private int ocupacion = 0;
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
      * @param capacidad
      */
     public ListaEnvios(int capacidad) {
-		
+		this.envios= new Envio[capacidad];
 		
     }
     // TODO: Devuelve el número de envíos que hay en la lista
     public int getOcupacion() {
-
+        for (int i = 0; i < envios.length; i++) {
+            if (envios[i] != null){
+                ocupacion++;
+            }
+        }
+        return ocupacion;
     }
     // TODO: ¿Está llena la lista de envíos?
     public boolean estaLlena() {
-
+        boolean hayhueco = false;
+        for(int i = 0;i< envios.length;i++){
+            if(envios[i]==null){
+                hayhueco = true;
+            }
+        }
+        return hayhueco;
     }
 	//TODO: Devuelve el envio dado un indice
     public Envio getEnvio(int i) {
-        return null;
+        return envios[i-1];
     }
 
     /**
@@ -38,7 +51,15 @@ public class ListaEnvios {
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarEnvio(Envio envio) {
-
+        estaLlena();
+        if(estaLlena()==true){
+            for(int i=0;i< envios.length;i++){
+                if (envios[i]==null){
+                    envios[i]=envio;
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -48,8 +69,11 @@ public class ListaEnvios {
      * @return el envio que encontramos o null si no existe
      */
     public Envio buscarEnvio(String localizador) {
-
-
+        for (int i = 0;i< envios.length;i++) {
+            if (envios[i].getLocalizador().equals(localizador)) {
+                return envios[i];
+            }
+        }
         return null;
     }
 
@@ -61,18 +85,29 @@ public class ListaEnvios {
      * @return el envio que encontramos o null si no existe
      */
     public Envio buscarEnvio(String idPorte, int fila, int columna) {
-
-
+        for(int i=0;i<envios.length;i++){
+            if(envios[i].getPorte().equals(idPorte)){
+                if(envios[i].getFila()==fila){
+                    if(envios[i].getColumna()==columna){
+                        return envios[i];
+                    }
+                }
+            }
+        }
         return null;
     }
-
     /**
      * TODO: Eliminamos un envio a través del localizador pasado por parámetro
      * @param localizador
      * @return True si se ha borrado correctamente, false en cualquier otro caso
      */
     public boolean eliminarEnvio (String localizador) {
-
+        for(int i = 0;i< envios.length;i++){
+            if(envios[i].getLocalizador().equals(localizador)){
+                envios[i]=null;
+                return true;
+            }
+        }
         return false;
     }
 
@@ -80,10 +115,12 @@ public class ListaEnvios {
      * TODO: Muestra por pantalla los Envios de la lista, con el formato que aparece
      * en el enunciado
      */
+    // creo que me falta por completar el metodo
     public void listarEnvios() {
-
+        for(int i=0;i< envios.length;i++){
+            envios[i].toString();
+        }
     }
-
     /**
      * TODO: Permite seleccionar un Envio existente a partir de su localizador, usando el mensaje pasado como argumento
      *  para la solicitud y siguiendo el orden y los textos mostrados en el enunciado.
@@ -92,7 +129,10 @@ public class ListaEnvios {
      * @param mensaje
      * @return
      */
+    // no comprendo mucho la idea de este enunciado
     public Envio seleccionarEnvio(Scanner teclado, String mensaje) {
+        for(int i=0;i< envios.length;i++){
+        }
         Envio envio = null;
 
 

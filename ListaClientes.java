@@ -21,14 +21,12 @@ public class ListaClientes {
      * @param capacidad indica numero de espacio que hay en el array o la lista de cliente.
      */
     public ListaClientes(int capacidad) {
-    clientes = new Cliente[capacidad];
+        this.clientes = new Cliente[capacidad];
     }
     // TODO: Devuelve el número de clientes que hay en la lista de clientes
     public int getOcupacion() {
         for(int i=0;i<clientes.length;i++){
-            if(clientes[i]==null){
-                ocupacion+=0;
-            }else{
+            if(clientes[i]!=null){
                 ocupacion++;
             }
         }
@@ -62,11 +60,29 @@ public class ListaClientes {
         }
         return llena;
     }
+    /*public boolean insertarCliente(Cliente cliente) {
+        estaLlena();
+        if(estaLlena()==true){
+            for(int i=0;i<clientes.length;i++){
+                if (clientes[i]==null){
+                    clientes[i]=cliente;
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+     */
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
     public Cliente buscarClienteEmail(String email) {
-
-    }return
-
+        for(int i=0;i<clientes.length;i++){
+            if(clientes[i].getEmail().equals(email)){
+                return clientes[i];
+            }
+        }
+        return null;
+    }
     /**
      * TODO: Método para seleccionar un Cliente existente a partir de su email, usando el mensaje pasado como argumento
      *  para la solicitud y, siguiendo el orden y los textos mostrados en el enunciado.
@@ -75,14 +91,19 @@ public class ListaClientes {
      * @param mensaje
      * @return
      */
+    //Error de no comprender el el enunciado y del ejemplo del enunciado.
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
+        String email = teclado.nextLine();
+        do{
+            buscarClienteEmail(email);
+                if (buscarClienteEmail(email)==null){
+                    System.out.println("Email no encontrado.");
+                }
+        }while (buscarClienteEmail(email)!=null);
         Cliente cliente = null;
-
-
-
         return cliente;
     }
-
+    // No entiendo la parte de fichero hay que preguntar y hacer lo en clase.
     /**
      * TODO: Método para guardar la lista de clientes en un fichero .csv, sobreescribiendo la información del mismo
      *  fichero
@@ -91,10 +112,7 @@ public class ListaClientes {
      */
     public boolean escribirClientesCsv(String fichero) {
 
-
         try {
-
-
 
         } catch (FileNotFoundException e) {
             return false;

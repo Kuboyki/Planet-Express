@@ -19,6 +19,7 @@ public class Envio {
     private int columna;
     private double precio;
 
+    private int huecos;
     /**
      * Constructor of the class
      *
@@ -36,6 +37,7 @@ public class Envio {
         this.fila = fila;
         this.columna = columna;
         this.precio = precio;
+        this.huecos = fila*columna;
     }
     public String getLocalizador() {
         return localizador;
@@ -55,17 +57,16 @@ public class Envio {
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
         return "";
-    }
+    } // que es que no me lo aclara
     public double getPrecio() {
         return precio;
     }
     //TODO: Texto que debe generar: Envío PM1111AAAABBBBC para Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05) en hueco 6C por 13424,56 SSD
-    public String toString() {
-
+    public String toString() { // no entiendo donde saco la fecha para esto?
+        return "Envio "+localizador+" para Porte "+porte+" de ";
     }
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
-    public boolean cancelar() {
-
+    public boolean cancelar() { // como borror y que quiere que borre
     }
 
     /**
