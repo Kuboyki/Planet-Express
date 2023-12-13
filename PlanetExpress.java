@@ -146,14 +146,14 @@ public class PlanetExpress {
      * @return opción seleccionada
      */
     public static int menu(Scanner teclado) {
-        System.out.println("1.  Alta de Porte.");
+        System.out.println("1. Alta de Porte.");
         System.out.println("2. Alta de Cliente.");
         System.out.println("3. Buscar Porte.");
         System.out.println("4. Mostrar envíos de un cliente.");
         System.out.println("5. Generar lista de envíos.");
         System.out.println("0. Salir.");
 //qué poner en la parte donde se supone que hay que poner un mensaje????????''
-        return Utilidades.leerNumero (teclado,0, 5);
+        return Utilidades.leerNumero (teclado,"Seleccione opción: ",0, 5);
     }
 
     /**

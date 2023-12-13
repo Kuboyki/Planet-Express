@@ -9,7 +9,7 @@ import java.util.Scanner;
  * @version     1.0
  */
 public class ListaNaves {
-    private Nave[] naves;
+    private final Nave[] naves;
 private int ocupacion=0;
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
@@ -34,10 +34,7 @@ private int ocupacion=0;
     }
     // TODO: ¿Está llena la lista de naves?
     public boolean estaLlena() {
-        boolean lleno= false;
-        if (getOcupacion()== naves.length){
-            lleno = true;
-        }
+        boolean lleno= getOcupacion() == naves.length;
         return lleno;
     }
 	// TODO: Devuelve nave dado un indice
@@ -51,9 +48,9 @@ private int ocupacion=0;
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarNave(Nave nave) {
-        boolean esPosibleRellenar=false;
-        boolean salir =false;
-        if(estaLlena()==false){
+        boolean esPosibleRellenar = false;
+        boolean salir = false;
+        if(!estaLlena()){
             esPosibleRellenar = true;
 
             do{
@@ -63,7 +60,7 @@ private int ocupacion=0;
                         naves [i]=nave;
                     }
                 }
-                }while (salir = false);
+                }while (salir==false); // se puede !salir ?????
         }
 
         return esPosibleRellenar;
@@ -77,19 +74,12 @@ private int ocupacion=0;
     public Nave buscarNave(String matricula) {
         Nave nave= getNave(Integer.parseInt(matricula));
 
-        if (nave != null){
-            return nave;
-        }
-        else {
-            return null;
-        }
+        return nave;
     }
     // TODO: Muestra por pantalla las naves de la lista con el formato indicado en el enunciado
     public void mostrarNaves() {
         for (int i=0; i<naves.length; i++){
-            //puedo crear objeto para poder acceder a metodos de la otra clase ???
-            System.out.print(getNave(i).getMarca()+"; "+getNave(i).getModelo()+"; "+getNave(i).getMatricula()+"; "+getNave(i).getColumnas()+"; "+getNave(i).getFilas()+"; "+getNave(i).getAlcance());
-
+            System.out.println(getNave(i).getMarca()+"; "+getNave(i).getModelo()+"; "+getNave(i).getMatricula()+"; "+getNave(i).getColumnas()+"; "+getNave(i).getFilas()+"; "+getNave(i).getAlcance());
         }
         //Starship;SN15;BFR-15;5;5;66.6846E-5
 
@@ -136,26 +126,27 @@ private int ocupacion=0;
      * @return
      */
     public boolean escribirNavesCsv(String nombre) {
-        //falta devolver algo, qué devolvemos ????? el pw ???????????''
         PrintWriter pw = null;
+        boolean close=false;
         try {
             pw = new PrintWriter (new FileWriter("ficheroNaves.csv")); //no hay que poner nombre???
-
+close=true;
             return true;
         }catch(FileNotFoundException e){
             System.out.print("Fichero "+nombre+" no encontrado"+e.getMessage());
-        } catch(IOException e) {
-            System.out.print("Error de escritura en fichero "+nombre + e.getMessage());
-        }finally {
+        } catch (IOException e) {
+            if ( close==false) {
+                System.out.println("Error de cierre de fichero "
+                        + e.getMessage());
+            }else{
+                System.out.print("Error de escritura en fichero " + e.getMessage());
+            }
+        } finally {
             if (pw != null) {
-                try {
-                    pw.close();
-                } catch (IOException ex){
-                    System.out.println("Error de cierre de fichero "
-                            +nombre +ex.getMessage());
-                }
+                pw.close();
             }
         }
+        return false;
     }
 
 
@@ -168,22 +159,23 @@ private int ocupacion=0;
     public static ListaNaves leerNavesCsv(String fichero, int capacidad) {
         ListaNaves listaNaves = new ListaNaves(capacidad);
         Scanner sc = null;
+        boolean close=false;
         try {
             sc = new Scanner(new FileReader("ficheroNaves.csv"));
-
+close=true;
             //añado excepciones
         }catch(FileNotFoundException e){
             System.out.print("Fichero "+fichero+" no encontrado"+ e.getMessage());
-        }catch(IOException e) {
-            System.out.print("Error de lectura de fichero "+e.getMessage());
+        }  catch (IOException e) {
+        if ( close==false) {
+            System.out.println("Error de cierre de fichero "
+                    + e.getMessage());
+        }else{
+            System.out.print("Error de lectura de fichero " + e.getMessage());
+        }
         }finally {
             if (sc != null) {
-                try {
-                    sc.close();
-                } catch (IOException e) {
-                    System.out.println("Error de cierre de fichero "
-                            + e.getMessage());
-                }
+                sc.close();
             }
         }
         return listaNaves;
