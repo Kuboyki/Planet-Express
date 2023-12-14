@@ -99,51 +99,21 @@ public class Utilidades {
         int dia;
         int mes;
         int anio;
-//com diferencias que el mensaje es para dias o el mensaje es para mes o anio????????????'''
+        System.out.print(mensaje); //por ejemplo: fecha de salida
+        // imprime mensaje que introduces en el main
+
         //dia
-        do {
-            System.out.print(mensaje);//"Ingrese día: "
-            dia=teclado.nextInt();
-        }while(dia<=0 || dia>31);
+        dia = leerNumero(teclado, "Ingrese día: ", 1, 31);
 
         //mes
-        if (dia ==31) {
-            do {
-                System.out.print(mensaje);//"Ingrese mes: "
-                mes=teclado.nextInt();
+        mes = leerNumero(teclado, "Ingrese mes: ", 1, 12);
 
-            } while (mes != 1 || mes !=3|| mes != 5|| mes != 7|| mes != 8|| mes != 10|| mes != 12);
-            //meses con dia 31: Enero, Marzo, Mayo, Julio, Agosto , Octubre, Diciembre
-        }else if(dia==30){
-            do {
-                System.out.print(mensaje);//"Ingrese mes: "
-                mes=teclado.nextInt();
+        //hay que hacer lo de que pasa un año ????
+        //año
+        anio = leerNumero(teclado, "Ingrese año: ", 1900, 3000);
+        //como lo pone en la clase fecha
 
-            } while (mes!=4 ||mes!=6||mes!=9||mes!=11 );
-            //meses con dia 30 (Abril, Junio, Septiembre, Noviembre)
-        }else if(dia==29){
-            do {
-                System.out.print(mensaje);//"Ingrese mes: "
-                mes=teclado.nextInt();
-            } while (mes ==2 );
-            //El único mes sin día 29 es febrero
-        }else if(dia<=28) {
-            do {
-                System.out.print(mensaje);//"Ingrese mes: "
-                mes = teclado.nextInt();
-            } while (mes <= 0 || mes > 12);
-            //todos los meses tienen dia 28 o menos
-
-
-            //no valen años bisiestos, no???????????
-            //son los años de 2023 para delante, no??????
-            //hay que hacer lo de que pasa un año ???????
-            do {
-                System.out.print(mensaje);//"Ingrese año: "
-                anio = teclado.nextInt();
-            } while (anio < 2023);
-
-            return new Fecha(dia, mes, anio);
+        return new Fecha(dia, mes, anio);
     }
 
 
@@ -162,32 +132,19 @@ public class Utilidades {
         int hora;
         int minuto;
         int segundo;
-    leerFecha(teclado, mensaje);
-    //com diferencias el mensaje ????????, como saco las diferentes variables ???o tengo que volver a hacer el metodo de antes ??????
 
-        System.out.print("Introduzca la fecha de salida: ");
+        //hora
+        hora = leerNumero(teclado, "Ingrese hora: ", 0, 24);
+        //se puede poner así o hay que llamar al enum????
 
-            //hora
-            do {
-                System.out.print(mensaje);//"Ingrese hora: "
-                hora = teclado.nextInt();
-            } while (hora < 0 || hora > 24);
-            //se puede poner así o hay que llamar al enum????
+        //minutos
+        minuto = leerNumero(teclado, "Ingrese minuto: ", 0, 60);
 
-            //minutos
-            do {
-                System.out.print(mensaje);//"Ingrese minuto: "
-                minuto = teclado.nextInt();
-            } while (minuto < 0 || minuto > 60);
+        //segundo
+        segundo = leerNumero(teclado, "Ingrese segundo: ", 0, 60);
 
-            //segundo
-            do {
-                System.out.print(mensaje);//"Ingrese segundo: "
-                segundo = teclado.nextInt();
-            } while (segundo < 0 || segundo > 60);
-        }
+        return new Fecha(leerFecha(teclado, mensaje).getDia(), leerFecha(teclado, mensaje).getMes(), leerFecha(teclado, mensaje).getAnio(), hora, minuto, segundo);
 
-        return new Fecha(dia, mes, anio, hora, minuto, segundo);
     }
 
     /**
@@ -202,3 +159,5 @@ public class Utilidades {
         return teclado.next();
     }
 }
+
+

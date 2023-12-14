@@ -67,7 +67,6 @@ public class PuertoEspacial {
     public double distancia(PuertoEspacial destino) {
         // TODO: Para calcular la distancia entre dos Puertos Espaciales, se transforman sus coordenadas esféricas a cartesianas
         //coordenadas cartesianas del objeto de tipo PuestoEspacial que recibe el mensaje
-//hay que usar el metodo seleccionarPuertoEspacial de ListaPuertosEspaciales para buscar dicho puerto ?????'
         double x1=getRadio()*Math.sin(getAzimut())*Math.cos(getPolar());
         double y1= getRadio()*Math.sin(getAzimut())*Math.sin(getPolar());
         double z1 = getRadio()* Math.cos(getAzimut());
@@ -78,9 +77,8 @@ public class PuertoEspacial {
         double z2 = destino.getRadio()* Math.cos(destino.getAzimut());
 
         // TODO: Una vez se tienen las coordenadas cartesianas, basta con calcular la distancia euclídea entre ellas:
-        double distancia= Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2) + Math.pow((z2-z1),2));
 
-        return  distancia;
+        return  Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2) + Math.pow((z2-z1),2));
     }
 
     /**
@@ -88,7 +86,6 @@ public class PuertoEspacial {
      * @return ejemplo -> "Gaia Galactic Terminal(GGT), en (1.0 90.0 0.0), con 8 muelles" (Radio, Azimut, Polar)
      */
     public String toString() {
-        //GGT es un codigo o son las iniciales del nombre , como lo he puesto en toStringSimple ???????????????????'
         return getNombre()+", en ( "+getCodigo()+"), en ("+getRadio()+", "+getAzimut()+", "+getPolar()+"), con "+getMuelles()+" muelles ";
     }
 
@@ -97,7 +94,6 @@ public class PuertoEspacial {
      * @return ejemplo -> "Gaia Galactic Terminal (GGT)"
      */
     public String toStringSimple() {
-        //como hago para que por cada palabra me coja la inicial ?? pq así solo me cogería la primera G
         return getNombre() + "("+getCodigo()+")";
 
     }

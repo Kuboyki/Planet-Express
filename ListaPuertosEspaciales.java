@@ -164,9 +164,16 @@ return false;
         Scanner sc = null;
         boolean close=false;
         try {
-            sc = new Scanner(new FileReader("ficheroPuertos.csv"));
+            sc = new Scanner(new FileReader(fichero));
+            String cadena;
+            while (sc.hasNextLine()) {
+                cadena = sc.nextLine();
+                System.out.println(cadena);
+            }
             sc.close();
             close=true;
+
+
 
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
