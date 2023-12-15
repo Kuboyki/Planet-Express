@@ -122,7 +122,7 @@ public class ListaEnvios {
         }
     }
     /**
-     * TODO: Permite seleccionar un Envio existente a partir de su localizador, usando el mensaje pasado como argumento
+     * TODO: Permite seleccionar un Envio existente a partir de su (localizador), usando el mensaje pasado como argumento
      *  para la solicitud y siguiendo el orden y los textos mostrados en el enunciado.
      *  La función solicita repetidamente hasta que se introduzca un localizador correcto
      * @param teclado
@@ -131,16 +131,17 @@ public class ListaEnvios {
      */
     // no comprendo mucho la idea de este enunciado
     public Envio seleccionarEnvio(Scanner teclado, String mensaje) {
-        for(int i=0;i< envios.length;i++){
+        while (true){
+            System.out.println(mensaje);
+            System.out.println("Seleccione un envio: ");
+            String localizador = teclado.nextLine();
+            Envio envio = buscarEnvio(localizador);
+            if(envio == null){
+                System.out.println("Localizador incorrecto");
+            }
+            return envio;
         }
-        Envio envio = null;
-
-
-        return envio;
     }
-
-
-
     /**
      * TODO: Añade los Envios al final de un fichero CSV, SIN SOBREESCRIBIR la información
      * @param fichero
@@ -156,7 +157,6 @@ public class ListaEnvios {
         } finally {
 
         }
-    }
 
     /**
      * TODO: Lee los Envios del fichero CSV y los añade a las listas de sus respectivos Portes y Clientes

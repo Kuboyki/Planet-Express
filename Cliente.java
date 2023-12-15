@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 /**
  * Description of the class
  *
@@ -78,7 +77,6 @@ public class Cliente {
      * @param maxEnvios
      * @return Cliente
      */
-
     // me falta la parte del que se repita
     public static Cliente altaCliente(Scanner teclado, ListaClientes clientes, int maxEnvios) {
         System.out.println("Nombre: ");
@@ -94,7 +92,6 @@ public class Cliente {
      * @param email
      * @return
      */
-
     //no comprendo la idea de que sea correcto: el formato?
     public static boolean correctoEmail(String email) {
         return false;

@@ -13,7 +13,6 @@ import java.util.Scanner;
  */
 public class ListaPortes {
     private Porte[] portes;
-
     private int ocupacion = 0;
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
@@ -88,19 +87,29 @@ public class ListaPortes {
      * @return
      */
     public ListaPortes buscarPortes(String codigoOrigen, String codigoDestino, Fecha fecha) {
+        for(int i=0; i< portes.length;i++){
+            if(portes[i].getMuelleOrigen()==Integer.parseInt(codigoOrigen)){
+                if((portes[i].getMuelleDestino() == Integer.parseInt(codigoDestino))){
+                    System.out.println("Fecha de Salida.");
+                    if(portes[i].getSalida().equals(fecha)){
+                        return{
+                    System.out.println("Fecha introducido incorrecto."){
+                }else{
+                    System.out.println("Muelle destino introducido incorrecto.");
+                }
+            }else {
+            }
 
-        return listaPortes;
+        }
     }
 
     /**
      * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
      */
     public void listarPortes() {
-        for(int i=0;i< portes.length;i++){
+        for(i = 0; i<portes.length; i++){
             portes[i].toString();
     }
-
-
     /**
      * TODO: Permite seleccionar un Porte existente a partir de su ID, usando el mensaje pasado como argumento para
      *  la solicitud y siguiendo el orden y los textos mostrados en el enunciado, y usando la cadena cancelar para
@@ -112,9 +121,10 @@ public class ListaPortes {
      * @return
      */
     public Porte seleccionarPorte(Scanner teclado, String mensaje, String cancelar) {
-        listarPortes();
+        while (true){
+            System.out.println(mensaje);
+        }
         Porte porte = null;
-
         return porte;
     }
 

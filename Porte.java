@@ -37,7 +37,15 @@ public class Porte {
      * @param precio
      */
     public Porte(String id, Nave nave, PuertoEspacial origen, int muelleOrigen, Fecha salida, PuertoEspacial destino, int muelleDestino, Fecha llegada, double precio) {
-
+    this.id=id;
+    this.nave=nave;
+    this.origen=origen;
+    this.muelleOrigen=muelleOrigen;
+    this.salida=salida;
+    this.destino=destino;
+    this.muelleDestino=muelleDestino;
+    this.llegada=llegada;
+    this.precio=precio;
     }
     public String getID() {
         return id;
@@ -68,21 +76,43 @@ public class Porte {
     }
     // TODO: Devuelve el número de huecos libres que hay en el porte
     public int numHuecosLibres() {
-
+        int huecosLibres = 0;
+        for (int i = 0; i<huecos.length;i++){
+            for(int j = 0;j<huecos.length;j++){
+                if(huecos[i]==null&&huecos[j]==null){
+                    huecosLibres++;
+                }
+            }
+        }
+        return huecosLibres;
     }
     // TODO: ¿Están llenos todos los huecos?
     public boolean porteLleno() {
+     boolean vacio = false;
+        for(int i = 0;i< huecos.length;i++){
+            for (int j = 0;j<huecos.length;j++){
+                if(huecos[i]==null&&huecos[j]==null){
+                    vacio = true;
+                    return vacio;
 
+                }
+            }
+        }
+     return vacio;
     }
     // TODO: ¿Está ocupado el hueco consultado?
     public boolean huecoOcupado(int fila, int columna) {
-
+        boolean lleno = false;
+        if (huecos[fila][columna]==true) {
+            lleno = true;
+            return lleno;
+        } else {
+            return lleno;
+        }
     }
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
     }
-
-
     /**
      * TODO: Devuelve el objeto Envio que corresponde con una fila o columna,
      * @param fila
@@ -144,7 +174,7 @@ public class Porte {
      * @return
      */
     public boolean coincide(String codigoOrigen, String codigoDestino, Fecha fecha) {
-        return ;
+        return true ;
     }
 
 
@@ -158,8 +188,17 @@ public class Porte {
      *     10[ ][ ][ ]
      */
     public void imprimirMatrizHuecos() {
-        System.out.print("  ");
-
+        for (int i = 0;i<huecos.length+1;i++){
+            for(int j = 0;j<huecos.length+1;i++){
+                if(i==0){
+                    if(j==0){
+                        System.out.print("  ");
+                    }
+                    System.out.println(" A ");
+                }
+                System.out.println();
+            }
+        }
     }
 
     /**

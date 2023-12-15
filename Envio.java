@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -19,7 +20,6 @@ public class Envio {
     private int columna;
     private double precio;
 
-    private int huecos;
     /**
      * Constructor of the class
      *
@@ -37,7 +37,6 @@ public class Envio {
         this.fila = fila;
         this.columna = columna;
         this.precio = precio;
-        this.huecos = fila*columna;
     }
     public String getLocalizador() {
         return localizador;
@@ -56,17 +55,23 @@ public class Envio {
     }
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
-        return "";
+        return "para el hueco con fila "+fila+" y columna "+columna;
     } // que es que no me lo aclara
     public double getPrecio() {
         return precio;
     }
     //TODO: Texto que debe generar: Envío PM1111AAAABBBBC para Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05) en hueco 6C por 13424,56 SSD
-    public String toString() { // no entiendo donde saco la fecha para esto?
-        return "Envio "+localizador+" para Porte "+porte+" de ";
+    public String toString() { //SIGUE LOS EJEMPLO DEL PDF.
+        return  "Porte "+porte+" de "+porte.getOrigen()+" "+porte.getMuelleOrigen()+" "+porte.getSalida()+" a "+porte.getDestino()+" M"+porte.getMuelleDestino()+" "+porte.getLlegada();
     }
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
-    public boolean cancelar() { // como borror y que quiere que borre
+    public boolean cancelar() {
+        if(cliente.cancelarEnvio(getLocalizador())==false){
+            porte.buscarEnvio(getLocalizador()).getLocalizador().equals(getLocalizador());
+            cliente.cancelarEnvio(getLocalizador());
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -88,14 +93,6 @@ public class Envio {
      */
     public boolean generarFactura(String fichero) {
         try {
-
-
-
-
-
-
-
-
             return true;
         } catch (FileNotFoundException e) {
             return false;

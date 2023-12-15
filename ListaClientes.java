@@ -14,7 +14,6 @@ import java.util.Scanner;
 public class ListaClientes {
     private Cliente[] clientes;
     private int ocupacion = 0;
-
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
@@ -91,19 +90,20 @@ public class ListaClientes {
      * @param mensaje
      * @return
      */
-    //Error de no comprender el el enunciado y del ejemplo del enunciado.
+    // SON TOTALMENTE DIFERENTE CON EL METODO ANTERIOR
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
-        String email = teclado.nextLine();
-        do{
-            buscarClienteEmail(email);
-                if (buscarClienteEmail(email)==null){
-                    System.out.println("Email no encontrado.");
-                }
-        }while (buscarClienteEmail(email)!=null);
-        Cliente cliente = null;
-        return cliente;
+        while (true){
+            System.out.println(mensaje);
+            System.out.println("Email del cliente: ");
+            String email = teclado.nextLine();
+            Cliente cliente =buscarClienteEmail(email);
+            if(cliente ==null){
+                System.out.println("Email incorrecto");
+            }
+            return cliente;
+        }
     }
-    // No entiendo la parte de fichero hay que preguntar y hacer lo en clase.
+    // No entiendo la parte de fichero hay que preguntar y hacer lo en clase. SOBREESCRIBIR ESTA EN EL TEMA 6 PAG 16
     /**
      * TODO: Método para guardar la lista de clientes en un fichero .csv, sobreescribiendo la información del mismo
      *  fichero
@@ -113,7 +113,6 @@ public class ListaClientes {
     public boolean escribirClientesCsv(String fichero) {
 
         try {
-
         } catch (FileNotFoundException e) {
             return false;
         } finally {
