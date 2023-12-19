@@ -87,88 +87,91 @@ public class ListaPortes {
      * @return
      */
     public ListaPortes buscarPortes(String codigoOrigen, String codigoDestino, Fecha fecha) {
-        for(int i=0; i< portes.length;i++){
-            if(portes[i].getMuelleOrigen()==Integer.parseInt(codigoOrigen)){
-                if((portes[i].getMuelleDestino() == Integer.parseInt(codigoDestino))){
+        for(int i=0; i< portes.length;i++) {
+            if (portes[i].getMuelleOrigen() == Integer.parseInt(codigoOrigen)) {
+                if ((portes[i].getMuelleDestino() == Integer.parseInt(codigoDestino))) {
                     System.out.println("Fecha de Salida.");
-                    if(portes[i].getSalida().equals(fecha)){
-                        return{
-                    System.out.println("Fecha introducido incorrecto."){
-                }else{
-                    System.out.println("Muelle destino introducido incorrecto.");
+                    if (portes[i].getSalida().equals(fecha)) {
+                         System.out.println("Fecha introducido incorrecto.");
+                    } else {
+                        System.out.println("Muelle destino introducido incorrecto.");
+                    }
+                } else {
+
+
                 }
-            }else {
-            }
-
-        }
+            }}
+        ListaPortes  porte = new ListaPortes(portes);
+        return  porte ;
     }
 
-    /**
-     * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
-     */
-    public void listarPortes() {
-        for(i = 0; i<portes.length; i++){
-            portes[i].toString();
-    }
-    /**
-     * TODO: Permite seleccionar un Porte existente a partir de su ID, usando el mensaje pasado como argumento para
-     *  la solicitud y siguiendo el orden y los textos mostrados en el enunciado, y usando la cadena cancelar para
-     *  salir devolviendo null.
-     *  La función solicita repetidamente hasta que se introduzca un ID correcto
-     * @param teclado
-     * @param mensaje
-     * @param cancelar
-     * @return
-     */
-    public Porte seleccionarPorte(Scanner teclado, String mensaje, String cancelar) {
-        while (true){
-            System.out.println(mensaje);
-        }
-        Porte porte = null;
-        return porte;
-    }
+                /**
+                 * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
+                 */
+                public void listarPortes () {
+                    for (i = 0; i < portes.length; i++) {
+                        portes[i].toString();
+                    }
+                }
+                    /**
+                     * TODO: Permite seleccionar un Porte existente a partir de su ID, usando el mensaje pasado como argumento para
+                     *  la solicitud y siguiendo el orden y los textos mostrados en el enunciado, y usando la cadena cancelar para
+                     *  salir devolviendo null.
+                     *  La función solicita repetidamente hasta que se introduzca un ID correcto
+                     * @param teclado
+                     * @param mensaje
+                     * @param cancelar
+                     * @return
+                     */
+                    public Porte seleccionarPorte (Scanner teclado, String mensaje, String cancelar){
+                        while (true) {
+                            System.out.println(mensaje);
+                        }
+                        Porte porte = null;
+                        return porte;
+                    }
 
-    /**
-     * TODO: Ha de escribir la lista de Portes en la ruta y nombre del fichero pasado como parámetro.
-     *  Si existe el fichero, SE SOBREESCRIBE, si no existe se crea.
-     * @param fichero
-     * @return
-     */
-    public boolean escribirPortesCsv(String fichero) {
-        try {
+                    /**
+                     * TODO: Ha de escribir la lista de Portes en la ruta y nombre del fichero pasado como parámetro.
+                     *  Si existe el fichero, SE SOBREESCRIBE, si no existe se crea.
+                     * @param fichero
+                     * @return
+                     */
+                    public boolean escribirPortesCsv (String fichero){
+                        try {
 
-            return true;
-        } catch (FileNotFoundException e) {
-            return false;
-        }
-    }
+                            return true;
+                        } catch (FileNotFoundException e) {
+                            return false;
+                        }
+                    }
 
-    /**
-     * TODO: Genera una lista de Portes a partir del fichero CSV, usando los límites especificados como argumentos para
-     *  la capacidad de la lista
-     * @param fichero
-     * @param capacidad
-     * @param puertosEspaciales
-     * @param naves
-     * @return
-     */
-    public static ListaPortes leerPortesCsv(String fichero, int capacidad, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves) {
-        ListaPortes listaPortes = new ListaPortes(capacidad);
-        try {
-            salida = new PrintWriter(new FileOutputStream("ficheroPortes.csv"));
+                    /**
+                     * TODO: Genera una lista de Portes a partir del fichero CSV, usando los límites especificados como argumentos para
+                     *  la capacidad de la lista
+                     * @param fichero
+                     * @param capacidad
+                     * @param puertosEspaciales
+                     * @param naves
+                     * @return
+                     */
+                    public static ListaPortes leerPortesCsv (String fichero,int capacidad, ListaPuertosEspaciales
+                    puertosEspaciales, ListaNaves naves){
+                        ListaPortes listaPortes = new ListaPortes(capacidad);
+                        try {
+                            salida = new PrintWriter(new FileOutputStream(fichero));
 
-        } catch (Exception e) {
-            return null;
-        }
-        //añado excepciones
-        catch(FileNotFoundException e){
-            System.out.print("Fichero "+fichero.getName()+" no encontrado"+ e.getMessage());
-        }catch( e){
-            System.out.print("Error de lectura de fichero "+e.getMessage());
-        }catch(IOException e) {
-            System.out.print("Error de escritura en fichero " + e.getMessage());
-        }
-        //Sin finally??
-        return listaPortes;
-    }
-}
+                        } catch (Exception e) {
+                            return null;
+                        }
+                        //añado excepciones
+                        catch (FileNotFoundException e) {
+                            System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
+                        } catch (IOException e) {
+                            System.out.print("Error de lectura de fichero " + e.getMessage());
+                        }
+                        //Sin finally??
+                        return listaPortes;
+                    }
+                }
+

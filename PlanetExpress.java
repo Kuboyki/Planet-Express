@@ -59,10 +59,10 @@ public class PlanetExpress {
     public void cargarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
 
         listaPuertosEspaciales = ListaPuertosEspaciales.leerPuertosEspacialesCsv(ficheroPuertos, maxPuertosEspaciales);
-        listaNaves =ListaNaves.leerNavesCsv(ficheroNaves,maxNaves);
+        listaNaves =ListaNaves.leerNavesCsv(ficheroNaves,maxNaves); 
         listaClientes =ListaClientes.leerClientesCsv(ficheroClientes,maxClientes,maxEnviosPorCliente);
         listaPortes = ListaPortes.leerPortesCsv(ficheroPortes,maxPortes,listaPuertosEspaciales,listaNaves);
-       = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);
+      listaEnvios = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);
 
 
 

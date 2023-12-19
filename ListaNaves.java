@@ -140,27 +140,25 @@ public class ListaNaves {
         boolean close = false;
         try {
             pw = new PrintWriter(new FileWriter(nombre)); //crear un objeto PrintWriter de un objeto File
-int cont=0;
-String cadena;
+            int cont = 0;
+            String cadena;
 
-do{
+            do {
 
 
-
-}while(cont != naves.length);//se termina cuando no hay más naves
+            } while (cont != naves.length);//se termina cuando no hay más naves
 //        return  getMarca()+" "+getModelo()+" ("+getMatricula()+"): "+(getFilas()*getColumnas())+ " contenedores, hasta "+getAlcance()+" UA";
-close = true;
+            close = true;
 
             return true;
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + nombre + " no encontrado" + e.getMessage());
         } catch (IOException e) {
-            if (close == false) {
-                System.out.println("Error de cierre de fichero "
-                        + e.getMessage());
-            } else {
+            //if (close == false) {
+                //System.out.println("Error de cierre de fichero "
+                   //     + e.getMessage());}
+
                 System.out.print("Error de escritura en fichero " + e.getMessage());
-            }
         } finally {
             if (pw != null) {
                 pw.close();
@@ -195,14 +193,9 @@ close = true;
             //añado excepciones
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
-        } catch (IOException e) {
-            if (close == false) {
-                System.out.println("Error de cierre de fichero "
-                        + e.getMessage());
-            } else {
-                System.out.print("Error de lectura de fichero " + e.getMessage());
-            }
-        } finally {
+        } catch (IOException e){
+            System.out.print("Error de lectura en fichero " + e.getMessage());
+        }finally {
             if (sc != null) {
                 sc.close();
             }
@@ -210,3 +203,7 @@ close = true;
         return listaNaves;
     }
 }
+// if (close == false) {
+// System.out.println("Error de cierre de fichero "
+//          + e.getMessage());
+//  } else {

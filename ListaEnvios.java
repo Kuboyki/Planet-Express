@@ -167,25 +167,21 @@ public class ListaEnvios {
     public static void leerEnviosCsv(String ficheroEnvios, ListaPortes portes, ListaClientes clientes) {
         Scanner sc = null;
         try {
-            sc = new Scanner(new FileOutputStream("ficheroEnvios.csv"));
+            sc = new Scanner(new FileOutputStream(ficheroEnvios));
 
         } catch (FileNotFoundException e) {
             System.out.println("No se ha encontrado el fichero de envíos");
         }
         //añado excepciones para este método
         catch(FileNotFoundException e){
-            System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
+            System.out.print("Fichero "+ficheroEnvios+" no encontrado"+ e.getMessage());
         }catch( IOException e){
             System.out.print("Error de lectura de fichero "+e.getMessage());
         }catch(IOException e) {
             System.out.print("Error de escritura en fichero " + e.getMessage());
         }finally {
-            if (salida != null) {
-                try {
-                    salida.close();
-                } catch (IOException e) {
-                    System.out.println("Error de cierre de fichero "
-                            + e.getMessage());
+            if (sc != null) {
+                    sc.close();
                 }
             }
         }

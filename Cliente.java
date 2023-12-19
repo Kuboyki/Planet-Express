@@ -36,11 +36,16 @@ public class Cliente {
     }
     // TODO: Texto que debe generar: Zapp Brannigan, zapp.brannigan@dop.gov
     public String toString() {
-        return (nombre+" "+apellidos+", "+email);
+        return (getNombre()+" "+getApellidos()+", "+getEmail());
     }
     // TODO: Devuelve un booleano que indica si se ha alcanzado el número máximo de envíos
     public boolean maxEnviosAlcanzado() {
-        return listaEnvios.estaLlena();
+        if (listaEnvios.estaLlena()==true){
+            return true;
+        }else{
+            return false;
+        }
+       // return listaEnvios.estaLlena();
     }
     // TODO: Devuelve un envío en función de su posición
     public Envio getEnvio(int i) {
@@ -51,6 +56,9 @@ public class Cliente {
     }
     // TODO: Añade un envío al cliente
     public boolean aniadirEnvio(Envio envio) {
+if (maxEnviosAlcanzado()==true){
+    System.out.println("No es posible añadir más envíos"); //esatá bien ????
+} //falta
         return listaEnvios.insertarEnvio(envio);
     }
     public Envio buscarEnvio(String localizador) {
@@ -59,6 +67,7 @@ public class Cliente {
     // TODO: Elimina el envío de la lista de envíos del pasajero
     public boolean cancelarEnvio(String localizador) {
         return listaEnvios.eliminarEnvio(localizador);
+        //Esto hay que modificarlo??????
     }
     public void listarEnvios() {
         listaEnvios.listarEnvios();
@@ -85,7 +94,17 @@ public class Cliente {
         String apellidos = teclado.nextLine();
         System.out.println("Email: ");
         String email = teclado.nextLine();
-        return new Cliente(nombre, apellidos, email, maxEnvios);
+        if (clientes.estaLlena()==true) {
+            System.out.println("No se pueden dar de alta más clientes");
+        }else if(clientes.buscarClienteEmail(email) != null){
+            System.out.println("Este cliente ya existe");
+        }else{
+            new Cliente(nombre, apellidos, email, maxEnvios);
+//insertar cliente en la lista de clientes ???????????
+             System.out.println("Cliente con email "+clientes[i].getEmail()+ "creado correctamente");
+
+        }
+           new Cliente(nombre, apellidos, email, maxEnvios);
     }
     /**
      * TODO: Metodo para comprobar que el formato de email introducido sea correcto
@@ -94,6 +113,12 @@ public class Cliente {
      */
     //no comprendo la idea de que sea correcto: el formato?
     public static boolean correctoEmail(String email) {
-        return false;
+        ListaClientes clientes;
+        boolean correcto=false;
+        if (email= clientes.buscarClienteEmail(email).getNombre()+".planetexpress.com") { //está bien así?????
+            correcto=true;
+        }
+            return correcto;
+
     }
 }

@@ -137,12 +137,12 @@ public class ListaPuertosEspaciales {
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + nombre + " no encontrado" + e.getMessage());
         } catch (IOException e) {
-            if ( closes==false) {
-                System.out.println("Error de cierre de fichero "
-                        + e.getMessage());
-            }else{
+         //   if ( closes==false) {
+         //       System.out.println("Error de cierre de fichero "
+        //                + e.getMessage());
+         //   }else{
                 System.out.print("Error de escritura en fichero " + e.getMessage());
-            }
+
         } finally {
             if (pw != null) {
                 pw.close();
@@ -179,12 +179,12 @@ return false;
             System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
         } catch (IOException e) {
 
-            if ( close==false) {
-                System.out.println("Error de cierre de fichero "
-                        + e.getMessage());
-            }else{
+       //     if ( close==false) {
+       //         System.out.println("Error de cierre de fichero "
+       //                 + e.getMessage());
+       //     }else{
                 System.out.print("Error de lectura de fichero " + e.getMessage());
-            }
+
         } finally {
             if (sc != null) {
                 sc.close();
