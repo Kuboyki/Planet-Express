@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.IllegalFormatCodePointException;
 import java.util.Scanner;
 
 /**
@@ -45,19 +46,18 @@ public class ListaClientes {
     }
     // TODO: Inserta el cliente en la lista de clientes
     public boolean insertarCliente(Cliente cliente) {
-    boolean llena = false;
+    boolean salir = false;
         if(estaLlena()==false){
-           llena = true;
            do{
                for (int i=0;i<clientes.length;i++){
                    if(clientes[i]== null){
                        clientes[i]=cliente;
-                       llena=true;
+                       salir=true;
                    }
                }
-           }while (llena==true);
+           }while (salir==false);
         }
-        return llena;
+        return salir;
     }
     /*public boolean insertarCliente(Cliente cliente) {
         estaLlena();
@@ -75,12 +75,15 @@ public class ListaClientes {
      */
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
     public Cliente buscarClienteEmail(String email) {
+        //IMPORTANTE
+        //he modificado lo de return por encontrdo, no sé si está mejor así o no ---PREGUNTAR
+        Cliente encontrado=null;
         for(int i=0;i<clientes.length;i++){
             if(clientes[i].getEmail().equals(email)){
-                return clientes[i];
+                encontrado= clientes[i]; //return clientes[i];
             }
         }
-        return null;
+        return encontrado ; //return null;
     }
     /**
      * TODO: Método para seleccionar un Cliente existente a partir de su email, usando el mensaje pasado como argumento
@@ -92,16 +95,31 @@ public class ListaClientes {
      */
     // SON TOTALMENTE DIFERENTE CON EL METODO ANTERIOR
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
-        while (true){
+        Utilidades.leerCadena(teclado, "Email del cliente: ");
+        String email = teclado.nextLine();
+        do{
+            if (email != mensaje){
+                System.out.println("Email no encontrado.");
+            }
+            Utilidades.leerCadena(teclado, "Email del cliente: ");
+             email = teclado.nextLine();
+        }while(email != mensaje);
+
+        //QUÉ HACE EL MENSAJE AQUÍ????????---- ME HE OLVIDADO
+
+        return buscarClienteEmail(email);
+
+
+       /* while (true){
             System.out.println(mensaje);
-            System.out.println("Email del cliente: ");
+            Utilidades.leerCadena(teclado, "Email del cliente: ");
             String email = teclado.nextLine();
             Cliente cliente =buscarClienteEmail(email);
             if(cliente ==null){
                 System.out.println("Email incorrecto");
             }
             return cliente;
-        }
+        }*/
     }
     // No entiendo la parte de fichero hay que preguntar y hacer lo en clase. SOBREESCRIBIR ESTA EN EL TEMA 6 PAG 16
     /**
@@ -132,7 +150,7 @@ public class ListaClientes {
     public static ListaClientes leerClientesCsv(String fichero, int capacidad, int maxEnviosPorCliente) {
 
         try {
-            salida = new PrintWriter(new FileOutputStream("ficheroClientes.csv"));
+            salida = new PrintWriter(new FileOutputStream(fichero));
 
         } catch (FileNotFoundException e) {
             return null;

@@ -58,11 +58,11 @@ public class ListaPuertosEspaciales {
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarPuertoEspacial(PuertoEspacial puertoEspacial) {
-        boolean esPosibleRellenar = false;
+        //boolean esPosibleRellenar = false;
         boolean salir = false;
         if (estaLlena() == false) {
             //pq hay algunos metodos que se pueden llamar usando el nombre de la clase y el nombre del metodo (los static) y los demas no ???
-            esPosibleRellenar = true;
+           // esPosibleRellenar = true;
 
             do {
                 for (int i = 0; i < lista.length; i++) {
@@ -76,7 +76,7 @@ public class ListaPuertosEspaciales {
             } while (salir = false);
         }
 
-        return esPosibleRellenar;
+        return salir;//esPosibleRellenar
     }
 
     /**
@@ -104,19 +104,19 @@ public class ListaPuertosEspaciales {
      * @return
      */
     public PuertoEspacial seleccionarPuertoEspacial(Scanner teclado, String mensaje) {
-        PuertoEspacial puertoEspacial = null;
-        System.out.print("Ingrese código de puerto Origen: ");
+        Utilidades.leerCadena(teclado,"Ingrese código de puerto Origen: ");
         String codigo = teclado.next();
         do {
             if (codigo != mensaje) {
                 System.out.print("Código de puerto no encontrado.");
             }
-            System.out.print("Ingrese código de puerto Origen: ");
-            codigo = teclado.next();
+            Utilidades.leerCadena(teclado,"Ingrese código de puerto Origen: ");
+             codigo = teclado.next();
         } while (codigo != mensaje);
-        puertoEspacial = buscarPuertoEspacial(mensaje);
+        buscarPuertoEspacial(mensaje);
 
-        return puertoEspacial;
+        return buscarPuertoEspacial(mensaje);
+
     }
 
     /**

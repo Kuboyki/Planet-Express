@@ -90,11 +90,11 @@ public class Cliente {
      */
     // me falta la parte del que se repita
     public static Cliente altaCliente(Scanner teclado, ListaClientes clientes, int maxEnvios) {
-        System.out.println("Nombre: ");
+        Utilidades.leerCadena(teclado,"Nombre: ");
         String nombre = teclado.nextLine();
-        System.out.println("Apellidos: ");
+        Utilidades.leerCadena(teclado,"Apellidos: ");
         String apellidos = teclado.nextLine();
-        System.out.println("Email: ");
+        Utilidades.leerCadena(teclado,"Email: ");
         String email = teclado.nextLine();
         Cliente nuevoCliente;
         if (clientes.estaLlena()==true) { //si no hay sitio para mas clientes
