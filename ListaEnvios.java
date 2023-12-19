@@ -32,13 +32,18 @@ public class ListaEnvios {
     }
     // TODO: ¿Está llena la lista de envíos?
     public boolean estaLlena() {
-        boolean hayhueco = false;
-        for(int i = 0;i< envios.length;i++){
+        boolean llena = false;
+       /* for(int i = 0;i< envios.length;i++){
             if(envios[i]==null){
-                hayhueco = true;
+                llena = true;
             }
         }
-        return hayhueco;
+        return llena;*/
+        if(getOcupacion()==envios.length){
+            llena = true;
+        }
+        return llena;
+
     }
 	//TODO: Devuelve el envio dado un indice
     public Envio getEnvio(int i) {
@@ -51,7 +56,7 @@ public class ListaEnvios {
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarEnvio(Envio envio) {
-        estaLlena();
+      /*  estaLlena();
         if(estaLlena()==true){
             for(int i=0;i< envios.length;i++){
                 if (envios[i]==null){
@@ -60,7 +65,19 @@ public class ListaEnvios {
                 }
             }
         }
-        return false;
+        return false;*/
+        boolean salir = false;
+        if(estaLlena()==false){
+            do{
+                for (int i=0;i<envios.length;i++){
+                    if(envios[i]== null){
+                        envios[i]=envio;
+                        salir=true;
+                    }
+                }
+            }while (salir==false);
+        }
+        return salir;
     }
 
     /**
@@ -68,14 +85,20 @@ public class ListaEnvios {
      * @param localizador
      * @return el envio que encontramos o null si no existe
      */
-    public Envio buscarEnvio(String localizador) {
+    public Envio buscarEnvio(String localizador) { //no sé si está bien??
+        Envio encontrado = null;
         for (int i = 0;i< envios.length;i++) {
             if (envios[i].getLocalizador().equals(localizador)) {
-                return envios[i];
+               encontrado= envios[i]; //return envios[i];
             }
         }
-        return null;
-    }
+        if (encontrado==null){
+        System.out.println("Localizador incorrecto");
+        }
+        return encontrado; // return null;
+
+    }  //no hay que poner si no se ha enocntrado que no se ha econtrado ???? no hay ejemplo
+
     /**
      * PuertoEspacial puerto = getPuertoEspacial(Integer.parseInt(codigo));
      *         if (puerto != null) {
@@ -93,30 +116,43 @@ public class ListaEnvios {
      * @return el envio que encontramos o null si no existe
      */
     public Envio buscarEnvio(String idPorte, int fila, int columna) {
+        Envio encontrado = null;
         for(int i=0;i<envios.length;i++){
             if(envios[i].getPorte().equals(idPorte)){
                 if(envios[i].getFila()==fila){
                     if(envios[i].getColumna()==columna){
-                        return envios[i];
+                  encontrado=envios[i];   //return envios[i];
                     }
                 }
             }
         }
-        return null;
-    }
+        return  encontrado;//return null;
+    }      //no hay que poner si no se ha enocntrado que no se ha econtrado ???? no hay ejemplo
+
     /**
      * TODO: Eliminamos un envio a través del localizador pasado por parámetro
      * @param localizador
      * @return True si se ha borrado correctamente, false en cualquier otro caso
      */
     public boolean eliminarEnvio (String localizador) {
-        for(int i = 0;i< envios.length;i++){
+       /* for(int i = 0;i< envios.length;i++){
             if(envios[i].getLocalizador().equals(localizador)){
                 envios[i]=null;
                 return true;
             }
         }
-        return false;
+        return false; */
+
+        boolean salir=false;
+        do {
+            for(int i = 0;i< envios.length;i++){
+                if(envios[i].getLocalizador().equals(localizador)){
+                    envios[i]=null;
+                    salir= true;
+                }
+            }
+        }while(salir ==false);
+        return salir;
     }
 
     /**

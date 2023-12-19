@@ -62,7 +62,11 @@ public class Envio {
     }
     //TODO: Texto que debe generar: Envío PM1111AAAABBBBC para Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05) en hueco 6C por 13424,56 SSD
     public String toString() { //SIGUE LOS EJEMPLO DEL PDF.
-        return  "Porte "+porte+" de "+porte.getOrigen()+" "+porte.getMuelleOrigen()+" "+porte.getSalida()+" a "+porte.getDestino()+" M"+porte.getMuelleDestino()+" "+porte.getLlegada();
+int poiscionCliente= ListaClientes.getOcupacion();  //com saber la poscion del cliente?????
+        //return  "Porte "+porte+" de "+porte.getOrigen()+" "+porte.getMuelleOrigen()+" "+porte.getSalida()+" a "+porte.getDestino()+" M"+porte.getMuelleDestino()+" "+porte.getLlegada();
+        return   "Envío "+getCliente().getEnvio(poiscionCliente)+ " para Porte " +getPorte()+" de "GGT M5 "("+getFecha()+ " " +getHora()+ ") a "+CID M1 +" ("+getFecha()+ " " +getHora()+ ") en hueco "+getHueco()+" por "+13424,56 SSD
+//pq para poner ListaEnvios.getEnvio() el metodo tiene que ser static ???
+        //PM0066 es id o nave del puerto ??????
     }
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
     public boolean cancelar() {
@@ -91,7 +95,7 @@ public class Envio {
      *     Hueco: 6C
      *     Precio: 13424,56 SSD
      */
-    public boolean generarFactura(String fichero) {
+    public boolean generarFactura(String fichero) { //opcion 5--generar...
         try {
             return true;
         } catch (FileNotFoundException e) {

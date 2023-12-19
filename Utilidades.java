@@ -99,6 +99,7 @@ public class Utilidades {
         int dia;
         int mes;
         int anio;
+        //mirar clase fecha--año bisisesto
         System.out.print(mensaje); //por ejemplo: fecha de salida
         // imprime mensaje que introduces en el main
 
