@@ -175,16 +175,26 @@ public class ListaEnvios {
      */
     // no comprendo mucho la idea de este enunciado
     public Envio seleccionarEnvio(Scanner teclado, String mensaje) {
-        while (true){
-            System.out.println(mensaje);
-            System.out.println("Seleccione un envio: ");
+        /*while (true){
+           // System.out.println(mensaje);
+            Utilidades.leerCadena(teclado,"Seleccione un envio: ");
             String localizador = teclado.nextLine();
             Envio envio = buscarEnvio(localizador);
-            if(envio == null){
+            if(envio != mensaje){
                 System.out.println("Localizador incorrecto");
             }
             return envio;
-        }
+        }*/
+        Utilidades.leerCadena(teclado,"Seleccione un envio: ");
+        String localizador = teclado.nextLine();
+        do {
+            if (localizador != mensaje) {
+                System.out.println("Localizador incorrecto");
+            }
+            Utilidades.leerCadena(teclado,"Seleccione un envio: ");
+             localizador = teclado.nextLine();
+        } while (localizador != mensaje);
+        return buscarEnvio(mensaje);
     }
     /**
      * TODO: Añade los Envios al final de un fichero CSV, SIN SOBREESCRIBIR la información

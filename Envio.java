@@ -70,12 +70,21 @@ int poiscionCliente= ListaClientes.getOcupacion();  //com saber la poscion del c
     }
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
     public boolean cancelar() {
-        if(cliente.cancelarEnvio(getLocalizador())==false){
+       /* if(cliente.cancelarEnvio(getLocalizador())==false){
             porte.buscarEnvio(getLocalizador()).getLocalizador().equals(getLocalizador());
             cliente.cancelarEnvio(getLocalizador());
             return true;
         }
-        return false;
+        return false;*/
+
+        boolean cancelar = false;
+        String localizador= getLocalizador();
+        cliente.cancelarEnvio(localizador));
+porte.desocuparHueco(localizador);
+         if (cliente.buscarEnvio(localizador) ==null && porte.desocuparHueco(localizador)){
+             cancelar =true;
+         }
+         return cancelar;
     }
 
     /**
