@@ -56,10 +56,12 @@ public class Cliente {
     }
     // TODO: Añade un envío al cliente
     public boolean aniadirEnvio(Envio envio) {
-if (maxEnviosAlcanzado()==true){
-    System.out.println("No es posible añadir más envíos"); //esatá bien ????
-} //falta
-        return listaEnvios.insertarEnvio(envio);
+        if (maxEnviosAlcanzado() == true) {
+            System.out.println("No es posible añadir más envíos");
+        } else if (){ //com se añade un envío al cliente ????????????????????????
+             envio.getCliente().listaEnvios.insertarEnvio(envio);
+        }
+        return
     }
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
@@ -94,17 +96,18 @@ if (maxEnviosAlcanzado()==true){
         String apellidos = teclado.nextLine();
         System.out.println("Email: ");
         String email = teclado.nextLine();
-        if (clientes.estaLlena()==true) {
-            System.out.println("No se pueden dar de alta más clientes");
-        }else if(clientes.buscarClienteEmail(email) != null){
-            System.out.println("Este cliente ya existe");
-        }else{
-            new Cliente(nombre, apellidos, email, maxEnvios);
-//insertar cliente en la lista de clientes ???????????
-             System.out.println("Cliente con email "+clientes[i].getEmail()+ "creado correctamente");
-
+        Cliente nuevoCliente;
+        if (clientes.estaLlena()==true) { //si no hay sitio para mas clientes
+             System.out.println("No se pueden dar de alta más clientes");
+        }else if(clientes.buscarClienteEmail(email) != null){ //si no da null, significa que lo ha encontrado, y por tatno ya existe dicho cliente
+             System.out.println("Este cliente ya existe");
+        }else{ //si no lo ha enocntrado y hay hueco, si se puede dar de alta un nuevo cliente
+            nuevoCliente= new Cliente(nombre, apellidos, email, maxEnvios);//se crea objeto cliente
+            clientes.insertarCliente(nuevoCliente); //se añade dicho objeto a la lista
+             System.out.println("Cliente con email "+nuevoCliente.getEmail()+ "creado correctamente");
         }
-           new Cliente(nombre, apellidos, email, maxEnvios);
+        return ;
+        //qué se devuelve???????????????????????'
     }
     /**
      * TODO: Metodo para comprobar que el formato de email introducido sea correcto
@@ -115,7 +118,7 @@ if (maxEnviosAlcanzado()==true){
     public static boolean correctoEmail(String email) {
         ListaClientes clientes;
         boolean correcto=false;
-        if (email= clientes.buscarClienteEmail(email).getNombre()+".planetexpress.com") { //está bien así?????
+        if (email= clientes.buscarClienteEmail(email).getEmail()){ //buscarClienteEmail(email).getNombre()+".planetexpress.com") { //está bien así?????
             correcto=true;
         }
             return correcto;
