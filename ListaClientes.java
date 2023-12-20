@@ -85,7 +85,7 @@ public class ListaClientes {
             }
         }
         return encontrado ; //return null;
-    }
+    } //no hay que poner si no se ha enocntrado que no se ha econtrado ???? no hay ejemplo
     /**
      * TODO: Método para seleccionar un Cliente existente a partir de su email, usando el mensaje pasado como argumento
      *  para la solicitud y, siguiendo el orden y los textos mostrados en el enunciado.

@@ -113,7 +113,6 @@ public class ListaPuertosEspaciales {
             Utilidades.leerCadena(teclado,"Ingrese código de puerto Origen: ");
              codigo = teclado.next();
         } while (codigo != mensaje);
-        buscarPuertoEspacial(mensaje);
 
         return buscarPuertoEspacial(mensaje);
 

@@ -83,7 +83,7 @@ public class Porte {
                     huecosLibres++;
                 }
             }
-        }
+        }//es así o con listaEnvios.buscarEnvio(localizador).getFila(); como en el metodo de desocupar
         return huecosLibres;
     }
     // TODO: ¿Están llenos todos los huecos?
@@ -96,7 +96,7 @@ public class Porte {
                     return vacio;
 
                 }
-            }
+            }//es así o con listaEnvios.buscarEnvio(localizador).getFila(); como en el metodo de desocupar
         }
      return vacio;
     }
@@ -108,7 +108,7 @@ public class Porte {
             return lleno;
         } else {
             return lleno;
-        }
+        }//es así o con listaEnvios.buscarEnvio(localizador).getFila(); como en el metodo de desocupar
     }
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
@@ -126,6 +126,8 @@ public class Porte {
             }
         }
         return null;
+//está bien asñi ???
+        return listaEnvios.buscarEnvio(getID(), fila, columna);
     }
 
 
@@ -136,8 +138,11 @@ public class Porte {
      * @return
      */
     public boolean ocuparHueco(Envio envio) {
-
-        return false;
+        boolean ocupado =false;
+if (desocuparHueco(envio.getLocalizador())== true){
+    ocupado=true;
+}
+        return ocupado;
     }
 
 
@@ -147,9 +152,19 @@ public class Porte {
      * @return
      */
     public boolean desocuparHueco(String localizador) {
-        if (listaEnvios.getEnvio(get.))
+        boolean salir=false;
+            int fila = listaEnvios.buscarEnvio(localizador).getFila();
+           int columna = listaEnvios.buscarEnvio(localizador).getColumna();
 
-        return false;
+            for(int i =0;i<fila;i++){
+            for (int j =0; j<columna; j++) {
+                if (huecos[i][j] == huecos[fila][columna]) {
+                    huecos[i][j] = Boolean.parseBoolean(null);
+                    salir = true;
+                }
+            }
+            }
+        return salir;
     }
 
     /**
@@ -159,6 +174,7 @@ public class Porte {
      */
     public String toString() {
         return "Porte "+generarID(new Random())+" de "+origen.getNombre()+" M"+origen.getMuelles()+" "+salida.toString()+" a "+destino.getNombre()+" M"+destino.getMuelles()+ " "+llegada.toString();
+        return "Porte "+PM0066+" de "+Gaia Galactic Terminal+" ("GGT") "+M5+" ("01/01/2023 08:15:00") a "+Cidonia"("CID") "M1" ("01/01/2024 11:00:05") en "+Planet Express One+"("+EP-245732X+") por "+13424,56 SSD", huecos libres: "+numHuecosLibres();
     }
 
 
@@ -167,7 +183,7 @@ public class Porte {
      * @return ejemplo del formato -> "Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05)"
      */
     public String toStringSimple() {
-        return "";
+        return "Porte "PM0066" de "GGT M5" ("01/01/2023 08:15:00") a "CID M1" ("01/01/2024 11:00:05")";
     }
 
 

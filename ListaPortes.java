@@ -1,6 +1,9 @@
-import javax.sound.sampled.Port;
-import java.io.*;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
+
+
 
 /**
  * Description of the class
@@ -112,6 +115,33 @@ public class ListaPortes {
         return porte;
     }
 
+<<<<<<< HEAD
+                /**
+                 * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
+                 */
+                public void listarPortes () {
+                    for (i = 0; i < portes.length; i++) {
+                        portes[i].toString();
+                    }
+                }
+                    /**
+                     * TODO: Permite seleccionar un Porte existente a partir de su ID, usando el mensaje pasado como argumento para
+                     *  la solicitud y siguiendo el orden y los textos mostrados en el enunciado, y usando la cadena cancelar para
+                     *  salir devolviendo null.
+                     *  La función solicita repetidamente hasta que se introduzca un ID correcto
+                     * @param teclado
+                     * @param mensaje
+                     * @param cancelar
+                     * @return
+                     */
+                    public Porte seleccionarPorte (Scanner teclado, String mensaje, String cancelar){
+                        while (true) {
+                            System.out.println(mensaje);
+                        }
+                        Porte porte = null;
+                        return porte;
+                    } //Seleccione un porte:
+=======
     /**
      * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
      */
@@ -120,6 +150,7 @@ public class ListaPortes {
             portes[i].toString();
         }
     }
+>>>>>>> origin/main
 
     /**
      * TODO: Permite seleccionar un Porte existente a partir de su ID, usando el mensaje pasado como argumento para
