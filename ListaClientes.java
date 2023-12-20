@@ -75,6 +75,7 @@ public class ListaClientes {
      */
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
     public Cliente buscarClienteEmail(String email) {
+        // Cliente cliente = getCliente(Integer.parseInt(matricula));
         //IMPORTANTE
         //he modificado lo de return por encontrdo, no sé si está mejor así o no ---PREGUNTAR
         Cliente encontrado=null;
@@ -129,14 +130,29 @@ public class ListaClientes {
      * @return
      */
     public boolean escribirClientesCsv(String fichero) {
-
+        PrintWriter pw = null;
+        boolean close = false;
         try {
+            pw = new PrintWriter(new FileWriter(fichero));
+            int cont = 0;
+            String cadena;
+            do {
+            }while (cont != clientes.length);
+            close = true;
+            return true;
         } catch (FileNotFoundException e) {
-            return false;
+            System.out.println("Fichero " + fichero + " no encontrado" + e.getMessage());
+        }catch (IOException e){
+            //if (close == false) {
+            //System.out.println("Error de cierre de fichero "
+            //     + e.getMessage());}
+            System.out.println("Error de escritura en fichero " +e.getMessage());
         } finally {
-
+            if (pw != null){
+                pw.close();
+            }
         }
-        return true;
+        return false;
     }
 
     /**
@@ -148,9 +164,18 @@ public class ListaClientes {
      * @return lista de clientes
      */
     public static ListaClientes leerClientesCsv(String fichero, int capacidad, int maxEnviosPorCliente) {
-
+        ListaClientes listaClientes = new ListaClientes(capacidad);
+        Scanner sc = null;
+        boolean close = false;
         try {
-            salida = new PrintWriter(new FileOutputStream(fichero));
+            sc = new Scanner((new FileReader(fichero)));
+            String cadena;
+            while (sc.hasNextLine()){
+                cadena = sc.nextLine();
+                System.out.println(cadena);
+            }
+            sc.close();
+            close = true;
 
         } catch (FileNotFoundException e) {
             return null;

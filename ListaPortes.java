@@ -105,8 +105,6 @@ public class ListaPortes {
                         System.out.println("Muelle destino introducido incorrecto.");
                     }
                 } else {
-
-
                 }
             }
         }
@@ -118,7 +116,7 @@ public class ListaPortes {
      * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
      */
     public void listarPortes() {
-        for (i = 0; i < portes.length; i++) {
+        for (int i = 0; i < portes.length; i++) {
             portes[i].toString();
         }
     }

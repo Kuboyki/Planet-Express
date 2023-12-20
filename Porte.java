@@ -120,7 +120,11 @@ public class Porte {
      * @return el objeto Envio que corresponde, o null si está libre o se excede en el límite de fila y columna
      */
     public Envio buscarEnvio(int fila, int columna) {
-
+        for(int i=0;i<huecos.length;i++){
+            if(nave.getFilas()==fila && nave.getColumnas()==columna){
+                return lista
+            }
+        }
         return null;
     }
 
@@ -143,6 +147,7 @@ public class Porte {
      * @return
      */
     public boolean desocuparHueco(String localizador) {
+        if (listaEnvios.getEnvio(get.))
 
         return false;
     }
@@ -153,7 +158,7 @@ public class Porte {
      *  Cidonia(CID) M1 (01/01/2024 11:00:05) en Planet Express One(EP-245732X) por 13424,56 SSD, huecos libres: 10"
      */
     public String toString() {
-        return "";
+        return "Porte "+generarID(new Random())+" de "+origen.getNombre()+" M"+origen.getMuelles()+" "+salida.toString()+" a "+destino.getNombre()+" M"+destino.getMuelles()+ " "+llegada.toString();
     }
 
 
@@ -174,7 +179,13 @@ public class Porte {
      * @return
      */
     public boolean coincide(String codigoOrigen, String codigoDestino, Fecha fecha) {
-        return true ;
+        if (origen.getCodigo().equals(codigoOrigen) && destino.getCodigo().equals(codigoDestino)){
+            if(salida.getDia()==fecha.getDia()&&salida.getMes()==fecha.getMes()&&salida.getAnio()==fecha.getAnio()){
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
 
@@ -188,32 +199,45 @@ public class Porte {
      *     10[ ][ ][ ]
      */
     public void imprimirMatrizHuecos() {
-        for (int i = 0;i<huecos.length+1;i++){
-            for(int j = 0;j<huecos.length+1;i++){
-                if(i==0){
-                    if(j==0){
-                        System.out.print("  ");
-                    }
-                    System.out.println(" A ");
+        System.out.print("     * ");
+        for (char c = 'A'; c < 'A' + huecos.length; c++) {
+            System.out.print(" " + c);
+        }
+        System.out.println();
+
+        for (int i = 0; i < huecos.length; i++) {
+            System.out.print("     " + (i + 1) + " [");
+            for (int j = 0; j < huecos[i].length; j++) {
+                System.out.print(huecos[i][j] ? "X" : " ");
+                if (j < huecos[i].length - 1) {
+                    System.out.print("][");
+                } else {
+                    System.out.print("]");
                 }
-                System.out.println();
             }
+            System.out.println();
         }
     }
 
-    /**
-     * TODO: Devuelve true si ha podido escribir en un fichero la lista de envíos del porte, siguiendo las indicaciones
-     *  del enunciado
-     * @param fichero
-     * @return
-     */
+        /**
+         * TODO: Devuelve true si ha podido escribir en un fichero la lista de envíos del porte, siguiendo las indicaciones
+         *  del enunciado
+         * @param fichero
+         * @return
+         */
     public boolean generarListaEnvios(String fichero) {
         PrintWriter pw = null;
         try {
-
+            pw = new PrintWriter(fichero);
+            pw.println();
             return true;
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
             return false;
+        }finally{
+            if(pw != null){
+                pw.close();
+            }
         }
     }
 
@@ -226,7 +250,11 @@ public class Porte {
      * @return ejemplo -> "PM0123"
      */
     public static String generarID(Random rand) {
-        return "PM";
+        StringBuilder idPorte = new StringBuilder("PM");
+        for(int i = 0;i < 4;i++){
+            idPorte.append(rand.nextInt(10));
+        }
+        return idPorte.toString();
     }
 
     /**
@@ -245,7 +273,8 @@ public class Porte {
                                   ListaPuertosEspaciales puertosEspaciales,
                                   ListaNaves naves,
                                   ListaPortes portes) {
-
+    Fecha fecha;
+    int capacidad;
         return null;
     }
 }
