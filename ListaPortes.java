@@ -115,7 +115,6 @@ public class ListaPortes {
         return porte;
     }
 
-<<<<<<< HEAD
                 /**
                  * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
                  */
@@ -141,7 +140,6 @@ public class ListaPortes {
                         Porte porte = null;
                         return porte;
                     } //Seleccione un porte:
-=======
     /**
      * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
      */
@@ -150,7 +148,6 @@ public class ListaPortes {
             portes[i].toString();
         }
     }
->>>>>>> origin/main
 
     /**
      * TODO: Permite seleccionar un Porte existente a partir de su ID, usando el mensaje pasado como argumento para

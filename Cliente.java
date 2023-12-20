@@ -40,12 +40,7 @@ public class Cliente {
     }
     // TODO: Devuelve un booleano que indica si se ha alcanzado el número máximo de envíos
     public boolean maxEnviosAlcanzado() {
-        if (listaEnvios.estaLlena()==true){
-            return true;
-        }else{
-            return false;
-        }
-       // return listaEnvios.estaLlena();
+       return listaEnvios.estaLlena();
     }
     // TODO: Devuelve un envío en función de su posición
     public Envio getEnvio(int i) {
@@ -56,12 +51,15 @@ public class Cliente {
     }
     // TODO: Añade un envío al cliente
     public boolean aniadirEnvio(Envio envio) {
+        boolean aniadido=false;
         if (maxEnviosAlcanzado() == true) {
             System.out.println("No es posible añadir más envíos");
-        } else if (){ //com se añade un envío al cliente ????????????????????????
-             envio.getCliente().listaEnvios.insertarEnvio(envio);
+            aniadido = false;
+        } else{
+            envio.getCliente().listaEnvios.insertarEnvio(envio);
+            aniadido=true;
         }
-        return
+        return aniadido;
     }
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
@@ -69,7 +67,6 @@ public class Cliente {
     // TODO: Elimina el envío de la lista de envíos del pasajero
     public boolean cancelarEnvio(String localizador) {
         return listaEnvios.eliminarEnvio(localizador);
-        //Esto hay que modificarlo??????
     }
     public void listarEnvios() {
         listaEnvios.listarEnvios();
@@ -96,32 +93,30 @@ public class Cliente {
         String apellidos = teclado.nextLine();
         Utilidades.leerCadena(teclado,"Email: ");
         String email = teclado.nextLine();
-        Cliente nuevoCliente;
+        Cliente nuevoCliente = null;
         if (clientes.estaLlena()==true) { //si no hay sitio para mas clientes
              System.out.println("No se pueden dar de alta más clientes");
-        }else if(clientes.buscarClienteEmail(email) != null){ //si no da null, significa que lo ha encontrado, y por tatno ya existe dicho cliente
+        }else if(clientes.buscarClienteEmail(email) != null){
+            //si no da null, significa que lo ha encontrado, y por tatno ya existe dicho cliente
              System.out.println("Este cliente ya existe");
         }else{ //si no lo ha enocntrado y hay hueco, si se puede dar de alta un nuevo cliente
             nuevoCliente= new Cliente(nombre, apellidos, email, maxEnvios);//se crea objeto cliente
             clientes.insertarCliente(nuevoCliente); //se añade dicho objeto a la lista
              System.out.println("Cliente con email "+nuevoCliente.getEmail()+ "creado correctamente");
         }
-        return ;
-        //qué se devuelve???????????????????????'
+        return nuevoCliente ;
     }
     /**
      * TODO: Metodo para comprobar que el formato de email introducido sea correcto
      * @param email
      * @return
      */
-    //no comprendo la idea de que sea correcto: el formato?
     public static boolean correctoEmail(String email) {
-        ListaClientes clientes;
-        boolean correcto=false;
-        if (email= clientes.buscarClienteEmail(email).getEmail()){ //buscarClienteEmail(email).getNombre()+".planetexpress.com") { //está bien así?????
-            correcto=true;
+        boolean formatoCorrecto=false;
+        if (email.endsWith(".planetexpress.com")) {
+            formatoCorrecto = true;
         }
-            return correcto;
+            return formatoCorrecto;
 
     }
 }

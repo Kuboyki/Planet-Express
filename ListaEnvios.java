@@ -32,17 +32,7 @@ public class ListaEnvios {
     }
     // TODO: ¿Está llena la lista de envíos?
     public boolean estaLlena() {
-        boolean llena = false;
-        /*for(int i = 0;i< envios.length;i++){
-            if(envios[i]==null){
-                llena = true;
-            }
-        }
-        return llena;*/
-        if(getOcupacion()==envios.length){
-            llena = true;
-        }
-        return llena;
+        return getOcupacion()==envios.length;
 
     }
 	//TODO: Devuelve el envio dado un indice
@@ -56,16 +46,7 @@ public class ListaEnvios {
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarEnvio(Envio envio) {
-      /*  estaLlena();
-        if(estaLlena()==true){
-            for(int i=0;i< envios.length;i++){
-                if (envios[i]==null){
-                    envios[i]=envio;
-                    return true;
-                }
-            }
-        }
-        return false;*/
+
         boolean salir = false;
         if(estaLlena()==false){
             do{
@@ -85,19 +66,19 @@ public class ListaEnvios {
      * @param localizador
      * @return el envio que encontramos o null si no existe
      */
-    public Envio buscarEnvio(String localizador) { //no sé si está bien??
+    public Envio buscarEnvio(String localizador) {
         Envio encontrado = null;
         for (int i = 0;i< envios.length;i++) {
             if (envios[i].getLocalizador().equals(localizador)) {
-               encontrado= envios[i]; //return envios[i];
+               encontrado= envios[i];
             }
         }
         if (encontrado==null){
         System.out.println("Localizador incorrecto");
         }
-        return encontrado; // return null;
+        return encontrado;
 
-    }  //no hay que poner si no se ha enocntrado que no se ha econtrado ???? no hay ejemplo
+    }
 
     /**
      * PuertoEspacial puerto = getPuertoEspacial(Integer.parseInt(codigo));
@@ -117,17 +98,17 @@ public class ListaEnvios {
      */
     public Envio buscarEnvio(String idPorte, int fila, int columna) {
         Envio encontrado = null;
-        for(int i=0;i<envios.length;i++){
-            if(envios[i].getPorte().equals(idPorte)){
-                if(envios[i].getFila()==fila){
-                    if(envios[i].getColumna()==columna){
-                  encontrado=envios[i];   //return envios[i];
+        for (int i = 0; i < envios.length; i++) {
+            if (envios[i].getPorte().equals(idPorte)) {
+                if (envios[i].getFila() == fila) {
+                    if (envios[i].getColumna() == columna) {
+                        encontrado = envios[i];
                     }
                 }
             }
         }
-        return  encontrado;//return null;
-    }      //no hay que poner si no se ha enocntrado que no se ha econtrado ???? no hay ejemplo
+        return encontrado;
+    }
 
     /**
      * TODO: Eliminamos un envio a través del localizador pasado por parámetro
@@ -135,23 +116,13 @@ public class ListaEnvios {
      * @return True si se ha borrado correctamente, false en cualquier otro caso
      */
     public boolean eliminarEnvio (String localizador) {
-       /* for(int i = 0;i< envios.length;i++){
-            if(envios[i].getLocalizador().equals(localizador)){
-                envios[i]=null;
-                return true;
-            }
-        }
-        return false; */
-
-        boolean salir=false;
-        do {
+       boolean salir=false;
             for(int i = 0;i< envios.length;i++){
                 if(envios[i].getLocalizador().equals(localizador)){
                     envios[i]=null;
                     salir= true;
                 }
             }
-        }while(salir ==false);
         return salir;
     }
 
@@ -159,7 +130,6 @@ public class ListaEnvios {
      * TODO: Muestra por pantalla los Envios de la lista, con el formato que aparece
      * en el enunciado
      */
-    // creo que me falta por completar el metodo
     public void listarEnvios() {
         for(int i=0;i< envios.length;i++){
             envios[i].toString();
@@ -173,27 +143,15 @@ public class ListaEnvios {
      * @param mensaje
      * @return
      */
-    // no comprendo mucho la idea de este enunciado
     public Envio seleccionarEnvio(Scanner teclado, String mensaje) {
-        /*while (true){
-           // System.out.println(mensaje);
-            Utilidades.leerCadena(teclado,"Seleccione un envio: ");
-            String localizador = teclado.nextLine();
-            Envio envio = buscarEnvio(localizador);
-            if(envio != mensaje){
-                System.out.println("Localizador incorrecto");
-            }
-            return envio;
-        }*/
-        Utilidades.leerCadena(teclado,"Seleccione un envio: ");
-        String localizador = teclado.nextLine();
-        do {
+
+        String localizador =Utilidades.leerCadena(teclado,mensaje); //Seleccione un envio:
+       /* do {
             if (localizador != mensaje) {
                 System.out.println("Localizador incorrecto");
             }
-            Utilidades.leerCadena(teclado,"Seleccione un envio: ");
-             localizador = teclado.nextLine();
-        } while (localizador != mensaje);
+            localizador=  Utilidades.leerCadena(teclado,mensaje);
+        } while (localizador != mensaje); */ //esto hay que modificarlo
         return buscarEnvio(mensaje);
     }
     /**

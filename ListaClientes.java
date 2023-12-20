@@ -72,16 +72,16 @@ public class ListaClientes {
      */
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
     public Cliente buscarClienteEmail(String email) {
-        // Cliente cliente = getCliente(Integer.parseInt(matricula));
         //IMPORTANTE
-        //he modificado lo de return por encontrdo, no sé si está mejor así o no ---PREGUNTAR
         Cliente encontrado=null;
-        for(int i=0;i<clientes.length;i++){
-            if(clientes[i].getEmail().equals(email)){
-                encontrado= clientes[i]; //return clientes[i];
+        if (Cliente.correctoEmail(email)==true) {
+            for (int i = 0; i < clientes.length; i++) {
+                if (clientes[i].getEmail().equals(email)) {
+                    encontrado = clientes[i]; //return clientes[i];
+                }
             }
         }
-        return encontrado ; //return null;
+        return encontrado ;
     } //no hay que poner si no se ha enocntrado que no se ha econtrado ???? no hay ejemplo
     /**
      * TODO: Método para seleccionar un Cliente existente a partir de su email, usando el mensaje pasado como argumento
@@ -93,31 +93,11 @@ public class ListaClientes {
      */
     // SON TOTALMENTE DIFERENTE CON EL METODO ANTERIOR
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
-        Utilidades.leerCadena(teclado, "Email del cliente: ");
-        String email = teclado.nextLine();
-        do{
-            if (email != mensaje){
-                System.out.println("Email no encontrado.");
-            }
-            Utilidades.leerCadena(teclado, "Email del cliente: ");
-             email = teclado.nextLine();
-        }while(email != mensaje);
-
-        //QUÉ HACE EL MENSAJE AQUÍ????????---- ME HE OLVIDADO
-
+        String email =Utilidades.leerCadena(teclado, mensaje);//"Email del cliente: "
+        Cliente.correctoEmail(email);
         return buscarClienteEmail(email);
 
 
-       /* while (true){
-            System.out.println(mensaje);
-            Utilidades.leerCadena(teclado, "Email del cliente: ");
-            String email = teclado.nextLine();
-            Cliente cliente =buscarClienteEmail(email);
-            if(cliente ==null){
-                System.out.println("Email incorrecto");
-            }
-            return cliente;
-        }*/
     }
     // No entiendo la parte de fichero hay que preguntar y hacer lo en clase. SOBREESCRIBIR ESTA EN EL TEMA 6 PAG 16
     /**

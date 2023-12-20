@@ -1,6 +1,5 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -55,32 +54,26 @@ public class Envio {
     }
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
-        return "para el hueco con fila "+fila+" y columna "+columna;
-    } // que es que no me lo aclara
+        return +getFila()+String.valueOf(getColumna())+" para el hueco con fila "+getFila()+" y columna "+getColumna();
+    }
     public double getPrecio() {
         return precio;
     }
     //TODO: Texto que debe generar: Envío PM1111AAAABBBBC para Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05) en hueco 6C por 13424,56 SSD
-    public String toString() { //SIGUE LOS EJEMPLO DEL PDF.
-int poiscionCliente= ListaClientes.getOcupacion();  //com saber la poscion del cliente?????
-        //return  "Porte "+porte+" de "+porte.getOrigen()+" "+porte.getMuelleOrigen()+" "+porte.getSalida()+" a "+porte.getDestino()+" M"+porte.getMuelleDestino()+" "+porte.getLlegada();
-        return   "Envío "+getCliente().getEnvio(poiscionCliente)+ " para Porte " +getPorte()+" de "GGT M5 "("+getFecha()+ " " +getHora()+ ") a "+CID M1 +" ("+getFecha()+ " " +getHora()+ ") en hueco "+getHueco()+" por "+13424,56 SSD
-//pq para poner ListaEnvios.getEnvio() el metodo tiene que ser static ???
-        //PM0066 es id o nave del puerto ??????
+    public String toString() {
+
+        return   "Envío "+getLocalizador()+ " para Porte " +getPorte().getID()+" de "
+                +Porte.getOrigen()+" "+Porte.getMuelleOrigen()+ "("+getFecha()+ " " +getHora()+ ") a "
+                +Porte.getDestino()+" "+ Porte.getMuelleDestino()+" ("+Porte.getLlegada()+ " " +getHora()+
+                ") en hueco "+getFila()+String.valueOf(getColumna())+" por "+getPrecio()+ "SSD";
+
     }
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
     public boolean cancelar() {
-       /* if(cliente.cancelarEnvio(getLocalizador())==false){
-            porte.buscarEnvio(getLocalizador()).getLocalizador().equals(getLocalizador());
-            cliente.cancelarEnvio(getLocalizador());
-            return true;
-        }
-        return false;*/
-
         boolean cancelar = false;
         String localizador= getLocalizador();
-        cliente.cancelarEnvio(localizador));
-porte.desocuparHueco(localizador);
+        cliente.cancelarEnvio(localizador);
+        porte.desocuparHueco(localizador);
          if (cliente.buscarEnvio(localizador) ==null && porte.desocuparHueco(localizador)){
              cancelar =true;
          }
@@ -104,7 +97,7 @@ porte.desocuparHueco(localizador);
      *     Hueco: 6C
      *     Precio: 13424,56 SSD
      */
-    public boolean generarFactura(String fichero) { //opcion 5--generar...
+    public boolean generarFactura(String fichero) { //yo guardo en el ficheor lo de arriba
         try {
             return true;
         } catch (FileNotFoundException e) {
