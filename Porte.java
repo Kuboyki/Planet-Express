@@ -83,7 +83,7 @@ public class Porte {
                     huecosLibres++;
                 }
             }
-        }
+        }//es así o con listaEnvios.buscarEnvio(localizador).getFila(); como en el metodo de desocupar
         return huecosLibres;
     }
     // TODO: ¿Están llenos todos los huecos?
@@ -96,7 +96,7 @@ public class Porte {
                     return vacio;
 
                 }
-            }
+            }//es así o con listaEnvios.buscarEnvio(localizador).getFila(); como en el metodo de desocupar
         }
      return vacio;
     }
@@ -108,7 +108,7 @@ public class Porte {
             return lleno;
         } else {
             return lleno;
-        }
+        }//es así o con listaEnvios.buscarEnvio(localizador).getFila(); como en el metodo de desocupar
     }
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
@@ -120,8 +120,8 @@ public class Porte {
      * @return el objeto Envio que corresponde, o null si está libre o se excede en el límite de fila y columna
      */
     public Envio buscarEnvio(int fila, int columna) {
-
-        return null;
+//está bien asñi ???
+        return listaEnvios.buscarEnvio(getID(), fila, columna);
     }
 
 
@@ -132,8 +132,11 @@ public class Porte {
      * @return
      */
     public boolean ocuparHueco(Envio envio) {
-
-        return false;
+        boolean ocupado =false;
+if (desocuparHueco(envio.getLocalizador())== true){
+    ocupado=true;
+}
+        return ocupado;
     }
 
 
@@ -164,7 +167,7 @@ public class Porte {
      *  Cidonia(CID) M1 (01/01/2024 11:00:05) en Planet Express One(EP-245732X) por 13424,56 SSD, huecos libres: 10"
      */
     public String toString() {
-        return "";
+        return "Porte "+PM0066+" de "+Gaia Galactic Terminal+" ("GGT") "+M5+" ("01/01/2023 08:15:00") a "+Cidonia"("CID") "M1" ("01/01/2024 11:00:05") en "+Planet Express One+"("+EP-245732X+") por "+13424,56 SSD", huecos libres: "+numHuecosLibres();
     }
 
 
@@ -173,7 +176,7 @@ public class Porte {
      * @return ejemplo del formato -> "Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05)"
      */
     public String toStringSimple() {
-        return "";
+        return "Porte "PM0066" de "GGT M5" ("01/01/2023 08:15:00") a "CID M1" ("01/01/2024 11:00:05")";
     }
 
 
