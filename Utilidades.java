@@ -113,7 +113,13 @@ public class Utilidades {
         //año
         anio = leerNumero(teclado, "Ingrese año: ", 1900, 3000);
         //como lo pone en la clase fecha
-
+        if ((dia > 28 && mes ==2) || (dia ==31 &&( mes==4 || mes==6 || mes==9 || mes==11))){
+            System.out.println("Fecha introducida incorrecta.");
+            leerFecha(teclado,mensaje);
+        }
+    //Febrero= 28 días
+    // Abril, Junio, Septiembre, Noviembre= 30 días
+    // Enero, Marzo, Mayo, Julio, Agosto , Octubre, Diciembre = 31 días
         return new Fecha(dia, mes, anio);
     }
 

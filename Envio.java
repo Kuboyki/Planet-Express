@@ -54,7 +54,7 @@ public class Envio {
     }
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
-        return +getFila()+String.valueOf(getColumna())+" para el hueco con fila "+getFila()+" y columna "+getColumna();
+        return getFila()+String.valueOf(getColumna())+" para el hueco con fila "+getFila()+" y columna "+getColumna();
     }
     public double getPrecio() {
         return precio;
@@ -74,7 +74,7 @@ public class Envio {
         String localizador= getLocalizador();
         cliente.cancelarEnvio(localizador);
         porte.desocuparHueco(localizador);
-         if (cliente.buscarEnvio(localizador) ==null && porte.desocuparHueco(localizador)){
+         if (cliente.buscarEnvio(localizador) ==null &&  porte.buscarEnvio(localizador)==null){
              cancelar =true;
          }
          return cancelar;
@@ -117,9 +117,6 @@ public class Envio {
      */
     public static String generarLocalizador(Random rand, String idPorte) {
         StringBuilder localizador = new StringBuilder(idPorte);
-
-
-
         return localizador.toString();
     }
 
@@ -135,9 +132,28 @@ public class Envio {
      * @return Envio para el porte y cliente especificados
      */
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
+        ListaPortes.seleccionarPorte(teclado,"Seleccione un porte: ",generarLocalizador(rand, porte.getID()));
+        //ListaPortes.seleccionarPorte(teclado,"Seleccione un porte: ", String cancelar);
+
+        char letra=Utilidades.leerLetra(teclado,"¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?",'e','n');
+        while(letra != 'n' || letra != 'e') {
+            System.out.println("El valor de entrada debe ser 'n' o 'e'");
+            letra=Utilidades.leerLetra(teclado,"¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?",'e','n');
+        }
+
+        cliente.seleccionarEnvio(teclado,"Email del cliente: ");
+        //o era   listaClientes.seleccionarCliente(teclado,"Email del cliente: ");
 
 
+        int fila=Utilidades.leerNumero(teclado,"Fila del hueco: ",get);
+        int columna=Utilidades.leerNumero(teclado,"Columna del hueco: ", );
 
-        return ;
+        "Precio del envío: "
+                System.out.println("Envío"+ generarLocalizador(rand, porte.getID())+ "creado correctamente");
+
+        ListaEnvios.aniadirEnviosCsv();
+        Envio envio =  ;
+        ListaEnvios.insertarEnvio(envio);
+return envio;
     }
 }

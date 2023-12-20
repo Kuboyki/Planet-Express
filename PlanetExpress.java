@@ -41,8 +41,6 @@ public class PlanetExpress {
         this.maxPortes = maxPortes;
         this.maxClientes = maxClientes;
         this.maxEnviosPorCliente = maxEnviosPorCliente;
-
-
     }
 
 
@@ -57,15 +55,12 @@ public class PlanetExpress {
      * @param ficheroEnvios
      */
     public void cargarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
-
         listaPuertosEspaciales = ListaPuertosEspaciales.leerPuertosEspacialesCsv(ficheroPuertos, maxPuertosEspaciales);
         listaNaves =ListaNaves.leerNavesCsv(ficheroNaves,maxNaves); 
         listaClientes =ListaClientes.leerClientesCsv(ficheroClientes,maxClientes,maxEnviosPorCliente);
         listaPortes = ListaPortes.leerPortesCsv(ficheroPortes,maxPortes,listaPuertosEspaciales,listaNaves);
-      listaEnvios = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);
-
-
-
+        listaEnvios = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);//listaPortes,listaClientes
+        //creo una variable de tipo---se puede hacer ?????????????????????????'
     }
 
 
@@ -80,11 +75,11 @@ public class PlanetExpress {
      * @param ficheroEnvios
      */
     public void guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
-        listaPuertosEspaciales = ListaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
-        listaNaves =ListaNaves.escribirNavesCsv(ficheroNaves);
-        listaClientes =ListaClientes.escribirClientesCsv(ficheroClientes);
-        listaPortes = ListaPortes.escribirPortesCsv(ficheroPortes);
-        = ListaEnvios.escribirEnviosCsv(ficheroEnvios, listaPortes,listaClientes);//como escrbiir los envios??????
+       listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
+        listaNaves.escribirNavesCsv(ficheroNaves);
+        listaClientes.escribirClientesCsv(ficheroClientes);
+        listaPortes.escribirPortesCsv(ficheroPortes);
+        listaEnvios.aniadirEnviosCsv(ficheroEnvios);//como escrbiir los envios??????
 
     }
 
@@ -114,9 +109,12 @@ public class PlanetExpress {
      * @return
      */
     public ListaPortes buscarPorte(Scanner teclado) {
-
-
-        return listaPortes.buscarPortes(codigoOrigen, codigoDestino, fecha);
+String codigoOrigen = Utilidades.leerCadena(teclado, "Ingrese código de puerto Origen: ");
+String codigoDestino = Utilidades.leerCadena(teclado, "Ingrese código de puerto Destino: ");
+Fecha fecha = Utilidades.leerFecha(teclado, "Fecha de Salida: ");
+        ListaPortes portesLista=listaPortes.buscarPortes(codigoOrigen, codigoDestino, fecha);
+                //que es eso que pone depues de poner lo del poe¡rte de seleccionar porte ???????, eso hay que ponerlo aquí???
+        return portesLista; //hay que dejarlo así ho hacer que salga lo de a que destino va y tal con toString()??????
     }
 
 
@@ -131,7 +129,7 @@ public class PlanetExpress {
      */
     public void contratarEnvio(Scanner teclado, Random rand, Porte porte) {
         if (porte != null) {
-
+//esto qué opcion es ???????
 
         }
     }
@@ -151,7 +149,6 @@ public class PlanetExpress {
         System.out.println("4. Mostrar envíos de un cliente.");
         System.out.println("5. Generar lista de envíos.");
         System.out.println("0. Salir.");
-//qué poner en la parte donde se supone que hay que poner un mensaje????????''
         return Utilidades.leerNumero (teclado,"Seleccione opción: ",0, 5);
     }
 

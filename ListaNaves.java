@@ -26,20 +26,23 @@ public class ListaNaves {
     // TODO: Devuelve el número de naves que hay en la lista
     public int getOcupacion() {
         for (int i = 0; i < naves.length; i++) {
-            if (naves[i] == null) {
-                ocupacion += 0;
-            } else {
+            if(naves[i]!=null){
                 ocupacion++;
             }
         }
-
         return ocupacion;
     }
 
     // TODO: ¿Está llena la lista de naves?
     public boolean estaLlena() {
-        boolean lleno = getOcupacion() == naves.length;
-        return lleno;
+       /* boolean llena = false;
+        if(getOcupacion()==naves.length){
+            llena = true;
+        }
+        return llena;
+        */
+        return this.getOcupacion()==naves.length;
+
     }
 
     // TODO: Devuelve nave dado un indice
@@ -54,23 +57,16 @@ public class ListaNaves {
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarNave(Nave nave) {
-        boolean esPosibleRellenar = false;
         boolean salir = false;
         if (!estaLlena()) {
-            esPosibleRellenar = true;
-
-            do {
-                for (int i = 0; i < naves.length; i++) {
-                    if (naves[i] == null) {
-                        salir = true;
-                        naves[i] = nave;
-                    }
+            for (int i = 0; i < naves.length; i++) {
+                if (naves[i] == null) {
+                    salir = true;
+                    naves[i] = nave;
                 }
-            } while (salir == false); // se puede !salir ?????
+            }
         }
-
-        return esPosibleRellenar;
-
+        return salir;
     }
 
     /**
@@ -80,18 +76,23 @@ public class ListaNaves {
      * @return la nave que encontramos o null si no existe
      */
     public Nave buscarNave(String matricula) {
-        Nave nave = getNave(Integer.parseInt(matricula));
-
-        return nave;
+        Nave encontrado=null;
+        for (int i = 0;i< naves.length;i++) {
+            if (naves[i].getMatricula().equals(matricula)) {
+                encontrado= naves[i];
+            }
+        }
+        if (encontrado==null){
+            System.out.println("Matrícula de avión no encontrada.");
+        }
+        return encontrado;
     }
 
     // TODO: Muestra por pantalla las naves de la lista con el formato indicado en el enunciado
     public void mostrarNaves() {
         for (int i = 0; i < naves.length; i++) {
-            System.out.println(getNave(i).getMarca() + "; " + getNave(i).getModelo() + "; " + getNave(i).getMatricula() + "; " + getNave(i).getColumnas() + "; " + getNave(i).getFilas() + "; " + getNave(i).getAlcance());
+            naves[i].toString();
         }
-        //Starship;SN15;BFR-15;5;5;66.6846E-5
-
     }
 
 
@@ -112,20 +113,17 @@ public class ListaNaves {
     //Avión seleccionado con alcance insuficiente.
     //Ingrese matrícula de la nave: MS-19
     public Nave seleccionarNave(Scanner teclado, String mensaje, double alcance) {
-        Nave nave = null;
-        System.out.print("Ingrese matrícula de la nave: ");
-        String codigo = teclado.next();
-        do {
-            if (codigo != mensaje) {
-                System.out.print("Matrícula de avión no encontrada.");
-            } else if (buscarNave(codigo).getAlcance() != alcance) {
+        String matricula = Utilidades.leerCadena(teclado,mensaje);//"Ingrese matrícula de la nave: "
+    while (buscarNave(matricula) == null  && buscarNave(matricula).getAlcance() < alcance){
+
+            if (buscarNave(matricula).getAlcance() < alcance) {
                 System.out.print("Avión seleccionado con alcance insuficiente.");
             }
-            System.out.print("Ingrese matrícula de la nave: ");
-            codigo = teclado.next();
-        } while (codigo != mensaje || buscarNave(codigo).getAlcance() != alcance);
-        nave = buscarNave(mensaje);
-        return nave;
+            matricula = Utilidades.leerCadena(teclado, mensaje);
+        }
+        return buscarNave(matricula);
+
+        //es así??????
     }
 
 

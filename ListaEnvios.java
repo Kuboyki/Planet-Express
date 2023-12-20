@@ -32,12 +32,17 @@ public class ListaEnvios {
     }
     // TODO: ¿Está llena la lista de envíos?
     public boolean estaLlena() {
-        return getOcupacion()==envios.length;
-
+        return this.getOcupacion()==envios.length;
+/*boolean llena = false;
+        if (getOcupacion()== envios.length) {
+           llena = true;
+        }
+        return llena;
+         */
     }
 	//TODO: Devuelve el envio dado un indice
     public Envio getEnvio(int i) {
-        return envios[i-1];
+        return envios[i - 1];
     }
 
     /**
@@ -46,17 +51,16 @@ public class ListaEnvios {
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarEnvio(Envio envio) {
-
         boolean salir = false;
         if(estaLlena()==false){
-            do{
+            //do{
                 for (int i=0;i<envios.length;i++){
                     if(envios[i]== null){
                         envios[i]=envio;
                         salir=true;
                     }
                 }
-            }while (salir==false);
+          //  }while (salir==false);
         }
         return salir;
     }
@@ -80,14 +84,6 @@ public class ListaEnvios {
 
     }
 
-    /**
-     * PuertoEspacial puerto = getPuertoEspacial(Integer.parseInt(codigo));
-     *         if (puerto != null) {
-     *             return puerto;
-     *         } else {
-     *             return null;
-     *         }
-     */
 
     /**
      * TODO: Buscamos el envio a partir del idPorte, fila y columna pasados como parámetros
@@ -99,13 +95,16 @@ public class ListaEnvios {
     public Envio buscarEnvio(String idPorte, int fila, int columna) {
         Envio encontrado = null;
         for (int i = 0; i < envios.length; i++) {
-            if (envios[i].getPorte().equals(idPorte)) {
-                if (envios[i].getFila() == fila) {
+            if (envios[i].getPorte().getID().equals(idPorte)) {
+                if (envios[i].getFila()==fila) {
                     if (envios[i].getColumna() == columna) {
                         encontrado = envios[i];
                     }
                 }
             }
+        }
+        if (encontrado==null){
+            System.out.println("Envío no encontrado"); //NO SE SI ESTO SE DEBE PONER
         }
         return encontrado;
     }
@@ -151,8 +150,11 @@ public class ListaEnvios {
                 System.out.println("Localizador incorrecto");
             }
             localizador=  Utilidades.leerCadena(teclado,mensaje);
-        } while (localizador != mensaje); */ //esto hay que modificarlo
-        return buscarEnvio(mensaje);
+        } while (localizador != mensaje); */
+        while(buscarEnvio(localizador)==null){
+            localizador =Utilidades.leerCadena(teclado,mensaje); //Seleccione un envio:
+        }
+        return buscarEnvio(localizador);
     }
     /**
      * TODO: Añade los Envios al final de un fichero CSV, SIN SOBREESCRIBIR la información
@@ -169,6 +171,7 @@ public class ListaEnvios {
         } finally {
 
         }
+    }
 
     /**
      * TODO: Lee los Envios del fichero CSV y los añade a las listas de sus respectivos Portes y Clientes

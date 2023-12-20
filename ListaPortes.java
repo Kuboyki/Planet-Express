@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 
-
 /**
  * Description of the class
  *
@@ -37,13 +36,14 @@ public class ListaPortes {
 
     // TODO: ¿Está llena la lista?
     public boolean estaLlena() {
-        boolean hayhueco = false;
-        for (int i = 0; i < portes.length; i++) {
-            if (portes[i] == null) {
-                hayhueco = true;
-            }
+        /*boolean llena = false;
+        if (getOcupacion()== portes.length) {
+           llena = true;
         }
-        return hayhueco;
+        return llena;
+         */
+        return this.getOcupacion() == portes.length;
+
     }
 
     //TODO: devuelve un porte dado un indice
@@ -58,16 +58,16 @@ public class ListaPortes {
      * @return false en caso de estar llena la lista o de error
      */
     public boolean insertarPorte(Porte porte) {
-        estaLlena();
-        if (estaLlena() == true) {
+        boolean salir = false;
+        if (estaLlena() == false) {
             for (int i = 0; i < portes.length; i++) {
                 if (portes[i] == null) {
                     portes[i] = porte;
-                    return true;
+                    salir = true;
                 }
             }
         }
-        return false;
+        return salir;
     }
 
 
@@ -78,14 +78,16 @@ public class ListaPortes {
      * @return el objeto Porte que encontramos o null si no existe
      */
     public Porte buscarPorte(String id) {
-        // Porte porte = getID(Integer.parseInt(id));
-        // return porte;
+        Porte encontrado = null;
         for (int i = 0; i < portes.length; i++) {
             if (portes[i].getID().equals(id)) {
-                return portes[i];
+                encontrado = portes[i];
             }
         }
-        return null;
+        if (encontrado==null){
+            System.out.println("Porte no encontrado.");
+        }
+        return encontrado;
     }
 
     /**
@@ -98,48 +100,17 @@ public class ListaPortes {
      * @return
      */
     public ListaPortes buscarPortes(String codigoOrigen, String codigoDestino, Fecha fecha) {
+        ListaPortes porte ;
         for (int i = 0; i < portes.length; i++) {
-            if (portes[i].getMuelleOrigen() == Integer.parseInt(codigoOrigen)) {
-                if ((portes[i].getMuelleDestino() == Integer.parseInt(codigoDestino))) {
-                    System.out.println("Fecha de Salida.");
-                    if (portes[i].getSalida().equals(fecha)) {
-                        System.out.println("Fecha introducido incorrecto.");
-                    } else {
-                        System.out.println("Muelle destino introducido incorrecto.");
-                    }
-                } else {
-                }
-            }
+            portes[i].coincide(codigoOrigen,codigoDestino,fecha);
+            if (portes[i].coincide(codigoOrigen,codigoDestino,fecha) ==true){
+                porte[portes[i]];
+            }//com oguardo los portres ???????????????????
+            //Llegada debe ser posterior a salida. ???????--esto es del main, no???
         }
-        ListaPortes porte = new ListaPortes(portes);
         return porte;
     }
 
-                /**
-                 * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
-                 */
-                public void listarPortes () {
-                    for (i = 0; i < portes.length; i++) {
-                        portes[i].toString();
-                    }
-                }
-                    /**
-                     * TODO: Permite seleccionar un Porte existente a partir de su ID, usando el mensaje pasado como argumento para
-                     *  la solicitud y siguiendo el orden y los textos mostrados en el enunciado, y usando la cadena cancelar para
-                     *  salir devolviendo null.
-                     *  La función solicita repetidamente hasta que se introduzca un ID correcto
-                     * @param teclado
-                     * @param mensaje
-                     * @param cancelar
-                     * @return
-                     */
-                    public Porte seleccionarPorte (Scanner teclado, String mensaje, String cancelar){
-                        while (true) {
-                            System.out.println(mensaje);
-                        }
-                        Porte porte = null;
-                        return porte;
-                    } //Seleccione un porte:
     /**
      * TODO: Muestra por pantalla los Portes siguiendo el formato de los ejemplos del enunciado
      */
@@ -161,20 +132,17 @@ public class ListaPortes {
      * @return
      */
     public Porte seleccionarPorte(Scanner teclado, String mensaje, String cancelar) {
-        Porte porte = null;
-        System.out.println("Seleccione un porte:");
-        String combinacion = teclado.nextLine();
-        do {
-            if (combinacion != mensaje) {
-                System.out.println("Porte no encontrado.");
-            } else if (combinacion == cancelar)
-                // como hago que vuelva empezar el menu 3
-                System.out.println("Seleccione un porte:");
-            combinacion = teclado.nextLine();
+        String combinacion = Utilidades.leerCadena(teclado, mensaje);//"Seleccione un porte:"
+        Porte comb = buscarPorte(combinacion);
+        while (comb==null) {
+            if (combinacion == cancelar){
+                return null;
+                // como hago que vuelva empezar el menu 3--pg 3 ejemplo enunciado
+            }
+             combinacion = Utilidades.leerCadena(teclado, mensaje);
         }
-        while (combinacion != mensaje);
-        porte = buscarPorte(mensaje);
-        return porte;
+        return buscarPorte(combinacion);
+        //como diferencio entre que salga con nullpq le ha dado a cancelar y que sea null pq no se ha encontrado ningun porte y por tanto se teine que volver a preguntar
     }
 
     /**

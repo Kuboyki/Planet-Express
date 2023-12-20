@@ -26,24 +26,23 @@ public class ListaPuertosEspaciales {
     public int getOcupacion() {
 
         for (int i = 0; i < lista.length; i++) {
-            if (lista[i] == null) {
-                ocupacion += 0;
-            } else {
+            if (lista[i] != null) {
                 ocupacion++;
             }
         }
-
         return ocupacion;
-        //El propio enunciado dice que devolvamos el número de puertos espaciales
     }
 
     // TODO: ¿Está llena la lista?
     public boolean estaLlena() {
-        boolean lleno = false;
+        /*boolean lleno = false;
         if (getOcupacion() == lista.length) {
             lleno = true;
         }
         return lleno;
+        */
+        return this.getOcupacion()==lista.length;
+
     }
 
     // TODO: Devuelve un puerto espacial dado un indice
@@ -58,25 +57,20 @@ public class ListaPuertosEspaciales {
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarPuertoEspacial(PuertoEspacial puertoEspacial) {
-        //boolean esPosibleRellenar = false;
         boolean salir = false;
         if (estaLlena() == false) {
             //pq hay algunos metodos que se pueden llamar usando el nombre de la clase y el nombre del metodo (los static) y los demas no ???
-           // esPosibleRellenar = true;
+            for (int i = 0; i < lista.length; i++) {
+                if (lista[i] == null) {
+                    lista[i] = puertoEspacial;
+                    salir = true;
 
-            do {
-                for (int i = 0; i < lista.length; i++) {
-                    if (lista[i] == null) {
-                        salir = true;
-                        lista[i] = puertoEspacial;
-                    }
                 }
-                //recorre la lista hasta haber un espacio en blanco y así, cuando salga del bucle, es decir,
-                // ha enocntrado un espaico en blanco, pueda meter ahí el objeto
-            } while (salir = false);
+            }
+            //recorre la lista hasta haber un espacio en blanco y así, cuando salga del bucle, es decir,
+            // ha enocntrado un espaico en blanco, pueda meter ahí el objeto
         }
-
-        return salir;//esPosibleRellenar
+        return salir;
     }
 
     /**
@@ -86,12 +80,16 @@ public class ListaPuertosEspaciales {
      * @return Puerto espacial que encontramos o null si no existe
      */
     public PuertoEspacial buscarPuertoEspacial(String codigo) {
-        PuertoEspacial puerto = getPuertoEspacial(Integer.parseInt(codigo));
-        if (puerto != null) {
-            return puerto;
-        } else {
-            return null;
+        PuertoEspacial encontrado = null;
+        for (int i = 0; i < lista.length; i++) {
+            if (lista[i].getCodigo().equals(codigo)) {
+                encontrado = lista[i];
+            }
         }
+        if (encontrado == null) {
+            System.out.print("Código de puerto no encontrado.");
+        }
+        return encontrado;
     }
 
     /**
@@ -104,17 +102,12 @@ public class ListaPuertosEspaciales {
      * @return
      */
     public PuertoEspacial seleccionarPuertoEspacial(Scanner teclado, String mensaje) {
-        Utilidades.leerCadena(teclado,"Ingrese código de puerto Origen: ");
-        String codigo = teclado.next();
-        do {
-            if (codigo != mensaje) {
-                System.out.print("Código de puerto no encontrado.");
-            }
-            Utilidades.leerCadena(teclado,"Ingrese código de puerto Origen: ");
-             codigo = teclado.next();
-        } while (codigo != mensaje);
-
+        String codigo = Utilidades.leerCadena(teclado, mensaje); //"Ingrese código de puerto Origen: //destino "
+        while (buscarPuertoEspacial(codigo) == null) {
+            codigo = Utilidades.leerCadena(teclado, mensaje); //"Ingrese código de puerto Origen: //destino "
+        }
         return buscarPuertoEspacial(mensaje);
+//está bien ????
 
     }
 
@@ -126,28 +119,28 @@ public class ListaPuertosEspaciales {
      */
     public boolean escribirPuertosEspacialesCsv(String nombre) {
         PrintWriter pw = null;
-        boolean closes =false;
+        boolean closes = false;
         try {
             pw = new PrintWriter(new FileWriter(nombre));
-            closes=true;
+            closes = true;
             pw.close();
             return true;
 
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + nombre + " no encontrado" + e.getMessage());
         } catch (IOException e) {
-         //   if ( closes==false) {
-         //       System.out.println("Error de cierre de fichero "
-        //                + e.getMessage());
-         //   }else{
-                System.out.print("Error de escritura en fichero " + e.getMessage());
+            //   if ( closes==false) {
+            //       System.out.println("Error de cierre de fichero "
+            //                + e.getMessage());
+            //   }else{
+            System.out.print("Error de escritura en fichero " + e.getMessage());
 
         } finally {
             if (pw != null) {
                 pw.close();
             }
         }
-return false;
+        return false;
     }
 
     /**
@@ -161,7 +154,7 @@ return false;
     public static ListaPuertosEspaciales leerPuertosEspacialesCsv(String fichero, int capacidad) {
         ListaPuertosEspaciales listaPuertosEspaciales = new ListaPuertosEspaciales(capacidad);
         Scanner sc = null;
-        boolean close=false;
+        boolean close = false;
         try {
             sc = new Scanner(new FileReader(fichero));
             String cadena;
@@ -170,19 +163,18 @@ return false;
                 System.out.println(cadena);
             }
             sc.close();
-            close=true;
-
+            close = true;
 
 
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
         } catch (IOException e) {
 
-       //     if ( close==false) {
-       //         System.out.println("Error de cierre de fichero "
-       //                 + e.getMessage());
-       //     }else{
-                System.out.print("Error de lectura de fichero " + e.getMessage());
+            //     if ( close==false) {
+            //         System.out.println("Error de cierre de fichero "
+            //                 + e.getMessage());
+            //     }else{
+            System.out.print("Error de lectura de fichero " + e.getMessage());
 
         } finally {
             if (sc != null) {

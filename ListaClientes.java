@@ -31,11 +31,14 @@ public class ListaClientes {
     }
     // TODO: ¿Está llena la lista de clientes?
     public boolean estaLlena() {
-        boolean llena = false;
+        /*boolean llena = false;
         if(getOcupacion()==clientes.length){
             llena = true;
         }
         return llena;
+        */
+        return this.getOcupacion()==clientes.length;
+
     }
 	// TODO: Devuelve el cliente dada el indice
     public Cliente getCliente(int i) {
@@ -44,45 +47,36 @@ public class ListaClientes {
     // TODO: Inserta el cliente en la lista de clientes
     public boolean insertarCliente(Cliente cliente) {
     boolean salir = false;
-        if(estaLlena()==false){
-           do{
-               for (int i=0;i<clientes.length;i++){
-                   if(clientes[i]== null){
-                       clientes[i]=cliente;
-                       salir=true;
-                   }
-               }
-           }while (salir==false);
-        }
-        return salir;
-    }
-    /*public boolean insertarCliente(Cliente cliente) {
-        estaLlena();
-        if(estaLlena()==true){
-            for(int i=0;i<clientes.length;i++){
-                if (clientes[i]==null){
-                    clientes[i]=cliente;
-                    return true;
+        if(estaLlena()==false) {
+            //     do{
+            for (int i = 0; i < clientes.length; i++) {
+                if (clientes[i] == null) {
+                    clientes[i] = cliente;
+                    salir = true;
                 }
             }
-        }
-        return false;
+            //    }while (salir==false);
+             }
 
+        return salir;
     }
-     */
+
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
-    public Cliente buscarClienteEmail(String email) {
-        //IMPORTANTE
+    public Cliente buscarClienteEmail(String email){
+
         Cliente encontrado=null;
         if (Cliente.correctoEmail(email)==true) {
             for (int i = 0; i < clientes.length; i++) {
                 if (clientes[i].getEmail().equals(email)) {
-                    encontrado = clientes[i]; //return clientes[i];
+                    encontrado = clientes[i];
                 }
             }
         }
+        if (encontrado==null){
+            System.out.println("Email no encontrado.");
+        }
         return encontrado ;
-    } //no hay que poner si no se ha enocntrado que no se ha econtrado ???? no hay ejemplo
+    }
     /**
      * TODO: Método para seleccionar un Cliente existente a partir de su email, usando el mensaje pasado como argumento
      *  para la solicitud y, siguiendo el orden y los textos mostrados en el enunciado.
@@ -94,10 +88,10 @@ public class ListaClientes {
     // SON TOTALMENTE DIFERENTE CON EL METODO ANTERIOR
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
         String email =Utilidades.leerCadena(teclado, mensaje);//"Email del cliente: "
-        Cliente.correctoEmail(email);
+while(buscarClienteEmail(email)==null){
+     email =Utilidades.leerCadena(teclado, mensaje);//"Email del cliente: "
+}
         return buscarClienteEmail(email);
-
-
     }
     // No entiendo la parte de fichero hay que preguntar y hacer lo en clase. SOBREESCRIBIR ESTA EN EL TEMA 6 PAG 16
     /**
