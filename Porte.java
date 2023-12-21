@@ -160,12 +160,14 @@ public class Porte {
         }
         return ocupado;
     }
-
     public int contarFila (){
-        return lista
+        return nave.getFilas();
+    }
+    public int contarColumna (){
+        return nave.getColumnas();
     }
 
-
+    //que fila y columna de que clase lo quieres.
 
     /**
      * TODO: A través del localizador del envio, se desocupará el hueco
