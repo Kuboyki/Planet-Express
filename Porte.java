@@ -1,3 +1,6 @@
+import jdk.jshell.execution.Util;
+import org.w3c.dom.html.HTMLLegendElement;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Random;
@@ -136,7 +139,7 @@ public class Porte {
      */
     public Envio buscarEnvio(int fila, int columna) {
 //está bien asñi ???
-        if(listaEnvios.buscarEnvio(getID(),fila,columna){
+        if(buscarEnvio(getID())!=null){
             return listaEnvios.buscarEnvio(getID(), fila, columna);
         }
         return null;
@@ -157,6 +160,11 @@ public class Porte {
         }
         return ocupado;
     }
+
+    public int contarFila (){
+        return lista
+    }
+
 
 
     /**
@@ -188,8 +196,9 @@ public class Porte {
      * Cidonia(CID) M1 (01/01/2024 11:00:05) en Planet Express One(EP-245732X) por 13424,56 SSD, huecos libres: 10"
      */
     public String toString() {
-        return "Porte " + generarID(new Random()) + " de " + origen.getNombre() + origen.getCodigo() + " M" + origen.getMuelles() + " " + salida.toString() + " a " + destino.getNombre() + destino.getCodigo() + " M" + destino.getMuelles() + " " + llegada.toString() + nave.toStringSimple()
-        " por";
+        return "Porte " + generarID(new Random()) + " de " + origen.getNombre() + origen.getCodigo() + " M" + origen.getMuelles() + " " + salida.toString() +
+                " a " + destino.getNombre() + destino.getCodigo() + " M" + destino.getMuelles() + " " + llegada.toString() +" "+ nave.toStringSimple()
+                +" por"+getPrecio()+"SSD, huecos libres: "+numHuecosLibres();
         //return "Porte " + PM0066 + " de " + Gaia Galactic Terminal +" (" GGT ") " + M5 + " (" 01 / 01 / 2023 08:15:00
         //") a " + Cidonia "(" CID ") " M1 " (" 01 / 01 / 2024 11:00:05 ") en " + Planet Express One +"(" + EP - 245732
         //X + ") por " + 13424, 56 SSD ", huecos libres: " + numHuecosLibres();
@@ -201,6 +210,8 @@ public class Porte {
      * @return ejemplo del formato -> "Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05)"
      */
     public String toStringSimple() {
+        return "Porte "+getID()+" de "+origen.getCodigo()+" M"+origen.getMuelles()+" "+salida.toString()+" a "+destino.getCodigo()+" M"+destino.getMuelles()+ " "+
+                llegada.toString();
         //return "Porte " PM0066 " de " GGT M5 " (" 01 / 01 / 2023 08:15:00 ") a " CID M1 " (" 01 / 01 / 2024 11:00:05
         //")";
         //return "Porte "
@@ -243,7 +254,7 @@ public class Porte {
         for (int i = 0; i < huecos.length; i++) {
             System.out.print("     " + (i + 1) + " [");
             for (int j = 0; j < huecos[i].length; j++) {
-                if (huecos[i][j] != null) {
+                if (huecos[i][j] == true) {
                     System.out.print("X");
                 } else {
                     System.out.println(" ");
@@ -312,12 +323,43 @@ public class Porte {
      */
     public static Porte altaPorte(Scanner teclado, Random rand, ListaPuertosEspaciales puertosEspaciales,
                                   ListaNaves naves, ListaPortes portes){
-            String origen =  Utilidades.leerCadena(teclado,"Ingresar código de puerto Origen: ");
+
+        if(portes.estaLlena()==true){
+            System.out.println("No se pueden dar de alta más vuelos.");
+        }
+        Porte nPorte = null;
+            PuertoEspacial puerto1=puertosEspaciales.seleccionarPuertoEspacial(teclado,"Ingrese código de puerto Origen: ");
             int muelleo = Utilidades.leerNumero(teclado,"Ingresar el muelle de Origen (1 - 4): ",1,4);
-            String destino =  Utilidades.leerCadena(teclado,"Ingrese código de puerto Destino: ");
             int muelled =  Utilidades.leerNumero(teclado,"Ingrese Terminal Destino (1 - 6):",1,6);
-        return new Porte(rand,naves,origen,muelleo,destino,muelled);
-        System.out.println("Ingrese código de puerto Destino");
-        return null;
-    }
+            PuertoEspacial puerto2=puertosEspaciales.seleccionarPuertoEspacial(teclado,"Ingrese código de puerto Destino: ");
+            naves.seleccionarNave(teclado,"Ingrese matricula de la nave; ",puerto1.distancia(puerto2));
+            Fecha salidaFecha = Utilidades.leerFechaHora(teclado,"Introduzca la fecha de salida");
+            Fecha llegadaFecha = Utilidades.leerFechaHora(teclado,"Introduzca la fecha de llegada");
+            if(salidaFecha.getAnio()>llegadaFecha.getAnio()){
+                System.out.println("Llegada debe ser posterior a salida.");
+            }else{
+                if(salidaFecha.getMes()>llegadaFecha.getMes()){
+                    System.out.println("Llegada debe ser posterior a salida.");
+                }else{
+                    if(salidaFecha.getDia()>llegadaFecha.getDia()){
+                        System.out.println("Llegada debe ser posterior a salida.");
+                    }else{
+                        if (salidaFecha.getHora()>llegadaFecha.getHora()){
+                            System.out.println("Llegada debe ser posterior a salida.");
+                        }else{
+                            if(salidaFecha.getMinuto()>llegadaFecha.getMinuto()){
+                                System.out.println("Llegada debe ser posterior a salida.");
+                            }else{
+                                if (salidaFecha.getSegundo()>llegadaFecha.getSegundo()){
+                                    System.out.println("Llegada debe ser porsterior a salida.");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Utilidades.leerNumero(teclado,"Ingrese precio de pasaje:",0,Double.POSITIVE_INFINITY);
+        return nPorte;
+
+        }
 }
