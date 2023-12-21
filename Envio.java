@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
@@ -63,8 +64,8 @@ public class Envio {
     public String toString() {
 
         return   "Envío "+getLocalizador()+ " para Porte " +getPorte().getID()+" de "
-                +Porte.getOrigen()+" "+Porte.getMuelleOrigen()+ "("+getFecha()+ " " +getHora()+ ") a "
-                +Porte.getDestino()+" "+ Porte.getMuelleDestino()+" ("+Porte.getLlegada()+ " " +getHora()+
+                +porte.getOrigen()+" "+porte.getMuelleOrigen()+ "("+porte.getSalida() + ") a "
+                +porte.getDestino()+" "+ porte.getMuelleDestino()+" ("+porte.getLlegada()+ " " +getHora()+
                 ") en hueco "+getFila()+String.valueOf(getColumna())+" por "+getPrecio()+ "SSD";
 
     }
@@ -98,11 +99,17 @@ public class Envio {
      *     Precio: 13424,56 SSD
      */
     public boolean generarFactura(String fichero) { //yo guardo en el ficheor lo de arriba
+        PrintWriter pw = null;
+        boolean close = false;
+
         try {
-            return true;
+            pw = new PrintWriter(new FileWriter(fichero));
+close=true;
         } catch (FileNotFoundException e) {
-            return false;
+            System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
+
         }
+        return close;
     }
 
 
@@ -117,7 +124,16 @@ public class Envio {
      */
     public static String generarLocalizador(Random rand, String idPorte) {
         StringBuilder localizador = new StringBuilder(idPorte);
-        return localizador.toString();
+final String cadena= "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+        for (int i =0; i<6; i++ ){
+            rand= new Random(); // está indicado que es hasta 27???
+           // int posicion = Math.round(rand);
+            int posicion = (int) rand;
+            char letra = cadena.charAt(posicion);
+            localizador.append(letra);
+
+        }
+        return  localizador;
     }
 
 
@@ -145,11 +161,12 @@ public class Envio {
         //o era   listaClientes.seleccionarCliente(teclado,"Email del cliente: ");
 
 
-        int fila=Utilidades.leerNumero(teclado,"Fila del hueco: ",get);
-        int columna=Utilidades.leerNumero(teclado,"Columna del hueco: ", );
+        int fila=Utilidades.leerNumero(teclado,"Fila del hueco: ",1,porte.getmaxFila());
+        int columna=Utilidades.leerNumero(teclado,"Columna del hueco: ",1,getmaxColumna() );
 
-        "Precio del envío: "
-                System.out.println("Envío"+ generarLocalizador(rand, porte.getID())+ "creado correctamente");
+       Utilidades.leerNumero(teclado,"Precio del envío: ", , );
+
+                System.out.println("Envío"+ generarLocalizador(rand, rand.getID())+ "creado correctamente");
 
         ListaEnvios.aniadirEnviosCsv();
         Envio envio =  ;

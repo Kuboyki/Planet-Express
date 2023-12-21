@@ -26,7 +26,7 @@ public class ListaNaves {
     // TODO: Devuelve el número de naves que hay en la lista
     public int getOcupacion() {
         for (int i = 0; i < naves.length; i++) {
-            if(naves[i]!=null){
+            if (naves[i] != null) {
                 ocupacion++;
             }
         }
@@ -41,7 +41,7 @@ public class ListaNaves {
         }
         return llena;
         */
-        return this.getOcupacion()==naves.length;
+        return this.getOcupacion() == naves.length;
 
     }
 
@@ -76,13 +76,13 @@ public class ListaNaves {
      * @return la nave que encontramos o null si no existe
      */
     public Nave buscarNave(String matricula) {
-        Nave encontrado=null;
-        for (int i = 0;i< naves.length;i++) {
+        Nave encontrado = null;
+        for (int i = 0; i < naves.length; i++) {
             if (naves[i].getMatricula().equals(matricula)) {
-                encontrado= naves[i];
+                encontrado = naves[i];
             }
         }
-        if (encontrado==null){
+        if (encontrado == null) {
             System.out.println("Matrícula de avión no encontrada.");
         }
         return encontrado;
@@ -113,8 +113,8 @@ public class ListaNaves {
     //Avión seleccionado con alcance insuficiente.
     //Ingrese matrícula de la nave: MS-19
     public Nave seleccionarNave(Scanner teclado, String mensaje, double alcance) {
-        String matricula = Utilidades.leerCadena(teclado,mensaje);//"Ingrese matrícula de la nave: "
-    while (buscarNave(matricula) == null  && buscarNave(matricula).getAlcance() < alcance){
+        String matricula = Utilidades.leerCadena(teclado, mensaje);//"Ingrese matrícula de la nave: "
+        while (buscarNave(matricula) == null && buscarNave(matricula).getAlcance() < alcance) {
 
             if (buscarNave(matricula).getAlcance() < alcance) {
                 System.out.print("Avión seleccionado con alcance insuficiente.");
@@ -123,7 +123,6 @@ public class ListaNaves {
         }
         return buscarNave(matricula);
 
-        //es así??????
     }
 
 
@@ -138,31 +137,26 @@ public class ListaNaves {
         boolean close = false;
         try {
             pw = new PrintWriter(new FileWriter(nombre)); //crear un objeto PrintWriter de un objeto File
-            int cont = 0;
-            String cadena;
 
-            do {
-
-
-            } while (cont != naves.length);//se termina cuando no hay más naves
-//        return  getMarca()+" "+getModelo()+" ("+getMatricula()+"): "+(getFilas()*getColumnas())+ " contenedores, hasta "+getAlcance()+" UA";
+            for (int i = 0; i < naves.length; i++) {
+                naves[i].toString();
+                //o es pw.println(mostrarNaves());
+            }
+            pw.close();
             close = true;
-
-            return true;
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + nombre + " no encontrado" + e.getMessage());
         } catch (IOException e) {
             //if (close == false) {
-                //System.out.println("Error de cierre de fichero "
-                   //     + e.getMessage());}
-
-                System.out.print("Error de escritura en fichero " + e.getMessage());
+            //System.out.println("Error de cierre de fichero "
+            //     + e.getMessage());}
+            System.out.print("Error de escritura en fichero "+nombre + e.getMessage());
         } finally {
             if (pw != null) {
                 pw.close();
             }
         }
-        return false;
+        return close;
     }
 
 
@@ -176,7 +170,6 @@ public class ListaNaves {
     public static ListaNaves leerNavesCsv(String fichero, int capacidad) {
         ListaNaves listaNaves = new ListaNaves(capacidad);
         Scanner sc = null;
-        boolean close = false;
         try {
             sc = new Scanner(new FileReader(fichero));
             String cadena;
@@ -187,13 +180,12 @@ public class ListaNaves {
                 System.out.println(cadena);
             }
             sc.close();
-            close = true;
             //añado excepciones
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
-        } catch (IOException e){
-            System.out.print("Error de lectura en fichero " + e.getMessage());
-        }finally {
+        } catch (IOException e) {
+            System.out.print("Error de lectura en fichero " +fichero+ e.getMessage());
+        } finally {
             if (sc != null) {
                 sc.close();
             }

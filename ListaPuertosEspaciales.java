@@ -35,7 +35,7 @@ public class ListaPuertosEspaciales {
 
     // TODO: ¿Está llena la lista?
     public boolean estaLlena() {
-        /*boolean lleno = false;
+        /* boolean lleno = false;
         if (getOcupacion() == lista.length) {
             lleno = true;
         }
@@ -122,9 +122,11 @@ public class ListaPuertosEspaciales {
         boolean closes = false;
         try {
             pw = new PrintWriter(new FileWriter(nombre));
-            closes = true;
+           for (int i=0; i< lista.length; i++){
+               pw.println(lista[i].toString());
+           }
             pw.close();
-            return true;
+            closes = true;
 
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + nombre + " no encontrado" + e.getMessage());
@@ -133,14 +135,14 @@ public class ListaPuertosEspaciales {
             //       System.out.println("Error de cierre de fichero "
             //                + e.getMessage());
             //   }else{
-            System.out.print("Error de escritura en fichero " + e.getMessage());
+            System.out.print("Error de escritura en fichero "+nombre + e.getMessage());
 
         } finally {
             if (pw != null) {
                 pw.close();
             }
         }
-        return false;
+        return closes;
     }
 
     /**
@@ -154,7 +156,6 @@ public class ListaPuertosEspaciales {
     public static ListaPuertosEspaciales leerPuertosEspacialesCsv(String fichero, int capacidad) {
         ListaPuertosEspaciales listaPuertosEspaciales = new ListaPuertosEspaciales(capacidad);
         Scanner sc = null;
-        boolean close = false;
         try {
             sc = new Scanner(new FileReader(fichero));
             String cadena;
@@ -162,8 +163,7 @@ public class ListaPuertosEspaciales {
                 cadena = sc.nextLine();
                 System.out.println(cadena);
             }
-            sc.close();
-            close = true;
+            sc.close(); //esto hay que ponerlo ?????????''
 
 
         } catch (FileNotFoundException e) {
@@ -181,7 +181,6 @@ public class ListaPuertosEspaciales {
                 sc.close();
             }
         }
-
         return listaPuertosEspaciales;
     }
 }
