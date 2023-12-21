@@ -85,7 +85,6 @@ public class Cliente {
      * @param maxEnvios
      * @return Cliente
      */
-    // me falta la parte del que se repita
     public static Cliente altaCliente(Scanner teclado, ListaClientes clientes, int maxEnvios) {
         Utilidades.leerCadena(teclado,"Nombre: ");
         String nombre = teclado.nextLine();

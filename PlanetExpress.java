@@ -25,7 +25,6 @@ public class PlanetExpress {
     private ListaEnvios listaEnvios;
 
 
-
     /**
      * TODO: Rellene el constructor de la clase
      *
@@ -56,11 +55,10 @@ public class PlanetExpress {
      */
     public void cargarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
         listaPuertosEspaciales = ListaPuertosEspaciales.leerPuertosEspacialesCsv(ficheroPuertos, maxPuertosEspaciales);
-        listaNaves =ListaNaves.leerNavesCsv(ficheroNaves,maxNaves); 
-        listaClientes =ListaClientes.leerClientesCsv(ficheroClientes,maxClientes,maxEnviosPorCliente);
-        listaPortes = ListaPortes.leerPortesCsv(ficheroPortes,maxPortes,listaPuertosEspaciales,listaNaves);
-        listaEnvios = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes,listaClientes);//listaPortes,listaClientes
-        //creo una variable de tipo---se puede hacer ?????????????????????????'
+        listaNaves = ListaNaves.leerNavesCsv(ficheroNaves, maxNaves);
+        listaClientes = ListaClientes.leerClientesCsv(ficheroClientes, maxClientes, maxEnviosPorCliente);
+        listaPortes = ListaPortes.leerPortesCsv(ficheroPortes, maxPortes, listaPuertosEspaciales, listaNaves);
+        listaEnvios = ListaEnvios.leerEnviosCsv(ficheroEnvios, listaPortes, listaClientes);
     }
 
 
@@ -75,11 +73,11 @@ public class PlanetExpress {
      * @param ficheroEnvios
      */
     public void guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
-       listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
+        listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
         listaNaves.escribirNavesCsv(ficheroNaves);
         listaClientes.escribirClientesCsv(ficheroClientes);
         listaPortes.escribirPortesCsv(ficheroPortes);
-        listaEnvios.aniadirEnviosCsv(ficheroEnvios);//como escrbiir los envios??????
+        listaEnvios.aniadirEnviosCsv(ficheroEnvios);//este ni guarda,no?? com ose guarda ????
 
     }
 
@@ -109,11 +107,11 @@ public class PlanetExpress {
      * @return
      */
     public ListaPortes buscarPorte(Scanner teclado) {
-String codigoOrigen = Utilidades.leerCadena(teclado, "Ingrese código de puerto Origen: ");
-String codigoDestino = Utilidades.leerCadena(teclado, "Ingrese código de puerto Destino: ");
-Fecha fecha = Utilidades.leerFecha(teclado, "Fecha de Salida: ");
-        ListaPortes portesLista=listaPortes.buscarPortes(codigoOrigen, codigoDestino, fecha);
-                //que es eso que pone depues de poner lo del poe¡rte de seleccionar porte ???????, eso hay que ponerlo aquí???
+        String codigoOrigen = Utilidades.leerCadena(teclado, "Ingrese código de puerto Origen: ");
+        String codigoDestino = Utilidades.leerCadena(teclado, "Ingrese código de puerto Destino: ");
+        Fecha fecha = Utilidades.leerFecha(teclado, "Fecha de Salida: ");
+
+        ListaPortes portesLista = listaPortes.buscarPortes(codigoOrigen, codigoDestino, fecha);
         return portesLista; //hay que dejarlo así ho hacer que salga lo de a que destino va y tal con toString()??????
     }
 
@@ -149,7 +147,7 @@ Fecha fecha = Utilidades.leerFecha(teclado, "Fecha de Salida: ");
         System.out.println("4. Mostrar envíos de un cliente.");
         System.out.println("5. Generar lista de envíos.");
         System.out.println("0. Salir.");
-        return Utilidades.leerNumero (teclado,"Seleccione opción: ",0, 5);
+        return Utilidades.leerNumero(teclado, "Seleccione opción: ", 0, 5);
     }
 
     /**
@@ -202,7 +200,7 @@ Fecha fecha = Utilidades.leerFecha(teclado, "Fecha de Salida: ");
                     break;
             }
         } while (opcion != 0);
-guardarDatos()
+        guardarDatos()
 
     }
 }

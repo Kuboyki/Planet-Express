@@ -93,7 +93,6 @@ while(buscarClienteEmail(email)==null){
 }
         return buscarClienteEmail(email);
     }
-    // No entiendo la parte de fichero hay que preguntar y hacer lo en clase. SOBREESCRIBIR ESTA EN EL TEMA 6 PAG 16
     /**
      * TODO: Método para guardar la lista de clientes en un fichero .csv, sobreescribiendo la información del mismo
      *  fichero
@@ -105,25 +104,25 @@ while(buscarClienteEmail(email)==null){
         boolean close = false;
         try {
             pw = new PrintWriter(new FileWriter(fichero));
-            int cont = 0;
-            String cadena;
-            do {
-            }while (cont != clientes.length);
+
+            for (int i =0; i<clientes.length; i++){
+                pw.println(clientes[i].toString());
+            }
+            pw.close();
             close = true;
-            return true;
         } catch (FileNotFoundException e) {
             System.out.println("Fichero " + fichero + " no encontrado" + e.getMessage());
         }catch (IOException e){
             //if (close == false) {
             //System.out.println("Error de cierre de fichero "
             //     + e.getMessage());}
-            System.out.println("Error de escritura en fichero " +e.getMessage());
+            System.out.println("Error de escritura en fichero " +fichero+e.getMessage());
         } finally {
             if (pw != null){
                 pw.close();
             }
         }
-        return false;
+        return close;
     }
 
     /**
@@ -137,37 +136,32 @@ while(buscarClienteEmail(email)==null){
     public static ListaClientes leerClientesCsv(String fichero, int capacidad, int maxEnviosPorCliente) {
         ListaClientes listaClientes = new ListaClientes(capacidad);
         Scanner sc = null;
-        boolean close = false;
         try {
-            sc = new Scanner((new FileReader(fichero)));
+            sc = new Scanner(new FileReader(fichero));
             String cadena;
-            while (sc.hasNextLine()){
+            while (sc.hasNextLine()) {
                 cadena = sc.nextLine();
                 System.out.println(cadena);
             }
-            sc.close();
-            close = true;
-
-        } catch (FileNotFoundException e) {
-            return null;
-        }
-        //añado excepciones
-        catch(FileNotFoundException e){
-            System.out.print("Fichero "+ficheroPuertos+" no encontrado"+ e.getMessage());
+            sc.close(); //esto hay que ponerlo ?????????''
+        }catch(FileNotFoundException e){
+            System.out.print("Fichero "+fichero+" no encontrado"+ e.getMessage());
         }catch(IOException e){
             System.out.print("Error de lectura de fichero "+e.getMessage());
-        }catch(IOException e) {
-            System.out.print("Error de escritura en fichero " + e.getMessage());
-        }finally {
-            if (salida != null) {
-                try {
-                    salida.close();
+       }finally {
+            if (sc != null) {
+               /* try{
+                    sc.close();
                 } catch (IOException e) {
                     System.out.println("Error de cierre de fichero "
                             + e.getMessage());
-                }
+                }*/
+                sc.close();
             }
         }
+
+
+
         return listaClientes;
     }
 }

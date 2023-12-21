@@ -1,6 +1,6 @@
+//Realizado por Sandra Blázquez Aldea bu0060 y DONG JINGHONG IWSIM11
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 
@@ -106,8 +106,7 @@ public class ListaPortes {
             if (portes[i].coincide(codigoOrigen,codigoDestino,fecha) ==true){
                 porte[portes[i]];
             }//com oguardo los portres ???????????????????
-            //Llegada debe ser posterior a salida. ???????--esto es del main, no???
-        }
+         }
         return porte;
     }
 
@@ -116,7 +115,7 @@ public class ListaPortes {
      */
     public void listarPortes() {
         for (int i = 0; i < portes.length; i++) {
-            portes[i].toString();
+            portes[i].toStringSimple();
         }
     }
 
@@ -134,15 +133,14 @@ public class ListaPortes {
     public Porte seleccionarPorte(Scanner teclado, String mensaje, String cancelar) {
         String combinacion = Utilidades.leerCadena(teclado, mensaje);//"Seleccione un porte:"
         Porte comb = buscarPorte(combinacion);
-        while (comb==null) {
-            if (combinacion == cancelar){
-                return null;
-                // como hago que vuelva empezar el menu 3--pg 3 ejemplo enunciado
+        boolean salir = false;
+        while (comb==null || !salir) {
+            if (combinacion == "cancelar" || combinacion == "CANCELAR"){
+                salir = true;
             }
              combinacion = Utilidades.leerCadena(teclado, mensaje);
         }
         return buscarPorte(combinacion);
-        //como diferencio entre que salga con nullpq le ha dado a cancelar y que sea null pq no se ha encontrado ningun porte y por tanto se teine que volver a preguntar
     }
 
     /**
@@ -154,28 +152,30 @@ public class ListaPortes {
      */
     public boolean escribirPortesCsv(String fichero) {
         PrintWriter pw = null;
-        boolean close = false;
+        boolean closes = false;
         try {
             pw = new PrintWriter(new FileWriter(fichero));
-            int cont = 0;
-            String constancia;
+            for (int i=0; i< portes.length; i++){
+                pw.println(portes [i].toString());
+            } //o es pw.println(listarPortes()); ????????????????????
+            pw.close();
+            closes = true;
 
-            do {
-
-            } while (cont != portes.length);
-
-            close = true;
-            return true;
         } catch (FileNotFoundException e) {
-            System.out.println("Fichero " + fichero + " no encontrado" + e.getMessage());
+            System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
         } catch (IOException e) {
+            //   if ( closes==false) {
+            //       System.out.println("Error de cierre de fichero "
+            //                + e.getMessage());
+            //   }else{
+            System.out.print("Error de escritura en fichero "+fichero + e.getMessage());
 
         } finally {
             if (pw != null) {
                 pw.close();
             }
         }
-        return false;
+        return closes;
     }
 
     /**
@@ -192,7 +192,13 @@ public class ListaPortes {
             puertosEspaciales, ListaNaves naves) {
         ListaPortes listaPortes = new ListaPortes(capacidad);
         try {
-            salida = new PrintWriter(new FileOutputStream(fichero));
+            sc = new Scanner(new FileReader(fichero));
+            String cadena;
+            while (sc.hasNextLine()) {
+                cadena = sc.nextLine();
+                System.out.println(cadena);
+            }
+            sc.close(); //esto hay que ponerlo ?????????''
 
         } catch (Exception e) {
             return null;
@@ -200,10 +206,14 @@ public class ListaPortes {
         //añado excepciones
         catch (FileNotFoundException e) {
             System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
-        } catch (IOException e) {
-            System.out.print("Error de lectura de fichero " + e.getMessage());
+            // } catch (IOException e) {
+            //      System.out.print("Error de lectura de fichero " + e.getMessage());
+        } finally {
+            if (sc != null) {
+                sc.close();
+            }
         }
-        //Sin finally??
+
         return listaPortes;
     }
 }
