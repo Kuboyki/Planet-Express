@@ -150,10 +150,11 @@ public class ListaNaves {
             //if (close == false) {
             //System.out.println("Error de cierre de fichero "
             //     + e.getMessage());}
-            System.out.print("Error de escritura en fichero "+nombre + e.getMessage());
+            System.out.print("Error de escritura en fichero " + nombre + e.getMessage());
         } finally {
             if (pw != null) {
                 pw.close();
+                close = true;
             }
         }
         return close;
@@ -169,25 +170,27 @@ public class ListaNaves {
      */
     public static ListaNaves leerNavesCsv(String fichero, int capacidad) {
         ListaNaves listaNaves = new ListaNaves(capacidad);
-        Scanner sc = null;
+        BufferedReader sc = null;
         try {
-            sc = new Scanner(new FileReader(fichero));
+            sc = new BufferedReader(new FileReader(fichero));
             String cadena;
-            while (sc.hasNextLine()) {
-                //mientras cadena tenga líneas que leer
-                // si feues leer enteros= hasNextInt()
-                cadena = sc.nextLine(); //me devuelve true si hay algo qye leer, y lo im`rimo
-                System.out.println(cadena);
+            while ((cadena = sc.readLine()) != null) {
+
+                String[] dato = cadena.split("");
+                Nave nave = new Nave(dato[0], dato[1], dato[2], Integer.parseInt(dato[3]), Integer.parseInt(dato[4]), Double.parseDouble(dato[5]));
+                listaNaves.insertarNave(nave);
             }
-            sc.close();
-            //añado excepciones
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
         } catch (IOException e) {
-            System.out.print("Error de lectura en fichero " +fichero+ e.getMessage());
+            System.out.print("Error de lectura de fichero " + e.getMessage());
         } finally {
             if (sc != null) {
-                sc.close();
+                try {
+                    sc.close();
+                } catch (IOException ex) {
+                    System.out.println("Error de cierre de fichero ");
+                }
             }
         }
         return listaNaves;

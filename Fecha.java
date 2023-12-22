@@ -13,7 +13,8 @@ public class Fecha {
      * Meses del año.
      */
 
-    enum Meses { ENERO, FEBRERO, MARZO, ABRIL, MAYO, JUNIO, JULIO, AGOSTO, SEPTIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE }
+    enum Meses {ENERO, FEBRERO, MARZO, ABRIL, MAYO, JUNIO, JULIO, AGOSTO, SEPTIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE}
+
     /**
      * Primer año para fecha válida.
      */
@@ -82,8 +83,8 @@ public class Fecha {
      * Constructor de la clase Fecha usado para definir
      * únicamente la fecha, pero no la hora del evento.
      *
-     * @param dia Dia del evento
-     * @param mes Mes del evento
+     * @param dia  Dia del evento
+     * @param mes  Mes del evento
      * @param anio Año del evento
      */
     public Fecha(int dia, int mes, int anio) {
@@ -99,11 +100,11 @@ public class Fecha {
      * Constructor de la clase Fecha usado para definir
      * fecha y hora de un evento.
      *
-     * @param dia Dia del evento
-     * @param mes Mes del evento
-     * @param anio Año del evento
-     * @param hora Hora del evento
-     * @param minuto Minutos del evento
+     * @param dia     Dia del evento
+     * @param mes     Mes del evento
+     * @param anio    Año del evento
+     * @param hora    Hora del evento
+     * @param minuto  Minutos del evento
      * @param segundo Segundos del evento
      */
     public Fecha(int dia, int mes, int anio, int hora, int minuto, int segundo) {
@@ -120,7 +121,7 @@ public class Fecha {
      *
      * @return Dia del evento
      */
-    public int getDia(){
+    public int getDia() {
         return dia;
     }
 
@@ -129,7 +130,7 @@ public class Fecha {
      *
      * @return Mes del evento
      */
-    public int getMes(){
+    public int getMes() {
         return mes;
     }
 
@@ -138,7 +139,7 @@ public class Fecha {
      *
      * @return Año del evento
      */
-    public int getAnio(){
+    public int getAnio() {
         return anio;
     }
 
@@ -179,7 +180,7 @@ public class Fecha {
         //Eventos sin hora
         if (hora < 0)
             evento = String.format("%02d/%02d/%04d", dia, mes, anio);
-        //Eventos con hora
+            //Eventos con hora
         else
             evento = String.format("%02d/%02d/%04d %02d:%02d:%02d", dia, mes, anio, hora, minuto, segundo);
         return evento;
@@ -192,10 +193,10 @@ public class Fecha {
      * @param fecha Fecha que se quiere comprobar si coincide con la fecha del evento
      * @return true si ambas fechas coinciden, false en caso contrario
      */
-    public boolean coincide(Fecha fecha){
+    public boolean coincide(Fecha fecha) {
         boolean igual = anio == fecha.getAnio() && mes == fecha.getMes() && dia == fecha.getDia();
         //Caso en el que hay hora en ambos eventos
-        if (hora >= 0 && fecha.hora >= 0){
+        if (hora >= 0 && fecha.hora >= 0) {
             igual = igual && hora == fecha.getHora() && minuto == fecha.getMinuto() && segundo == fecha.getSegundo();
         }
         return igual;
@@ -211,7 +212,7 @@ public class Fecha {
     public boolean anterior(Fecha fecha) {
         String thisString = "";
         String fechaString = "";
-        if (hora >= 0 && fecha.hora >= 0){
+        if (hora >= 0 && fecha.hora >= 0) {
             thisString = String.format("%04d%02d%02d%02d%02d%02d", anio, mes, dia, hora, minuto, segundo);
             fechaString = String.format("%04d%02d%02d%02d%02d%02d", fecha.getAnio(), fecha.getMes(), fecha.getDia(), fecha.getHora(), fecha.getMinuto(), fecha.getSegundo());
         } else {
@@ -222,6 +223,7 @@ public class Fecha {
     }
 
     //Metodos estaticos
+
     /**
      * Función que comprueba si un año es bisiesto.
      * Se considera que un año es bisiesto si:
@@ -252,18 +254,18 @@ public class Fecha {
      * cada mes, incluyendo la consideración de años bisiestos para
      * dar el 29 de febrero como válido.
      *
-     * @param dia Dia del evento
-     * @param mes Mes del evento
+     * @param dia  Dia del evento
+     * @param mes  Mes del evento
      * @param anio Año del evento
      * @return true si la fecha es correcta, false en caso contrario
      */
     public static boolean comprobarFecha(int dia, int mes, int anio) {
         boolean fechaCorrecta = anio >= PRIMER_ANIO && anio <= ULTIMO_ANIO && mes >= 1 && mes <= MESES_ANIO && dia >= 1 && dia <= DIAS_MES;
-        if (fechaCorrecta){
+        if (fechaCorrecta) {
             // Mes de Febrero tiene 28 días (29 en bisiesto)
             if (mes == Meses.FEBRERO.ordinal() + 1)
                 fechaCorrecta = dia <= DIAS_FEBRERO || (dia <= DIAS_FEBRERO + 1 && esBisiesto(anio));
-            //Meses de Abril, Junio, Septiembre y Noviembre tienen 30 días
+                //Meses de Abril, Junio, Septiembre y Noviembre tienen 30 días
             else if (mes == Meses.ABRIL.ordinal() + 1 || mes == Meses.JUNIO.ordinal() + 1
                     || mes == Meses.SEPTIEMBRE.ordinal() + 1 || mes == Meses.NOVIEMBRE.ordinal() + 1)
                 fechaCorrecta = dia <= DIAS_MES - 1;
@@ -276,8 +278,8 @@ public class Fecha {
      * Una hora es correcta cuando los valores de hora, minuto y
      * segundo se encuentran dentro de sus correspondientes rangos.
      *
-     * @param hora Hora del evento
-     * @param minuto Minutos del evento
+     * @param hora    Hora del evento
+     * @param minuto  Minutos del evento
      * @param segundo Segundos del evento
      * @return true si la hora es correcta, false en caso contrario
      */
@@ -312,7 +314,7 @@ public class Fecha {
         }
         //Evento con hora
         if (division.length > 1) {
-            String [] tiempo = division[1].split(":");
+            String[] tiempo = division[1].split(":");
             if (tiempo.length == LENGTH) {
                 hora = Integer.parseInt(tiempo[0]);
                 minuto = Integer.parseInt(tiempo[1]);

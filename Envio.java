@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
@@ -9,7 +10,7 @@ import java.util.Scanner;
  *
  * @author
  * @author
- * @version     1.0
+ * @version 1.0
  */
 public class Envio {
 
@@ -38,65 +39,74 @@ public class Envio {
         this.columna = columna;
         this.precio = precio;
     }
+
     public String getLocalizador() {
         return localizador;
     }
+
     public Porte getPorte() {
         return porte;
     }
+
     public Cliente getCliente() {
         return cliente;
     }
+
     public int getFila() {
         return fila;
     }
+
     public int getColumna() {
         return columna;
     }
+
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
-        return getFila()+String.valueOf(getColumna())+" para el hueco con fila "+getFila()+" y columna "+getColumna();
+        return getFila() + String.valueOf(getColumna()) + " para el hueco con fila " + getFila() + " y columna " + getColumna();
     }
+
     public double getPrecio() {
         return precio;
     }
+
     //TODO: Texto que debe generar: Envío PM1111AAAABBBBC para Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05) en hueco 6C por 13424,56 SSD
     public String toString() {
 
-        return   "Envío "+getLocalizador()+ " para Porte " +getPorte().getID()+" de "
-                +porte.getOrigen()+" "+porte.getMuelleOrigen()+ "("+porte.getSalida() + ") a "
-                +porte.getDestino()+" "+ porte.getMuelleDestino()+" ("+porte.getLlegada()+ " " +getHora()+
-                ") en hueco "+getFila()+String.valueOf(getColumna())+" por "+getPrecio()+ "SSD";
+        return "Envío " + getLocalizador() + " para Porte " + getPorte().getID() + " de "
+                + porte.getOrigen() + " " + porte.getMuelleOrigen() + "(" + porte.getSalida() + ") a "
+                + porte.getDestino() + " " + porte.getMuelleDestino() + " (" + porte.getLlegada() + ") en hueco " + getFila() + String.valueOf(getColumna()) + " por " + getPrecio() + "SSD";
 
     }
+
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
     public boolean cancelar() {
         boolean cancelar = false;
-        String localizador= getLocalizador();
+        String localizador = getLocalizador();
         cliente.cancelarEnvio(localizador);
         porte.desocuparHueco(localizador);
-         if (cliente.buscarEnvio(localizador) ==null &&  porte.buscarEnvio(localizador)==null){
-             cancelar =true;
-         }
-         return cancelar;
+        if (cliente.buscarEnvio(localizador) == null && porte.buscarEnvio(localizador) == null) {
+            cancelar = true;
+        }
+        return cancelar;
     }
 
     /**
      * TODO: Método para imprimir la información de este envío en un fichero que respecta el formato descrito en el
      *  enunciado
+     *
      * @param fichero
      * @return Devuelve la información con el siguiente formato como ejemplo ->
-     *     -----------------------------------------------------
-     *     --------- Factura del envío PM1111AAAABBBBC ---------
-     *     -----------------------------------------------------
-     *     Porte: PM0066
-     *     Origen: Gaia Galactic Terminal (GGT) M5
-     *     Destino: Cidonia (CID) M1
-     *     Salida: 01/01/2023 08:15:00
-     *     Llegada: 01/01/2024 11:00:05
-     *     Cliente: Zapp Brannigan, zapp.brannigan@dop.gov
-     *     Hueco: 6C
-     *     Precio: 13424,56 SSD
+     * -----------------------------------------------------
+     * --------- Factura del envío PM1111AAAABBBBC ---------
+     * -----------------------------------------------------
+     * Porte: PM0066
+     * Origen: Gaia Galactic Terminal (GGT) M5
+     * Destino: Cidonia (CID) M1
+     * Salida: 01/01/2023 08:15:00
+     * Llegada: 01/01/2024 11:00:05
+     * Cliente: Zapp Brannigan, zapp.brannigan@dop.gov
+     * Hueco: 6C
+     * Precio: 13424,56 SSD
      */
     public boolean generarFactura(String fichero) { //yo guardo en el ficheor lo de arriba
         PrintWriter pw = null;
@@ -104,36 +114,56 @@ public class Envio {
 
         try {
             pw = new PrintWriter(new FileWriter(fichero));
-close=true;
+            pw.println(" -----------------------------------------------------");
+            pw.println("--------- Factura del envío " + getLocalizador() + " ---------");
+            pw.println(" -----------------------------------------------------");
+            pw.println("Porte: " + getPorte().getID());
+            pw.println("Origen: " + getPorte().getOrigen().getNombre() + " (" + getPorte().getOrigen().getCodigo() + ") " + getPorte().getMuelleOrigen());
+            pw.println("Destino: " + getPorte().getDestino().getNombre() + " (" + getPorte().getDestino().getCodigo() + ") " + getPorte().getMuelleDestino());
+            pw.println("Salida: " + getPorte().getSalida());
+            pw.println("Llegada: " + getPorte().getLlegada());
+            pw.println("Cliente: " + getCliente() + ", " + getCliente().getEmail());
+            pw.println("Hueco: " + getHueco());
+            pw.println("Precio: " + getPrecio() + " SSD");
+
+            System.out.println("Factura generada correctamente");
+
+
+
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
-
+        } catch (IOException e) {
+            System.out.print("Error de escritura en fichero " + fichero + e.getMessage());
+        } finally {
+            if (pw != null) {
+                pw.close();
+                close = true;
+            }
         }
         return close;
     }
 
 
-
     /**
-     *	TODO: Genera un localizador de envío. Este consistirá en una cadena de 15 caracteres, de los cuales los seis
-	 *   primeros será el ID del porte asociado y los 9 siguientes serán letras mayúsculas aleatorias. Ejemplo: PM0123ABCD
+     * TODO: Genera un localizador de envío. Este consistirá en una cadena de 15 caracteres, de los cuales los seis
+     *   primeros será el ID del porte asociado y los 9 siguientes serán letras mayúsculas aleatorias. Ejemplo: PM0123ABCD
      *   NOTA: Usar el objeto rand pasado como argumento para la parte aleatoria.
+     *
      * @param rand
      * @param idPorte
      * @return
      */
     public static String generarLocalizador(Random rand, String idPorte) {
         StringBuilder localizador = new StringBuilder(idPorte);
-final String cadena= "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-        for (int i =0; i<6; i++ ){
-            rand= new Random(); // está indicado que es hasta 27???
-           // int posicion = Math.round(rand);
-            int posicion = (int) rand;
+        final String cadena = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+        for (int i = 0; i < 6; i++) {
+            rand = new Random();
+            int posicion = rand.nextInt(26);
             char letra = cadena.charAt(posicion);
             localizador.append(letra);
-
         }
-        return  localizador;
+
+        return String.valueOf(localizador);
     }
 
 
@@ -141,6 +171,7 @@ final String cadena= "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
      * TODO: Método para crear un nuevo envío para un porte y cliente específico, pidiendo por teclado los datos
      *  necesarios al usuario en el orden y con los textos indicados en los ejemplos de ejecución del enunciado
      *  La función solicita repetidamente los parámetros hasta que sean correctos
+     *
      * @param teclado
      * @param rand
      * @param porte
@@ -148,29 +179,27 @@ final String cadena= "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
      * @return Envio para el porte y cliente especificados
      */
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
-        ListaPortes.seleccionarPorte(teclado,"Seleccione un porte: ",generarLocalizador(rand, porte.getID()));
-        //ListaPortes.seleccionarPorte(teclado,"Seleccione un porte: ", String cancelar);
 
-        char letra=Utilidades.leerLetra(teclado,"¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?",'e','n');
-        while(letra != 'n' || letra != 'e') {
-            System.out.println("El valor de entrada debe ser 'n' o 'e'");
-            letra=Utilidades.leerLetra(teclado,"¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?",'e','n');
+
+        int fila = Utilidades.leerNumero(teclado, "Fila del hueco: ", 1, porte.contarFila());
+        int columna = Utilidades.leerNumero(teclado, "Columna del hueco: ", 1, porte.contarColumna());
+porte.imprimirMatrizHuecos();
+        while (porte.huecoOcupado(fila, porte.contarColumna())){
+            fila = Utilidades.leerNumero(teclado, "Fila del hueco: ", 1, porte.contarFila());
+            columna = Utilidades.leerNumero(teclado, "Columna del hueco: ", 1, porte.contarColumna());
         }
+        double precio = Utilidades.leerNumero(teclado, "Precio del envío: ", 0, Double.MAX_VALUE);
+        String localizador= generarLocalizador(rand, porte.getID());
 
-        cliente.seleccionarEnvio(teclado,"Email del cliente: ");
-        //o era   listaClientes.seleccionarCliente(teclado,"Email del cliente: ");
+        Envio envio = new Envio(localizador,porte,cliente,fila,columna,precio);
+
+        System.out.println("Envío" + localizador + "creado correctamente");
+
+       cliente.getListaEnvios().insertarEnvio(envio);
+       cliente.aniadirEnvio(envio);
+       porte.ocuparHueco(envio);
 
 
-        int fila=Utilidades.leerNumero(teclado,"Fila del hueco: ",1,porte.getmaxFila());
-        int columna=Utilidades.leerNumero(teclado,"Columna del hueco: ",1,getmaxColumna() );
-
-       Utilidades.leerNumero(teclado,"Precio del envío: ", , );
-
-                System.out.println("Envío"+ generarLocalizador(rand, rand.getID())+ "creado correctamente");
-
-        ListaEnvios.aniadirEnviosCsv();
-        Envio envio =  ;
-        ListaEnvios.insertarEnvio(envio);
-return envio;
+        return envio;
     }
 }

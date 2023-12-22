@@ -107,7 +107,6 @@ public class ListaPuertosEspaciales {
             codigo = Utilidades.leerCadena(teclado, mensaje); //"Ingrese código de puerto Origen: //destino "
         }
         return buscarPuertoEspacial(mensaje);
-//está bien ????
 
     }
 
@@ -123,10 +122,9 @@ public class ListaPuertosEspaciales {
         try {
             pw = new PrintWriter(new FileWriter(nombre));
            for (int i=0; i< lista.length; i++){
-               pw.println(lista[i].toString());
+               pw.print(lista[i].toString());
+
            }
-            pw.close();
-            closes = true;
 
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + nombre + " no encontrado" + e.getMessage());
@@ -140,6 +138,7 @@ public class ListaPuertosEspaciales {
         } finally {
             if (pw != null) {
                 pw.close();
+                closes=true;
             }
         }
         return closes;
@@ -155,17 +154,21 @@ public class ListaPuertosEspaciales {
      */
     public static ListaPuertosEspaciales leerPuertosEspacialesCsv(String fichero, int capacidad) {
         ListaPuertosEspaciales listaPuertosEspaciales = new ListaPuertosEspaciales(capacidad);
-        Scanner sc = null;
+     //   Scanner sc = null;
+    BufferedReader sc = null;
         try {
-            sc = new Scanner(new FileReader(fichero));
+       // sc = new Scanner(new FileReader(fichero));
+       sc=new BufferedReader(new FileReader(fichero));
             String cadena;
-            while (sc.hasNextLine()) {
-                cadena = sc.nextLine();
-                System.out.println(cadena);
+            //while (sc.hasNextLine()) {
+        while ((cadena= sc.readLine()) != null) {
+
+                String[] dato =cadena.split("");
+              //  cadena = sc.nextLine();
+              //  System.out.println(cadena);
+                PuertoEspacial puertoEspacial= new PuertoEspacial(dato[0], dato[1], Double.parseDouble(dato[2]),Double.parseDouble(dato[3]), Double.parseDouble(dato[4]), Integer.parseInt(dato[5]) );
+                listaPuertosEspaciales.insertarPuertoEspacial(puertoEspacial);
             }
-            sc.close(); //esto hay que ponerlo ?????????''
-
-
         } catch (FileNotFoundException e) {
             System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
         } catch (IOException e) {
@@ -175,10 +178,13 @@ public class ListaPuertosEspaciales {
             //                 + e.getMessage());
             //     }else{
             System.out.print("Error de lectura de fichero " + e.getMessage());
-
         } finally {
             if (sc != null) {
-                sc.close();
+                try {
+                    sc.close();
+                }catch (IOException ex){
+             System.out.println("Error de cierre de fichero ");
+                }
             }
         }
         return listaPuertosEspaciales;

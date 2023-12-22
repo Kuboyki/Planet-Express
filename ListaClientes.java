@@ -135,28 +135,27 @@ while(buscarClienteEmail(email)==null){
      */
     public static ListaClientes leerClientesCsv(String fichero, int capacidad, int maxEnviosPorCliente) {
         ListaClientes listaClientes = new ListaClientes(capacidad);
-        Scanner sc = null;
+        BufferedReader sc = null;
         try {
-            sc = new Scanner(new FileReader(fichero));
+            sc=new BufferedReader(new FileReader(fichero));
             String cadena;
-            while (sc.hasNextLine()) {
-                cadena = sc.nextLine();
-                System.out.println(cadena);
+            while ((cadena= sc.readLine()) != null) {
+                String[] dato =cadena.split("");
+Cliente cliente = new Cliente(dato[0] ,dato[1],dato[2],maxEnviosPorCliente);
+listaClientes.insertarCliente(cliente);
             }
-            sc.close(); //esto hay que ponerlo ?????????''
         }catch(FileNotFoundException e){
             System.out.print("Fichero "+fichero+" no encontrado"+ e.getMessage());
         }catch(IOException e){
             System.out.print("Error de lectura de fichero "+e.getMessage());
        }finally {
             if (sc != null) {
-               /* try{
+                try{
                     sc.close();
                 } catch (IOException e) {
                     System.out.println("Error de cierre de fichero "
                             + e.getMessage());
-                }*/
-                sc.close();
+                }
             }
         }
 

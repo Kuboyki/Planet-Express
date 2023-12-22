@@ -1,7 +1,6 @@
-import jdk.jshell.execution.Util;
-import org.w3c.dom.html.HTMLLegendElement;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
@@ -102,7 +101,7 @@ public class Porte {
 
     // TODO: ¿Están llenos todos los huecos?
     public boolean porteLleno() {
-        boolean vacio = false;
+       /* boolean vacio = false;
         for (int i = 0; i < huecos.length; i++) {
             for (int j = 0; j < huecos.length; j++) {
                 if (huecos[i] == null && huecos[j] == null) {
@@ -110,20 +109,21 @@ public class Porte {
                     return vacio;
 
                 }
-            }//es así o con listaEnvios.buscarEnvio(localizador).getFila(); como en el metodo de desocupar
+            }*/
+        boolean lleno = false;
+        if (numHuecosLibres() == 0) {
+            lleno = true;
         }
-        return vacio;
+        return lleno; //vacio
     }
 
     // TODO: ¿Está ocupado el hueco consultado?
     public boolean huecoOcupado(int fila, int columna) {
-        boolean lleno = false;
-        if (huecos[fila][columna] == true) {
-            lleno = true;
-            return lleno;
-        } else {
-            return lleno;
-        }//es así o con listaEnvios.buscarEnvio(localizador).getFila(); como en el metodo de desocupar
+        boolean ocupado = false;
+        if (huecos[fila][columna]) { //está bien ??
+            ocupado = true;
+        }
+        return ocupado;
     }
 
     public Envio buscarEnvio(String localizador) {
@@ -137,12 +137,8 @@ public class Porte {
      * @param columna
      * @return el objeto Envio que corresponde, o null si está libre o se excede en el límite de fila y columna
      */
-    public Envio buscarEnvio(int fila, int columna) {
-//está bien asñi ???
-        if(buscarEnvio(getID())!=null){
-            return listaEnvios.buscarEnvio(getID(), fila, columna);
-        }
-        return null;
+    public Envio buscarEnvio(int fila, int columna) { //está bien así??
+        return buscarEnvio(fila, columna);
     }
 
 
@@ -155,19 +151,35 @@ public class Porte {
      */
     public boolean ocuparHueco(Envio envio) {
         boolean ocupado = false;
-        if (desocuparHueco(envio.getLocalizador()) == true) {
+
+        if (!huecoOcupado(envio.getFila(), envio.getColumna())) {
+            for (int i = 0; i < huecos.length; i++) {
+                for (int j = 0; j < huecos.length; j++) {
+                    if (!huecos[i][j]) {
+                        huecos[i][j] = huecos[envio.getFila()][envio.getColumna()];
+                    }
+                }
+            }
             ocupado = true;
         }
         return ocupado;
     }
-    public int contarFila (){
-        return nave.getFilas();
-    }
-    public int contarColumna (){
-        return nave.getColumnas();
+
+    int contarFila() {
+        int cont = 0;
+        for (int i = 0; i < huecos.length; i++) {
+            for (int j = 0; j < 1; j++) {
+                cont++;
+            }
+        }
+        return cont;
     }
 
-    //que fila y columna de que clase lo quieres.
+    int contarColumna() {
+        return huecos.length;
+    }
+    //ESTO SE PONE ???????? PARA LA CALSE ENVIOS ALTA ENVISOS ?????
+
 
     /**
      * TODO: A través del localizador del envio, se desocupará el hueco
@@ -183,7 +195,7 @@ public class Porte {
         for (int i = 0; i < fila; i++) {
             for (int j = 0; j < columna; j++) {
                 if (huecos[i][j] == huecos[fila][columna]) {
-                    huecos[i][j] = Boolean.parseBoolean(null);
+                    huecos[i][j] = false;
                     salir = true;
                 }
             }
@@ -198,12 +210,12 @@ public class Porte {
      * Cidonia(CID) M1 (01/01/2024 11:00:05) en Planet Express One(EP-245732X) por 13424,56 SSD, huecos libres: 10"
      */
     public String toString() {
-        return "Porte " + generarID(new Random()) + " de " + origen.getNombre() + origen.getCodigo() + " M" + origen.getMuelles() + " " + salida.toString() +
-                " a " + destino.getNombre() + destino.getCodigo() + " M" + destino.getMuelles() + " " + llegada.toString() +" "+ nave.toStringSimple()
-                +" por"+getPrecio()+"SSD, huecos libres: "+numHuecosLibres();
-        //return "Porte " + PM0066 + " de " + Gaia Galactic Terminal +" (" GGT ") " + M5 + " (" 01 / 01 / 2023 08:15:00
-        //") a " + Cidonia "(" CID ") " M1 " (" 01 / 01 / 2024 11:00:05 ") en " + Planet Express One +"(" + EP - 245732
-        //X + ") por " + 13424, 56 SSD ", huecos libres: " + numHuecosLibres();
+        return "Porte " + getID() + " de " + getOrigen().getNombre() + "(" + getOrigen().getCodigo() + ") " + getMuelleOrigen() +
+                " (" + getSalida().getDia() + "/" + getSalida().getMes() + "/" + getSalida().getAnio() + " " + getSalida().getHora() + ":"
+                + getSalida().getMinuto() + ":" + getSalida().getSegundo() + ") a " + getDestino().getNombre() + " (" + getDestino().getCodigo() + ") " + getMuelleDestino() + " ("
+                + getLlegada().getDia() + "/" + getLlegada().getMes() + "/" + getLlegada().getAnio() + " " + getLlegada().getHora() + ":"
+                + getLlegada().getMinuto() + ":" + getLlegada().getSegundo() + ") en " + getNave() + "(" + getNave().getMatricula() + ") por"
+                + getPrecio() + "SSD, huecos libres: " + numHuecosLibres();
     }
 
     /**
@@ -212,11 +224,12 @@ public class Porte {
      * @return ejemplo del formato -> "Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05)"
      */
     public String toStringSimple() {
-        return "Porte "+getID()+" de "+origen.getCodigo()+" M"+origen.getMuelles()+" "+salida.toString()+" a "+destino.getCodigo()+" M"+destino.getMuelles()+ " "+
-                llegada.toString();
-        //return "Porte " PM0066 " de " GGT M5 " (" 01 / 01 / 2023 08:15:00 ") a " CID M1 " (" 01 / 01 / 2024 11:00:05
-        //")";
-        //return "Porte "
+        return "Porte " + getID() + " de " + getOrigen().getCodigo() + " " + getMuelleOrigen() +
+                " (" + getSalida().getDia() + "/" + getSalida().getMes() + "/" + getSalida().getAnio() + " " + getSalida().getHora() + ":"
+                + getSalida().getMinuto() + ":" + getSalida().getSegundo() + ") a " + getDestino().getCodigo() + " " + getMuelleDestino() + " ("
+                + getLlegada().getDia() + "/" + getLlegada().getMes() + "/" + getLlegada().getAnio() + " " + getLlegada().getHora() + ":"
+                + getLlegada().getMinuto() + ":" + getLlegada().getSegundo() + ")";
+
     }
 
     /**
@@ -228,13 +241,16 @@ public class Porte {
      * @return
      */
     public boolean coincide(String codigoOrigen, String codigoDestino, Fecha fecha) {
-        if (origen.getCodigo().equals(codigoOrigen) && destino.getCodigo().equals(codigoDestino)) {
-            if (salida.getDia() == fecha.getDia() && salida.getMes() == fecha.getMes() && salida.getAnio() == fecha.getAnio()) {
+        boolean coincide = false;
+        if (getOrigen().getCodigo().equals(codigoOrigen) && getDestino().getCodigo().equals(codigoDestino) &&
+                (getSalida().equals(fecha) || getLlegada().equals(fecha))) {
+
+            /*if (salida.getDia() == fecha.getDia() && salida.getMes() == fecha.getMes() && salida.getAnio() == fecha.getAnio()) {
                 return true;
-            }
-            return false;
+            }*/
+            coincide = true;
         }
-        return false;
+        return coincide;
     }
 
     /**
@@ -247,29 +263,30 @@ public class Porte {
      *     10[ ][ ][ ]
      */
     public void imprimirMatrizHuecos() {
-        System.out.print("     *");
-        for (char c = 'A'; c < 'A' + huecos.length; c++) {
-            System.out.print(" " + c);
-        }
-        System.out.println();
+
+        System.out.print("    ");
+        final String cadena = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+        final String numeros = "123456789"; //se puede hacer asñi suponiendo que no van a haber más de 9 filas ????
+        //qué significan los números ?? el numero de huecos libres o el numero de que ?????
 
         for (int i = 0; i < huecos.length; i++) {
-            System.out.print("     " + (i + 1) + " [");
-            for (int j = 0; j < huecos[i].length; j++) {
-                if (huecos[i][j] == true) {
-                    System.out.print("X");
-                } else {
-                    System.out.println(" ");
-                    if (j < huecos[i].length - 1) {
-                        System.out.print("][");
-                    } else {
-                        System.out.print("]");
-                    }
+            System.out.print(cadena.charAt(i));
+        }
+        System.out.println(" ");
+        for (int i = 0; i < contarFila(); i++) { //está bien así ???? en lugar de poner huecos.length
+            System.out.print(numeros.charAt(i));
+            for (int j = 0; j < contarColumna(); j++) {
+                if (huecoOcupado(i, j)) {
+                    System.out.print("[X]");
+                } else if (!huecoOcupado(i, j)) {
+                    System.out.print("[ ]");
+//qué había mal en el enunciado de la preunta ????
                 }
-                System.out.println();
             }
+            System.out.println(" ");
         }
     }
+
     /**
      * TODO: Devuelve true si ha podido escribir en un fichero la lista de envíos del porte, siguiendo las indicaciones
      *  del enunciado
@@ -279,18 +296,25 @@ public class Porte {
      */
     public boolean generarListaEnvios(String fichero) {
         PrintWriter pw = null;
+        boolean lectura = false;
+        ListaPortes portes = null;
         try {
             pw = new PrintWriter(fichero);
-            pw.println();
-            return true;
+            for (int i = 0; i < listaEnvios.getOcupacion(); i++) {
+                pw.println(portes.getPorte(i).toStringSimple());
+            }
+            lectura = true;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
+            System.out.print("Fichero " + fichero + " no encontrado" + e.getMessage());
+        } catch (IOException e) {
+            System.out.print("Error de escritura en fichero " + fichero + e.getMessage());
+
         } finally {
             if (pw != null) {
                 pw.close();
             }
         }
+        return lectura;
     }
 
 
@@ -307,7 +331,8 @@ public class Porte {
         for (int i = 0; i < 4; i++) {
             idPorte.append(rand.nextInt(10));
         }
-        return null;
+        return String.valueOf(idPorte);
+        //esto esta bien así ?????
     }
 
     /**
@@ -324,44 +349,74 @@ public class Porte {
      * @return
      */
     public static Porte altaPorte(Scanner teclado, Random rand, ListaPuertosEspaciales puertosEspaciales,
-                                  ListaNaves naves, ListaPortes portes){
+                                  ListaNaves naves, ListaPortes portes) {
 
-        if(portes.estaLlena()==true){
+       /* if (portes.estaLlena()) {
             System.out.println("No se pueden dar de alta más vuelos.");
+        }*/
+        String codigoOrigen = Utilidades.leerCadena(teclado, "Ingrese código de puerto Origen: ");
+        boolean salir = false;
+        PuertoEspacial puerto1=null;
+        do{
+            System.out.println("Código de puerto no encontrado.");
+             codigoOrigen = Utilidades.leerCadena(teclado, "Ingrese código de puerto Origen: ");
+             puerto1 =puertosEspaciales.buscarPuertoEspacial(codigoOrigen);//esto se pone en el main ????
+            /*
+             PuertoEspacial puerto1 =null;//esto se pone en el main ????
+
+        while(puerto1!=null){
+            System.out.println("Código de puerto no encontrado.");
+             codigoOrigen = Utilidades.leerCadena(teclado, "Ingrese código de puerto Origen: ");
+             puerto1 =puertosEspaciales.buscarPuertoEspacial(codigoOrigen);//esto se pone en el main ????
+
+             */
+
+        }while(puerto1!=null);
+        int muelle1 = Utilidades.leerNumero(teclado, "Ingresar el muelle de Origen (1 - 4): ", 1, 4);
+
+        String codigoDestino = Utilidades.leerCadena(teclado, "Ingrese código de puerto Destino: ");
+        PuertoEspacial puerto2 =puertosEspaciales.buscarPuertoEspacial(codigoDestino);//esto se pone en el main ????
+        while(puerto2==null){
+            codigoDestino = Utilidades.leerCadena(teclado, "Ingrese código de puerto Destino: ");
         }
-        Porte nPorte = null;
-            PuertoEspacial puerto1=puertosEspaciales.seleccionarPuertoEspacial(teclado,"Ingrese código de puerto Origen: ");
-            int muelleo = Utilidades.leerNumero(teclado,"Ingresar el muelle de Origen (1 - 4): ",1,4);
-            int muelled =  Utilidades.leerNumero(teclado,"Ingrese Terminal Destino (1 - 6):",1,6);
-            PuertoEspacial puerto2=puertosEspaciales.seleccionarPuertoEspacial(teclado,"Ingrese código de puerto Destino: ");
-            naves.seleccionarNave(teclado,"Ingrese matricula de la nave; ",puerto1.distancia(puerto2));
-            Fecha salidaFecha = Utilidades.leerFechaHora(teclado,"Introduzca la fecha de salida");
-            Fecha llegadaFecha = Utilidades.leerFechaHora(teclado,"Introduzca la fecha de llegada");
-            if(salidaFecha.getAnio()>llegadaFecha.getAnio()){
+        int muelle2 = Utilidades.leerNumero(teclado, "Ingrese Terminal Destino (1 - 6):", 1, 6);
+        naves.toString();
+        Nave nave= naves.seleccionarNave(teclado, "Ingrese matricula de la nave; ", puerto1.distancia(puerto2));
+        Fecha salidaFecha = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de salida");
+        Fecha llegadaFecha = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de llegada");
+       /* if (salidaFecha.getAnio() > llegadaFecha.getAnio()) {
+            System.out.println("Llegada debe ser posterior a salida.");
+        } else {
+            if (salidaFecha.getMes() > llegadaFecha.getMes()) {
                 System.out.println("Llegada debe ser posterior a salida.");
-            }else{
-                if(salidaFecha.getMes()>llegadaFecha.getMes()){
+            } else {
+                if (salidaFecha.getDia() > llegadaFecha.getDia()) {
                     System.out.println("Llegada debe ser posterior a salida.");
-                }else{
-                    if(salidaFecha.getDia()>llegadaFecha.getDia()){
+                } else {
+                    if (salidaFecha.getHora() > llegadaFecha.getHora()) {
                         System.out.println("Llegada debe ser posterior a salida.");
-                    }else{
-                        if (salidaFecha.getHora()>llegadaFecha.getHora()){
+                    } else {
+                        if (salidaFecha.getMinuto() > llegadaFecha.getMinuto()) {
                             System.out.println("Llegada debe ser posterior a salida.");
-                        }else{
-                            if(salidaFecha.getMinuto()>llegadaFecha.getMinuto()){
-                                System.out.println("Llegada debe ser posterior a salida.");
-                            }else{
-                                if (salidaFecha.getSegundo()>llegadaFecha.getSegundo()){
-                                    System.out.println("Llegada debe ser porsterior a salida.");
-                                }
+                        } else {
+                            if (salidaFecha.getSegundo() > llegadaFecha.getSegundo()) {
+                                System.out.println("Llegada debe ser porsterior a salida.");
                             }
                         }
                     }
                 }
             }
-            Utilidades.leerNumero(teclado,"Ingrese precio de pasaje:",0,Double.POSITIVE_INFINITY);
+        }*/
+        while(llegadaFecha.anterior(salidaFecha)){
+            System.out.println("Llegada debe ser posterior a salida.");
+             salidaFecha = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de salida");
+             llegadaFecha = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de llegada");
+        }//está bien así ??
+        double precio =Utilidades.leerNumero(teclado, "Ingrese precio de pasaje:", 0, Double.POSITIVE_INFINITY);//está bien esto ??
+      Porte nPorte = new Porte(generarID(new Random()),nave, puerto1,muelle1,salidaFecha,puerto2,muelle2,llegadaFecha,precio);
+        System.out.println("Porte " + nPorte.getID() + " creado correctamente");
         return nPorte;
 
-        }
+
+    }
 }
