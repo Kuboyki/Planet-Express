@@ -1,10 +1,12 @@
+//Realizado por Sandra Blázquez Aldea bu0060 y Dong Jinghong IWSIM11
+
 import java.util.Scanner;
 
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author Sandra Blázquez Aldea
+ * @author Dong Jinghong
  * @version 1.0
  */
 public class Utilidades {
@@ -12,11 +14,11 @@ public class Utilidades {
     /**
      * TODO: Solicita un número repetidamente hasta que se introduzca uno correcto (dentro de los límites)
      *
-     * @param teclado
-     * @param mensaje
-     * @param minimo
-     * @param maximo
-     * @return int numero
+     * @param teclado que hace referencia al teclado físico por el que se introduce el número correspondiente
+     * @param mensaje que se muestra por pantalla para indicar que se necesita introducir por teclado
+     * @param minimo numero mínimo que se permite introducir
+     * @param maximo numero máximo que se permite introducir
+     * @return numero correspondiente
      */
     public static int leerNumero(Scanner teclado, String mensaje, int minimo, int maximo) {
         int numero;
@@ -32,11 +34,11 @@ public class Utilidades {
     /**
      * TODO: Solicita un número repetidamente hasta que se introduzca uno correcto (dentro de los límites)
      *
-     * @param teclado
-     * @param mensaje
-     * @param minimo
-     * @param maximo
-     * @return long numero
+     * @param teclado que hace referencia al teclado físico por el que se introduce el número correspondiente
+     * @param mensaje que se muestra por pantalla para indicar que se necesita introducir por teclado
+     * @param minimo  numero mínimo que se permite introducir
+     * @param maximo numero máximo que se permite introducir
+     * @return numero correspondiente
      */
     public static long leerNumero(Scanner teclado, String mensaje, long minimo, long maximo) {
         long numero;
@@ -51,11 +53,11 @@ public class Utilidades {
     /**
      * TODO: Solicita un número repetidamente hasta que se introduzca uno correcto (dentro de los límites)
      *
-     * @param teclado
-     * @param mensaje
-     * @param minimo
-     * @param maximo
-     * @return double numero
+     * @param teclado que hace referencia al teclado físico por el que se introduce el número correspondiente
+     * @param mensaje que se muestra por pantalla para indicar que se necesita introducir por teclado
+     * @param minimo  numero mínimo que se permite introducir
+     * @param maximo numero máximo que se permite introducir
+     * @return numero correspondiente
      */
     public static double leerNumero(Scanner teclado, String mensaje, double minimo, double maximo) {
         double numero;
@@ -70,11 +72,11 @@ public class Utilidades {
     /**
      * TODO: TODO: Solicita una letra repetidamente hasta que se introduzca uno correcto (dentro de los límites)
      *
-     * @param teclado
-     * @param mensaje
-     * @param minimo
-     * @param maximo
-     * @return char letra
+     * @param teclado que hace referencia al teclado físico por el que se introduce la letra correspondiente
+     * @param mensaje que se muestra por pantalla para indicar que se necesita introducir por teclado
+     * @param minimo la letra mínima que se puede introducir
+     * @param maximo la letra maxima  que se puede introducir
+     * @return char letra correspondiente
      */
     public static char leerLetra(Scanner teclado, String mensaje, char minimo, char maximo) {
         char letra;
@@ -90,29 +92,23 @@ public class Utilidades {
     /**
      * TODO: Solicita una fecha repetidamente hasta que se introduzca una correcta
      *
-     * @param teclado
-     * @param mensaje
-     * @return Fecha
+     * @param teclado que hace referencia al teclado físico por el que se introduce la fecha correspondiente
+     * @param mensaje que se muestra por pantalla para indicar que se necesita introducir por teclado
+     * @return Fecha que corresponde
      */
     //fecha de entrada
     public static Fecha leerFecha(Scanner teclado, String mensaje) {
         int dia;
         int mes;
         int anio;
-        //mirar clase fecha--año bisisesto
-        System.out.print(mensaje); //por ejemplo: fecha de salida
-        // imprime mensaje que introduces en el main
+        System.out.print(mensaje);
 
-        //dia
         dia = leerNumero(teclado, "Ingrese día: ", 1, 31);
 
-        //mes
         mes = leerNumero(teclado, "Ingrese mes: ", 1, 12);
 
-        //hay que hacer lo de que pasa un año ????
-        //año
+
         anio = leerNumero(teclado, "Ingrese año: ", 1900, 3000);
-        //como lo pone en la clase fecha
         if ((dia > 28 && mes == 2) || (dia == 31 && (mes == 4 || mes == 6 || mes == 9 || mes == 11))) {
             System.out.println("Fecha introducida incorrecta.");
             leerFecha(teclado, mensaje);
@@ -127,9 +123,9 @@ public class Utilidades {
     /**
      * TODO: Solicita una fecha y hora repetidamente hasta que se introduzcan unas correctas
      *
-     * @param teclado
-     * @param mensaje
-     * @return Fecha
+     * @param teclado que hace referencia al teclado físico por el que se introduce la fecha correspondiente
+     * @param mensaje que se muestra por pantalla para indicar que se necesita introducir por teclado
+     * @return Fecha que corresponde
      */
     //fecha de salida
     public static Fecha leerFechaHora(Scanner teclado, String mensaje) {
@@ -157,9 +153,9 @@ public class Utilidades {
     /**
      * TODO: Imprime por pantalla el String pasado por parámetro
      *
-     * @param teclado
-     * @param s
-     * @return
+     * @param teclado que hace referencia al teclado físico por el que se introduce la fecha correspondiente
+     * @param s mensaje que se muestra por pantalla para indicar que se necesita introducir por teclado
+     * @return la cadena que se itroduce por teclado
      */
     public static String leerCadena(Scanner teclado, String s) {
         System.out.print(s);

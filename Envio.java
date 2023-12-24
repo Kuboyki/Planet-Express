@@ -1,3 +1,5 @@
+//Realizado por Sandra Blázquez Aldea bu0060 y Dong Jinghong IWSIM11
+
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,10 +8,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * Clase en el que se gestionan y se realizan las acciones correspondientes a los envíos
  *
- * @author
- * @author
+ * @author Sandra Blázquez Aldea
+ * @author Dong Jinghong
  * @version 1.0
  */
 public class Envio {
@@ -24,12 +26,12 @@ public class Envio {
     /**
      * Constructor of the class
      *
-     * @param localizador
-     * @param porte
-     * @param cliente
-     * @param fila
-     * @param columna
-     * @param precio
+     * @param localizador con el que se identifica al envío
+     * @param porte con el que se identifica el porte
+     * @param cliente con el que se identifica el cliente
+     * @param fila  en la que está situado el envío
+     * @param columna en la que está situado el envío
+     * @param precio del envío
      */
     public Envio(String localizador, Porte porte, Cliente cliente, int fila, int columna, double precio) {
         this.localizador = localizador;
@@ -40,36 +42,63 @@ public class Envio {
         this.precio = precio;
     }
 
+    /**
+     * Función que devuelve el localizador del envío
+     * @return el localizador
+     */
     public String getLocalizador() {
         return localizador;
     }
-
+    /**
+     * Función que devuelve el porte del envío
+     * @return el porte
+     */
     public Porte getPorte() {
         return porte;
     }
-
+    /**
+     * Función que devuelve el cliente del envío
+     * @return el cliente
+     */
     public Cliente getCliente() {
         return cliente;
     }
-
+    /**
+     * Función que devuelve la fila donde se encuentra el envío
+     * @return la fila
+     */
     public int getFila() {
         return fila;
     }
-
+    /**
+     * Función que devuelve la columna donde se encuentra el envío
+     * @return la columna
+     */
     public int getColumna() {
         return columna;
     }
 
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
+    /**
+     *
+     * @return devuelve los datos de un envío en un determinado formato
+     */
     public String getHueco() {
         return getFila() + String.valueOf(getColumna()) + " para el hueco con fila " + getFila() + " y columna " + getColumna();
     }
-
+    /**
+     * FUnción que pretende identificar el precio del envío
+     * @return deevuelve el precio
+     */
     public double getPrecio() {
         return precio;
     }
 
     //TODO: Texto que debe generar: Envío PM1111AAAABBBBC para Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05) en hueco 6C por 13424,56 SSD
+    /**
+     *
+     * @return devuelve los datos de un envío en un determinado formato
+     */
     public String toString() {
 
         return "Envío " + getLocalizador() + " para Porte " + getPorte().getID() + " de "
@@ -77,7 +106,10 @@ public class Envio {
                 + porte.getDestino() + " " + porte.getMuelleDestino() + " (" + porte.getLlegada() + ") en hueco " + getFila() + String.valueOf(getColumna()) + " por " + getPrecio() + "SSD";
 
     }
-
+    /**
+     * Función que elimina el envío
+     * @return devuelve un true si el envío se ha cancelado o un false si no
+     */
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
     public boolean cancelar() {
         boolean cancelar = false;
@@ -94,7 +126,7 @@ public class Envio {
      * TODO: Método para imprimir la información de este envío en un fichero que respecta el formato descrito en el
      *  enunciado
      *
-     * @param fichero
+     * @param fichero fichero en el que se imprime la información del envío en cierto formato
      * @return Devuelve la información con el siguiente formato como ejemplo ->
      * -----------------------------------------------------
      * --------- Factura del envío PM1111AAAABBBBC ---------
@@ -149,21 +181,20 @@ public class Envio {
      *   primeros será el ID del porte asociado y los 9 siguientes serán letras mayúsculas aleatorias. Ejemplo: PM0123ABCD
      *   NOTA: Usar el objeto rand pasado como argumento para la parte aleatoria.
      *
-     * @param rand
-     * @param idPorte
-     * @return
+     * @param rand número random
+     * @param idPorte identificación del porte del envío
+     * @return el localizador generado de un envío
      */
     public static String generarLocalizador(Random rand, String idPorte) {
         StringBuilder localizador = new StringBuilder(idPorte);
         final String cadena = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
         for (int i = 0; i < 6; i++) {
-            rand = new Random();
             int posicion = rand.nextInt(26);
             char letra = cadena.charAt(posicion);
             localizador.append(letra);
         }
 
-        return String.valueOf(localizador);
+        return localizador.toString();// String.valueOf(localizador)
     }
 
 
@@ -172,10 +203,10 @@ public class Envio {
      *  necesarios al usuario en el orden y con los textos indicados en los ejemplos de ejecución del enunciado
      *  La función solicita repetidamente los parámetros hasta que sean correctos
      *
-     * @param teclado
-     * @param rand
-     * @param porte
-     * @param cliente
+     * @param teclado  nos sirve como referencia al teclado físico, para poder asignar valores a las variables como fila o columna
+     * @param rand número random
+     * @param porte que se usa para generar el localizador del envío
+     * @param cliente que se usa para crear el envío
      * @return Envio para el porte y cliente especificados
      */
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
@@ -193,7 +224,7 @@ porte.imprimirMatrizHuecos();
 
         Envio envio = new Envio(localizador,porte,cliente,fila,columna,precio);
 
-        System.out.println("Envío" + localizador + "creado correctamente");
+        System.out.println("Envío " + localizador + " creado correctamente");
 
        cliente.getListaEnvios().insertarEnvio(envio);
        cliente.aniadirEnvio(envio);

@@ -1,8 +1,10 @@
+//Realizado por Sandra Blázquez Aldea bu0060 y Dong Jinghong IWSIM11
+
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author Sandra Blázquez Aldea
+ * @author Dong Jinghong
  * @version     1.0
  */
 public class PuertoEspacial {
@@ -10,14 +12,11 @@ public class PuertoEspacial {
     private String nombre;
     private String codigo;
     private double radio;
-    //puertos se determina según la distancia al Sol
-    // en unidades astronómicas UA
+
     private double azimut;
-    //el ángulo desde el eje positivo x hasta la
-    // proyección del punto en el plano xy
+
     private double polar;
-    // el ángulo desde el eje positivo z
-    //hasta el puerto
+
     private int numMuelles;
 
     /**
@@ -33,27 +32,56 @@ public class PuertoEspacial {
     public PuertoEspacial(String nombre, String codigo, double radio, double azimut, double polar, int numMuelles) {
         this.nombre = nombre;
         this.codigo = codigo;
-        this.radio = radio;
-        this.azimut = azimut;
-        this.polar = polar;
+        this.radio = Math.toRadians(radio);
+        this.azimut = Math.toRadians(azimut);
+        this.polar =Math.toRadians( polar);
         this.numMuelles = numMuelles;
     }
+
+    /**
+     *
+     * @return el nombre del puerto espacial
+     */
     public String getNombre() {
         return nombre;
     }
+
+    /**
+     *
+     * @return el codigo del puerto espacial
+     */
     public String getCodigo() {
         return codigo;
     }
+
+    /**
+     *
+      * @return el radio del puerto espacial
+     */
     public double getRadio() {
         return radio;
     }
+
+    /**
+     *
+     * @return el azimut del puerto espacial
+     */
     public double getAzimut() {
         return azimut;
     }
 
+    /**
+     *
+      * @return el polar del puerto espacial
+     */
     public double getPolar() {
         return polar;
     }
+
+    /**
+     *
+     * @return los muelles del puerto espacial
+     */
     public int getMuelles() {
         return numMuelles;
     }
@@ -61,8 +89,8 @@ public class PuertoEspacial {
     /**
      * TODO: Método para calcular la distancia entre el puerto espacial que recibe el mensaje y el puerto
      *  espacial "destino" siguiendo las ecuaciones del enunciado (Las formulas se encuentran en el enunciado)
-     * @param destino
-     * @return
+     * @param destino el otro puerto
+     * @return distancia entre los dos puertos
      */
     public double distancia(PuertoEspacial destino) {
         // TODO: Para calcular la distancia entre dos Puertos Espaciales, se transforman sus coordenadas esféricas a cartesianas
